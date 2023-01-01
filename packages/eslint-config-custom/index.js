@@ -1,7 +1,10 @@
 module.exports = {
-  extends: ["next", "turbo", "prettier"],
+  parser: '@typescript-eslint/parser',
+
+  extends: ['turbo', 'prettier', 'plugin:@typescript-eslint/recommended'],
   rules: {
-    "@next/next/no-html-link-for-pages": "off",
-    "react/jsx-key": "off",
+    'react/jsx-key': 'off',
+    'prefer-const': 'warn',
   },
+  ignorePatterns: ['**/*.js', 'node_modules', '.turbo', 'dist', 'coverage'],
 };

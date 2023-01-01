@@ -1,0 +1,8 @@
+{
+  "parserOptions": {
+    "project": ["client/tsconfig.json", "client/tsconfig.node.json"]
+  },
+  "rules": {},
+  "ignorePatterns": ["node_modules", "tailwind.config.cjs"],
+  "extends": ["custom"]
+}

@@ -1,26 +1,18 @@
 import { Button } from '@ui/Button';
-import React, { useEffect, useState } from 'react';
 import Logo from '../../assets/VocabVaultLogo.svg';
 import Nav from './Nav.components';
 import { IoMdCompass } from 'react-icons/io';
 import { FiLogIn } from 'react-icons/fi';
+import useHasScrolled from './hooks/useHasScrolled';
+import useWindowBreakpoint from '../../hooks/useWindowBreakpoint';
 
 const Header = () => {
-  const [hasScrolled, setHasScrolled] = useState(false);
-
-  const handleScroll = () => {
-    setHasScrolled(window.scrollY > 0);
-  };
-
-  useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
-
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  const hasScrolled = useHasScrolled();
+  const currentBreakpoint = useWindowBreakpoint();
 
   return (
     <header
-      className={`fixed flex h-[64px] w-screen items-center justify-between px-[70px] ${
+      className={`px-17 fixed flex h-16 w-screen items-center justify-between ${
         hasScrolled && 'bg-gray-800/50 shadow-md backdrop-blur-md'
       }`}
     >

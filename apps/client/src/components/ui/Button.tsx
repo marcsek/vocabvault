@@ -1,7 +1,6 @@
 import { cva } from 'class-variance-authority';
 import React, { ReactElement } from 'react';
 import type { VariantProps } from 'class-variance-authority';
-import { FiAperture } from 'react-icons/fi';
 import { IconType } from 'react-icons';
 
 const buttonStyles = cva('rounded-default flex items-center justify-center gap-2 font-semibold duration-100 active:scale-[98%] h-fit', {

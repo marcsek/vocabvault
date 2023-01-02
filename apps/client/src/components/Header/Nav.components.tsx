@@ -19,10 +19,10 @@ const Nav = ({ links }: Props) => {
 
 export default Nav;
 
-const NavElement = ({ isActive, to, children, text }: { isActive: boolean; to: string; children?: React.ReactNode; text: string }) => {
+const NavElement = ({ isActive, to, text }: { isActive: boolean; to: string; text: string }) => {
   return (
     <Link to={to} className="relative flex items-center gap-2">
-      {isActive && <div className="bg-primary-300 absolute -left-3.5 h-[6px] w-[6px] rounded-full" />}
+      {isActive && <div className="bg-primary-300 absolute -left-3.5 h-1.5 w-1.5 rounded-full" />}
       <p className="text-sm font-bold text-gray-100">{text}</p>
     </Link>
   );

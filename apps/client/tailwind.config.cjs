@@ -50,6 +50,7 @@ module.exports = {
         400: '#B91C1C',
       },
     },
+
     extend: {
       borderRadius: {
         default: '0.375rem',
@@ -58,6 +59,9 @@ module.exports = {
         display: '5rem',
         h1: '4rem',
         h1s: '3rem',
+      },
+      spacing: {
+        17: '4.375rem',
       },
     },
   },

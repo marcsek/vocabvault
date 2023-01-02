@@ -5,5 +5,5 @@
     "module": "commonjs",
     "esModuleInterop": true
   },
-  "exclude": ["node_modules", "dist", ".turbo", "coverage"]
+  "exclude": ["node_modules", "dist", ".turbo", "coverage", "prisma"]
 }

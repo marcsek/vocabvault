@@ -1,0 +1,14 @@
+import e from 'express';
+import { createAccessToken } from '../jwt';
+
+export const createTokenAttachCookie = ({ res, userId }: { res: e.Response; userId: string }) => {
+  const accessToken = createAccessToken({ userId: userId }, { expiresIn: '1h', allowInsecureKeySizes: true });
+
+  res.cookie('jit', accessToken, {
+    maxAge: 3_600_000,
+    httpOnly: true,
+    secure: false,
+  });
+
+  return accessToken;
+};

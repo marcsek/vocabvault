@@ -1,10 +1,16 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { trpc } from '../../../utils/trpc';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
+
   const login = trpc.auth.login.useMutation({
+    onSuccess() {
+      navigate('/protected', { replace: true });
+    },
     onSettled(data) {
       console.log(data);
     },

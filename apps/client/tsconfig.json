@@ -10,7 +10,10 @@
     "module": "ESNext",
     "resolveJsonModule": true,
     "noEmit": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "paths": {
+      "@ui/*": ["./src/components/ui/*"]
+    }
   },
   "include": ["src"],
   "exclude": ["node_modules"],

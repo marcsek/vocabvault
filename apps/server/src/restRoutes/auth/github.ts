@@ -1,7 +1,6 @@
 import { Router } from 'express';
 import passport from 'passport';
 import { createTokenAttachCookie } from '../../auth/helpers/createTokenAttachCookie';
-import { createAccessToken } from '../../auth/jwt';
 
 const githubRouter = Router();
 
@@ -13,7 +12,7 @@ githubRouter.get('/callback', passport.authenticate('github', { session: false }
   if (userID) {
     console.log(userID);
     const accessToken = createTokenAttachCookie({ res, userId: userID });
-    res.status(200).send('Sucess');
+    res.redirect('http://localhost:5173/auth/success');
   }
 });
 

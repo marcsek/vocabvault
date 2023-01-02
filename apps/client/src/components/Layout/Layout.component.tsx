@@ -1,10 +1,14 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
+import Header from '../Header/Header.component';
 
 const Layout = () => {
   return (
-    <div className="flex justify-center rounded py-28 text-3xl font-bold">
-      <Outlet />
+    <div className="min-h-screen rounded bg-gray-800 text-gray-50">
+      <Header />
+      <div className="pt-16">
+        <Outlet />
+      </div>
     </div>
   );
 };

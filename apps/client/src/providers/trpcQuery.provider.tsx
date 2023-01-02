@@ -9,7 +9,7 @@ interface Props {
 }
 
 const TrpcQueryProvider: React.FC<Props> = ({ children }) => {
-  const [queryClient] = useState(() => new QueryClient());
+  const [queryClient] = useState(() => new QueryClient({}));
   const [trpcClient] = useState(() =>
     trpc.createClient({
       links: [

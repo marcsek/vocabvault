@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-const LoginSucess = () => {
+const AuthSuccess = () => {
   useEffect(() => {
     setTimeout(() => {
       window.close();
@@ -10,4 +10,4 @@ const LoginSucess = () => {
   return <h1 className="absolute inset-1/2 min-w-max -translate-x-1/2 translate-y-1/2 text-2xl font-bold">Very Nice!</h1>;
 };
 
-export default LoginSucess;
+export default AuthSuccess;

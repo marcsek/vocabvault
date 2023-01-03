@@ -10,6 +10,7 @@
     "lint": "eslint src --fix"
   },
   "dependencies": {
+    "@headlessui/react": "^1.7.7",
     "@react-hook/window-size": "^3.1.1",
     "@tailwindcss/forms": "^0.5.3",
     "@tanstack/react-query": "^4.20.4",
@@ -23,7 +24,8 @@
     "react-error-boundary": "^3.1.4",
     "react-icons": "^4.7.1",
     "react-router-dom": "^6.6.1",
-    "server": "*"
+    "server": "*",
+    "usehooks-ts": "^2.9.1"
   },
   "devDependencies": {
     "@tanstack/react-query-devtools": "^4.20.4",

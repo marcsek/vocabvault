@@ -60,6 +60,9 @@ module.exports = {
         h1: '4rem',
         h1s: '3rem',
       },
+      padding: {
+        8.5: '2.1875rem',
+      },
       spacing: {
         17: '4.375rem',
       },

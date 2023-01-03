@@ -9,7 +9,7 @@ type Props = {
   active?: boolean;
 };
 
-export const Link = React.forwardRef<HTMLAnchorElement, Props>(({ className, active, children, to, onClick, ...props }, ref) => {
+const Link = React.forwardRef<HTMLAnchorElement, Props>(({ className, active, children, to, onClick, ...props }, ref) => {
   return (
     <RouterLink
       ref={ref}
@@ -22,3 +22,5 @@ export const Link = React.forwardRef<HTMLAnchorElement, Props>(({ className, act
     </RouterLink>
   );
 });
+
+export default Link;

@@ -5,7 +5,7 @@ const AuthPage = () => {
   return (
     <div>
       <div>AuthPage</div>
-      <Link to="/">Auth Required</Link>
+      <Link to="/protected">Auth Required</Link>
       <Outlet />
       <AuthProviderWindow />
     </div>

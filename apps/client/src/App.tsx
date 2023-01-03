@@ -15,11 +15,11 @@ import DefaultErrorBoundary from './components/ErrorBoundary/DefaultErrorBoundar
 
 function App() {
   return (
-    <TrpcQueryProvider>
-      <Suspense fallback={<div>Loading</div>}>
-        <ErrorBoundary FallbackComponent={DefaultErrorBoundary}>
-          <UserContextProvider>
-            <Router>
+    <Router>
+      <TrpcQueryProvider>
+        <Suspense fallback={<div>Loading</div>}>
+          <ErrorBoundary FallbackComponent={DefaultErrorBoundary}>
+            <UserContextProvider>
               <Routes>
                 <Route element={<Layout />}>
                   <Route path="/" element={<LandingPage />} />
@@ -33,12 +33,12 @@ function App() {
                 </Route>
                 <Route path="/auth/success" element={<AuthSuccess />} />
               </Routes>
-            </Router>
-          </UserContextProvider>
-        </ErrorBoundary>
-      </Suspense>
-      <ReactQueryDevtools />
-    </TrpcQueryProvider>
+            </UserContextProvider>
+          </ErrorBoundary>
+        </Suspense>
+        <ReactQueryDevtools />
+      </TrpcQueryProvider>
+    </Router>
   );
 }
 

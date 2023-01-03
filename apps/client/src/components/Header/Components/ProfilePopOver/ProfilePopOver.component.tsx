@@ -1,18 +1,17 @@
-import React from 'react';
 import { Popover } from '@headlessui/react';
-import ProfilePicture from '../../../assets/PoriflePicture.png';
+import ProfilePicture from '../../../../assets/PoriflePicture.png';
 import { FiChevronDown } from 'react-icons/fi';
 import Divider from '@ui/Divider';
-import { Link } from '@ui/Link';
+import Link from '@ui/Link';
 
 const ProfilePopOver = () => {
   return (
-    <Popover className="relative">
+    <Popover className="relative h-[32px]">
       {({ open }) => (
-        <div>
+        <>
           <Popover.Button className="outline-none">
-            <div className="flex items-center gap-2">
-              <img src={ProfilePicture}></img>
+            <div className="flex items-center justify-center gap-2">
+              <img className="h-8 w-8" src={ProfilePicture}></img>
               <FiChevronDown size="20" className={`${open ? 'rotate-180' : 'rotate-0'}`} />
             </div>
           </Popover.Button>
@@ -23,19 +22,19 @@ const ProfilePopOver = () => {
             </div>
             <Divider className="h-[1px] w-full bg-gray-700" />
             <div className="flex flex-col gap-2">
-              <Popover.Button as={Link} to="#" className="inline-block py-1">
+              <Popover.Button as={Link} to="#" className="inline-block py-1 text-gray-300">
                 History
               </Popover.Button>
-              <Popover.Button as={Link} to="#" className="inline-block py-1">
+              <Popover.Button as={Link} to="#" className="inline-block py-1 text-gray-300">
                 Settings
               </Popover.Button>
             </div>
             <Divider className="h-[1px] w-full bg-gray-700" />
-            <Popover.Button as={Link} to="#" className="block leading-none">
+            <Popover.Button as={Link} to="#" className="block leading-none text-gray-300">
               Sign Out
             </Popover.Button>
           </Popover.Panel>
-        </div>
+        </>
       )}
     </Popover>
   );

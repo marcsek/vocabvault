@@ -1,7 +1,14 @@
+import { useQueryClient } from '@tanstack/react-query';
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useUser } from '../../../providers/UserContext.provider';
+import handleSucessRedirect from '../handleSucessRedirect';
 
 const AuthProviderWindow = () => {
   const [externalPopup, setExternalPopup] = useState<Window | null>(null);
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+  const { user } = useUser();
 
   const connectClick = () => {
     const left = window.screenX + (window.outerWidth - 500) / 2;
@@ -11,11 +18,20 @@ const AuthProviderWindow = () => {
     setExternalPopup(popup);
   };
 
+  const daco = async () => {
+    await handleSucessRedirect({ navigate, queryClient });
+    console.log(user);
+  };
+
   useEffect(() => {
     if (!externalPopup) return;
 
     const timer = setInterval(() => {
       if (externalPopup?.closed) {
+        const hasCookie = !!document.cookie.match(/^(.*;)?\s*is_loggedin\s*=\s*[^;]+(.*)?$/);
+        if (hasCookie) daco();
+        if (!hasCookie) console.log('nemas cookie');
+
         if (timer) clearInterval(timer);
       }
     }, 500);

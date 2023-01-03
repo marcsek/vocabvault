@@ -1,6 +1,5 @@
-import { Link } from '@ui/Link';
-import React from 'react';
-import { Link as RouterLink, useLocation } from 'react-router-dom';
+import Link from '@ui/Link';
+import { useLocation } from 'react-router-dom';
 
 interface Props {
   links: { to: string; text: string }[];

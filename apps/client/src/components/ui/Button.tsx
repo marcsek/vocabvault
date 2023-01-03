@@ -4,7 +4,7 @@ import type { VariantProps } from 'class-variance-authority';
 import { IconType } from 'react-icons';
 
 const buttonStyles = cva(
-  'rounded-default flex items-center justify-center gap-2 font-semibold duration-100 active:scale-[98%] h-fit box-border',
+  'rounded-default flex items-center justify-center gap-2 font-semibold duration-100 active:scale-[98%] box-border',
   {
     variants: {
       intent: {
@@ -14,8 +14,8 @@ const buttonStyles = cva(
         asWrapper: 'bg-transparent hover:bg-gray-100/5 gap-0',
       },
       size: {
-        small: 'px-3 py-2 text-sm max-h-[]',
-        medium: 'px-4 py-2 text-base ',
+        small: 'px-3 py-2 text-sm h-9',
+        medium: 'px-4 py-2 text-base h-10',
         asWraper: 'p-none',
       },
     },
@@ -35,7 +35,7 @@ type PolymorphicProps<Element extends React.ElementType> = CustomProps &
   };
 
 const defaultElement = 'button';
-export const Button = <Element extends React.ElementType = typeof defaultElement>(props: PolymorphicProps<Element>) => {
+const Button = <Element extends React.ElementType = typeof defaultElement>(props: PolymorphicProps<Element>) => {
   const { as: Component = defaultElement, loading, className, intent, size, children, Icon, ...rest } = props;
   return (
     <Component className={`rounded-full ${buttonStyles({ intent, size })} ${className}`} {...rest}>
@@ -50,3 +50,5 @@ export const Button = <Element extends React.ElementType = typeof defaultElement
     </Component>
   );
 };
+
+export default Button;

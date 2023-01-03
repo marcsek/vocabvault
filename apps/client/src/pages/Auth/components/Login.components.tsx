@@ -1,15 +1,18 @@
+import { useQueryClient } from '@tanstack/react-query';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { trpc } from '../../../utils/trpc';
+import handleSucessRedirect from '../handleSucessRedirect';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   const login = trpc.auth.login.useMutation({
     onSuccess() {
-      navigate('/protected', { replace: true });
+      handleSucessRedirect({ navigate, queryClient });
     },
     onSettled(data) {
       console.log(data);

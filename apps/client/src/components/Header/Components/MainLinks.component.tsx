@@ -17,7 +17,7 @@ const MainLinks = ({ onClose = () => null }: Props) => {
             <Link to="/" active={activeLink === '/'} onClick={elementClicked}>
               Dasboard
             </Link>
-            <Link to="/auth/login" active={activeLink === '/auth/login'} onClick={elementClicked}>
+            <Link to="/create-datasource" active={activeLink === '/create-datasource'} onClick={elementClicked}>
               Word Sources
             </Link>
           </>

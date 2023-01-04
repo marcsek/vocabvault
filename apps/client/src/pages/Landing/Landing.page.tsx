@@ -1,7 +1,12 @@
+import MyListbox from '@ui/ListBox';
 import React from 'react';
 
 const Landing = () => {
-  return <div>Landing</div>;
+  return (
+    <div>
+      <MyListbox />
+    </div>
+  );
 };
 
 export default Landing;

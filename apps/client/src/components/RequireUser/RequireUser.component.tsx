@@ -1,10 +1,9 @@
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
-import { trpc } from '../../utils/trpc';
+import { useGetUser } from '../../queries/user';
 
 const RequireUser = () => {
-  const query = trpc.useContext();
   const location = useLocation();
-  const user = query.user.getUser.getData();
+  const { data: user } = useGetUser();
 
   return user ? <Outlet /> : <Navigate to="auth/login" state={{ from: location }} replace />;
 };

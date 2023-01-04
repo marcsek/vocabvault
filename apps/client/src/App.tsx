@@ -7,7 +7,7 @@ import Register from './pages/Auth/components/Register.component';
 import RequireUser from './components/RequireUser/RequireUser.component';
 import { UserContextProvider } from './providers/UserContext.provider';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import LandingPage from './pages/LandingPage/LandingPage.page';
+import LandingPage from './pages/Landing/Landing.page';
 import { Suspense } from 'react';
 import AuthSuccess from './pages/Auth/components/utils/AuthSucessPopupPage';
 import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary';

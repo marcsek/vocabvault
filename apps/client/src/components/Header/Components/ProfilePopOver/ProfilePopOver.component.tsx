@@ -6,8 +6,11 @@ import { TbSettings } from 'react-icons/tb';
 import { VscSignOut } from 'react-icons/vsc';
 import Divider from '@ui/Divider';
 import Link from '@ui/Link';
+import { useLogout } from '../../../../queries/user';
 
 const ProfilePopOver = () => {
+  const logout = useLogout();
+
   return (
     <Popover className="relative z-50 h-[32px]">
       {({ open }) => (
@@ -36,6 +39,7 @@ const ProfilePopOver = () => {
             <Popover.Button
               as={Link}
               hoverEffect
+              onClick={() => logout.mutate()}
               to="#"
               className="block py-1 px-3 leading-none text-gray-300"
               Icon={<VscSignOut size={16} />}

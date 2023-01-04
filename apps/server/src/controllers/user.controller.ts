@@ -45,3 +45,14 @@ export const registerUserController = async ({ ctx: { prisma, res }, registerInp
   const accessToken = createTokenAttachCookie({ res, userId: createdUser.id });
   return `success ${accessToken}`;
 };
+
+export const logoutUserController = async ({ ctx: { req, res } }: { ctx: Context }) => {
+  if (!req.cookies.jit) {
+    throw new TRPCError({ message: "Can't logout without token", code: 'BAD_REQUEST' });
+  }
+
+  res.clearCookie('jit');
+  res.clearCookie('is_loggedin');
+
+  return 'sucess';
+};

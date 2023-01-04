@@ -3,14 +3,14 @@ import TextField from '@ui/TextField';
 import { Formik, Field, Form } from 'formik';
 import { useState } from 'react';
 import { FiEye, FiEyeOff } from 'react-icons/fi';
-import { trpc } from '../../../utils/trpc';
 import { toFormikValidationSchema } from './utils/zodToFormik';
 import ErrorModal from './ErrorModal.component';
 import Heading from './Heading.component';
 import { loginUserSchema } from 'server/src/schemas/user.schema';
+import { useLogin } from '../../../queries/user';
 
 const Login = () => {
-  const login = trpc.auth.login.useMutation();
+  const login = useLogin();
   const [showPassword, setShowPassword] = useState(false);
 
   return (

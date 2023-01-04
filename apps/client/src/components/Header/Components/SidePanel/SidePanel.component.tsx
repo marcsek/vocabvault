@@ -31,7 +31,7 @@ const SidePanel = ({ isOpen, onClose }: Props) => {
           {!!user && (
             <>
               <Divider className="h-[1px] w-full" />
-              <UserNav onClose={onClose} />
+              <UserNav withLogout onClose={onClose} />
             </>
           )}
 

@@ -6,6 +6,7 @@ import { trpc } from '../../../utils/trpc';
 import handleSucessRedirect from './utils/handleSucessRedirect';
 import { FcGoogle } from 'react-icons/fc';
 import { ImGithub } from 'react-icons/im';
+import Cookies from 'js-cookie';
 
 //window atributes
 const width = 500;
@@ -35,7 +36,7 @@ const AuthProviderWindow = ({ providerName }: Props) => {
 
     const timer = setInterval(() => {
       if (externalPopup?.closed) {
-        const hasCookie = !!document.cookie.match(/^(.*;)?\s*is_loggedin\s*=\s*[^;]+(.*)?$/);
+        const hasCookie = Boolean(Cookies.get('is_loggedin'));
         if (hasCookie) {
           handleSucessRedirect({ navigate, queryClient, trpcContext });
         } else {

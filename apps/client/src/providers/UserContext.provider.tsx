@@ -1,18 +1,13 @@
 import { createContext, useContext, useEffect } from 'react';
-import { trpc } from '../utils/trpc';
+import { useGetUser } from '../queries/user';
 
-const UserContext = createContext<{ user: { name: string; email: string; id: string } | null }>({ user: null });
+const UserContext = createContext<{ user: { name: string; email: string; id: string } | null | undefined }>({ user: null });
 
 export const UserContextProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const { data: user } = trpc.user.getUser.useQuery(undefined, {
-    retry: false,
-    useErrorBoundary: true,
-    suspense: true,
-    refetchInterval: 600000,
-    enabled: !!document.cookie.match(/^(.*;)?\s*is_loggedin\s*=\s*[^;]+(.*)?$/) && !(window.opener && window.opener !== window),
-  });
+  const { data: user } = useGetUser();
+
   useEffect(() => console.log(user), [user]);
-  return <UserContext.Provider value={{ user: user ?? null }}>{children}</UserContext.Provider>;
+  return <UserContext.Provider value={{ user: user }}>{children}</UserContext.Provider>;
 };
 
 export const useUser = () => {

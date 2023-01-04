@@ -1,5 +1,4 @@
 import Link from '@ui/Link';
-import React from 'react';
 import ProfilePicture from '../../../../assets/PoriflePicture.png';
 import NavWrapper from '../NavWrapper';
 

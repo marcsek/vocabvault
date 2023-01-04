@@ -1,17 +1,19 @@
 import { QueryClient } from '@tanstack/react-query';
 import { NavigateFunction } from 'react-router-dom';
-import { trpc } from '../../utils/trpc';
+import { TContext, trpc } from '../../../../utils/trpc';
 
 interface Props {
   navigate: NavigateFunction;
   queryClient: QueryClient;
+  trpcContext: TContext;
 }
 
-const handleSucessRedirect = async ({ navigate, queryClient }: Props) => {
+const handleSucessRedirect = async ({ navigate, queryClient, trpcContext }: Props) => {
   const getUserKey = trpc.user.getUser.getQueryKey(undefined, 'query');
   queryClient.setQueryData(getUserKey, null);
-  await queryClient.resetQueries(getUserKey);
-  await queryClient.refetchQueries(getUserKey);
+  queryClient.resetQueries(getUserKey);
+  await trpcContext.user.getUser.fetch();
+  navigate('/protected', { replace: true });
 };
 
 export default handleSucessRedirect;

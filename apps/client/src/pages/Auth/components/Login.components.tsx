@@ -1,35 +1,69 @@
-import { useQueryClient } from '@tanstack/react-query';
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import Button from '@ui/Button';
+import TextField from '@ui/TextField';
+import { Formik, Field, Form } from 'formik';
+import { useState } from 'react';
+import { FiEye, FiEyeOff } from 'react-icons/fi';
 import { trpc } from '../../../utils/trpc';
-import handleSucessRedirect from '../handleSucessRedirect';
+import { toFormikValidationSchema } from './utils/zodToFormik';
+import ErrorModal from './ErrorModal.component';
+import Heading from './Heading.component';
+import { loginUserSchema } from 'server/src/schemas/user.schema';
 
 const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const navigate = useNavigate();
-  const queryClient = useQueryClient();
-
-  const login = trpc.auth.login.useMutation({
-    onSuccess() {
-      handleSucessRedirect({ navigate, queryClient });
-    },
-    onSettled(data) {
-      console.log(data);
-    },
-  });
-
-  const onFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    login.mutate({ email, password });
-  };
+  const login = trpc.auth.login.useMutation();
+  const [showPassword, setShowPassword] = useState(false);
 
   return (
-    <form onSubmit={onFormSubmit}>
-      <input type="text" value={email} onChange={(e) => setEmail(e.target.value)}></input>
-      <input type="text" value={password} onChange={(e) => setPassword(e.target.value)} />
-      <button type="submit">Submit</button>
-    </form>
+    <div className="z-10 flex flex-col gap-10">
+      <Heading type="login" />
+      <Formik
+        initialValues={{
+          password: '',
+          email: '',
+        }}
+        onSubmit={async ({ email, password }) => {
+          login.mutate({ email, password });
+        }}
+        validationSchema={toFormikValidationSchema(loginUserSchema)}
+      >
+        {({ errors, touched, isValid }) => (
+          <Form className="flex flex-col gap-6">
+            {login.isError && <ErrorModal errorMessage={login.error?.message} />}
+
+            <Field
+              as={TextField}
+              labelText="Email"
+              state={errors.email && touched.email ? 'error' : 'default'}
+              helperText={touched.email && errors.email}
+              id="email"
+              name="email"
+              disabled={login.isLoading}
+            />
+            <Field
+              as={TextField}
+              state={errors.password && touched.password ? 'error' : 'default'}
+              helperText={touched.password && errors.password}
+              labelText="Password"
+              id="password"
+              name="password"
+              disabled={login.isLoading}
+              placeholder=""
+              type={showPassword ? 'text' : 'password'}
+              Icon={!showPassword ? <FiEye /> : <FiEyeOff />}
+              handleIconClick={() => setShowPassword(!showPassword)}
+            />
+            <Button
+              loading={login.isLoading}
+              disabled={!isValid || (!touched.email && !touched.password) || login.isLoading}
+              type="submit"
+              className="mt-4 w-full"
+            >
+              Sign In
+            </Button>
+          </Form>
+        )}
+      </Formik>
+    </div>
   );
 };
 

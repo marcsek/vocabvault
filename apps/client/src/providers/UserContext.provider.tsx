@@ -1,16 +1,10 @@
 import { createContext, useContext, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { trpc } from '../utils/trpc';
 
 const UserContext = createContext<{ user: { name: string; email: string; id: string } | null }>({ user: null });
 
 export const UserContextProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const navigate = useNavigate();
-
   const { data: user } = trpc.user.getUser.useQuery(undefined, {
-    onSuccess() {
-      navigate('/protected');
-    },
     retry: false,
     useErrorBoundary: true,
     suspense: true,

@@ -66,6 +66,9 @@ module.exports = {
       spacing: {
         17: '4.375rem',
       },
+      maxWidth: {
+        '8xl': '90rem',
+      },
     },
   },
   // plugins: [require('@tailwindcss/forms')],

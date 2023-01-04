@@ -1,11 +1,10 @@
-import Link from '@ui/Link';
-import React from 'react';
+import Link, { TUiLinkProps } from '@ui/Link';
 import LogoAsset from '../../../assets/VocabVaultLogo.svg';
 
-const Logo = () => {
+const Logo = (props: Omit<TUiLinkProps, 'to'>) => {
   return (
-    <Link to="/">
-      <img className="h-8 w-32" src={LogoAsset}></img>
+    <Link to="/" {...props}>
+      <img className={`h-8 w-32`} src={LogoAsset}></img>
     </Link>
   );
 };

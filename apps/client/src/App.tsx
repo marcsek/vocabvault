@@ -9,7 +9,7 @@ import { UserContextProvider } from './providers/UserContext.provider';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import LandingPage from './pages/LandingPage/LandingPage.page';
 import { Suspense } from 'react';
-import AuthSuccess from './pages/Auth/components/AuthSucess';
+import AuthSuccess from './pages/Auth/components/utils/AuthSucessPopupPage';
 import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary';
 import DefaultErrorBoundary from './components/ErrorBoundary/DefaultErrorBoundary';
 
@@ -22,11 +22,13 @@ function App() {
             <UserContextProvider>
               <Routes>
                 <Route element={<Layout />}>
-                  <Route path="/" element={<LandingPage />} />
                   <Route path="/auth" element={<AuthPage />}>
                     <Route path="login" element={<Login />} />
                     <Route path="register" element={<Register />} />
                   </Route>
+                </Route>
+                <Route element={<Layout hasHeader />}>
+                  <Route path="/" element={<LandingPage />} />
                   <Route element={<RequireUser />}>
                     <Route path="/protected" element={<div className="font-medium text-gray-50">Procted</div>}></Route>
                   </Route>

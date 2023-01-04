@@ -2,9 +2,11 @@ import { cva } from 'class-variance-authority';
 import React, { ReactElement } from 'react';
 import type { VariantProps } from 'class-variance-authority';
 import { IconType } from 'react-icons';
+import SpinnerSmall from './utils/SpinnerSmall';
+import { PolymorphicProps } from './types';
 
 const buttonStyles = cva(
-  'rounded-default flex items-center justify-center gap-2 font-semibold duration-100 active:scale-[98%] box-border',
+  'rounded-default disabled:bg-gray-600/25 disabled:text-gray-400 disabled:ring-2 disabled:ring-gray-500 disa disabled:hover:shadow-none disabled:active:scale-100 flex items-center justify-center gap-2 font-semibold duration-100 active:scale-[98%] box-border',
   {
     variants: {
       intent: {
@@ -23,24 +25,20 @@ const buttonStyles = cva(
   }
 );
 
-type CustomProps = {
+export type ButtonProps = {
   loading?: boolean;
   Icon?: ReactElement<IconType>;
   to?: string;
 } & VariantProps<typeof buttonStyles>;
 
-type PolymorphicProps<Element extends React.ElementType> = CustomProps &
-  Omit<React.ComponentProps<Element>, 'as'> & {
-    as?: Element;
-  };
-
 const defaultElement = 'button';
-const Button = <Element extends React.ElementType = typeof defaultElement>(props: PolymorphicProps<Element>) => {
-  const { as: Component = defaultElement, loading, className, intent, size, children, Icon, ...rest } = props;
+const Button = <Element extends React.ElementType = typeof defaultElement>(props: PolymorphicProps<Element, ButtonProps>) => {
+  const { as: Component = defaultElement, loading = false, className, intent, size, children, Icon, ...rest } = props;
+
   return (
-    <Component className={`rounded-full ${buttonStyles({ intent, size })} ${className}`} {...rest}>
+    <Component className={`${buttonStyles({ intent, size })} ${className} ${loading ? 'disabled' : ''}`} {...rest}>
       {loading ? (
-        <div></div>
+        <SpinnerSmall />
       ) : (
         <>
           <p className="text-lg">{Icon}</p>

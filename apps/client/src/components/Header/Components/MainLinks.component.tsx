@@ -1,5 +1,4 @@
 import Link from '@ui/Link';
-import React from 'react';
 import { useUser } from '../../../providers/UserContext.provider';
 import NavWrapper from './NavWrapper';
 

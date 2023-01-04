@@ -19,30 +19,26 @@ const Header = () => {
   const { user } = useUser();
 
   return (
-    <header
-      className={`px-8.5 sm:px-17 fixed flex h-16 w-screen items-center justify-between ${
-        hasScrolled && 'bg-gray-800/50 shadow-md backdrop-blur-md'
-      }`}
-    >
-      <Logo />
-      <div className="static flex items-center gap-10">
-        {isWindowMobile ? (
-          <>
+    <header className={`fixed z-30 flex w-full justify-center ${hasScrolled && 'bg-gray-800/50 shadow-md backdrop-blur-md'}`}>
+      <div className="px-8.5 max-w-8xl md:px-17 flex h-16 w-screen items-center justify-between">
+        <Logo />
+        <div className="static flex items-center gap-10">
+          {isWindowMobile ? (
             <Button intent="asWrapper" size="asWraper" className="!rounded-2xl p-1">
               <Hamburger handleClick={() => setSidePanelOpen((prev) => !prev)} />
               <SidePanel isOpen={sidePanelOpen} onClose={() => setSidePanelOpen(false)}></SidePanel>
             </Button>
-          </>
-        ) : (
-          <>
-            <MainLinks />
-            <Divider className="h-5 w-[1px]" />
-            <div className="flex items-center gap-8">
-              <MainButtons />
-              {user && <ProfilePopOver />}
-            </div>
-          </>
-        )}
+          ) : (
+            <>
+              <MainLinks />
+              <Divider className="h-5 w-[1px]" />
+              <div className="flex items-center gap-8">
+                <MainButtons />
+                {user && <ProfilePopOver />}
+              </div>
+            </>
+          )}
+        </div>
       </div>
     </header>
   );

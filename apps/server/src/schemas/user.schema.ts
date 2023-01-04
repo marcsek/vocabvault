@@ -1,14 +1,21 @@
 import { z } from 'zod';
 
-export const loginUserSchema = z.object({ email: z.string().email('Not an email.'), password: z.string().min(8).max(40) });
 export const registerUserSchema = z.object({
-  email: z.string().email(),
+  name: z
+    .string({ required_error: 'Name is required' })
+    .min(2, 'Name must be at least 2 characters long')
+    .max(25, 'Name cannot be longer than 25 characters'),
+  email: z.string({ required_error: 'Email is required' }).email('Enter a valid email').max(255, 'Email is too long'),
   password: z
-    .string()
-    .min(8)
-    .max(40)
-    .regex(/^(?=.*\d)(?=.*[a-z]).{8,40}$/),
-  name: z.string().min(2).max(25),
+    .string({ required_error: 'Password is required' })
+    .min(8, 'Password must have at least 8 characters')
+    .max(40, 'Password is too long')
+    .regex(/^(?=.*[A-Za-z])(?=.*[0-9]).*$/, 'Password must contain one digit'),
+});
+
+export const loginUserSchema = z.object({
+  email: z.string({ required_error: 'Email is required' }).email('Enter a valid email').max(255, 'Email is too long'),
+  password: z.string({ required_error: 'Password is required' }).min(8, 'Must have at least 8 characters').max(40, 'Password is too long'),
 });
 
 export type LoginInput = z.TypeOf<typeof loginUserSchema>;

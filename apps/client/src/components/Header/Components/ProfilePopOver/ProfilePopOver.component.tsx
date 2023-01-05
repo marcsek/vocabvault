@@ -1,5 +1,5 @@
 import { Popover } from '@headlessui/react';
-import ProfilePicture from '../../../../assets/PoriflePicture.png';
+import ProfilePicture from '../../../../assets/ProfilePicture.png';
 import { FiChevronDown } from 'react-icons/fi';
 import { RiHistoryFill } from 'react-icons/ri';
 import { TbSettings } from 'react-icons/tb';

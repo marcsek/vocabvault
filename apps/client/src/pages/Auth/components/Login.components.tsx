@@ -3,7 +3,7 @@ import TextField from '@ui/TextField';
 import { Formik, Field, Form } from 'formik';
 import { useState } from 'react';
 import { FiEye, FiEyeOff } from 'react-icons/fi';
-import { toFormikValidationSchema } from './utils/zodToFormik';
+import { toFormikValidationSchema } from '../../../utils/helpers/zodToFormik';
 import ErrorModal from './ErrorModal.component';
 import Heading from './Heading.component';
 import { loginUserSchema } from 'server/src/schemas/user.schema';

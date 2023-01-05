@@ -41,7 +41,7 @@ const Button = <Element extends React.ElementType = typeof defaultElement>(props
         <SpinnerSmall />
       ) : (
         <>
-          <p className="text-lg">{Icon}</p>
+          {!!Icon && <p className="text-lg">{Icon}</p>}
           {children ?? 'Button'}
         </>
       )}

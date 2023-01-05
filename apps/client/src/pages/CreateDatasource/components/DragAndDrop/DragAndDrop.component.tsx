@@ -1,18 +1,24 @@
-import React, { useRef } from 'react';
+import { useRef } from 'react';
+import useOnChange from '../../../../hooks/useOnChange';
 import useDropInput from '../../hooks/useDropInput';
 import FilePreview from './FilePreview.component';
 import UploadFileModal from './UploadFileModal.component';
 
-const DragAndDrop = () => {
+interface Props {
+  onChange: (value: File | null | undefined) => void;
+}
+
+const DragAndDrop = ({ onChange }: Props) => {
   const { dragActive, activeFile, handleDrag, handleDrop, handleChange } = useDropInput();
   const inputRef = useRef<HTMLInputElement>(null);
+  useOnChange({ changedValue: activeFile, onChange });
 
   return (
     <div onDragEnter={handleDrag} className="rounded-default relative box-border h-full outline-dashed outline-1 outline-gray-600">
       <input ref={inputRef} type="file" id="input-file-upload" name="file" onChange={handleChange} className="hidden"></input>
       <label htmlFor="input-file-upload" className="h-full">
         <div className={`flex h-full items-center justify-center ${dragActive ? 'bg-gray-700/50' : ''}`}>
-          {activeFile ? <FilePreview file={activeFile} /> : <UploadFileModal handleClickRef={inputRef} />}
+          {activeFile ? <FilePreview handleClickRef={inputRef} file={activeFile} /> : <UploadFileModal handleClickRef={inputRef} />}
         </div>
       </label>
       {dragActive && (

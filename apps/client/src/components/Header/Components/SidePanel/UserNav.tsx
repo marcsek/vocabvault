@@ -1,5 +1,5 @@
 import Link from '@ui/Link';
-import ProfilePicture from '../../../../assets/PoriflePicture.png';
+import ProfilePicture from '../../../../assets/ProfilePicture.png';
 import { useLogout } from '../../../../queries/user';
 import NavWrapper from '../NavWrapper';
 

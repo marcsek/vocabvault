@@ -1,10 +1,10 @@
-import MyListbox from '@ui/ListBox';
 import React from 'react';
+import UserSelect from '../../components/UserSelect/UserSelect.component';
 
 const Landing = () => {
   return (
     <div>
-      <MyListbox />
+      <UserSelect />
     </div>
   );
 };

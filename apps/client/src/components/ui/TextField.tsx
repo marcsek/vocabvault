@@ -27,7 +27,7 @@ interface Props
 
 const TextField = ({ helperText, labelText, className, state, Icon, handleIconClick, ...props }: Props) => {
   return (
-    <div className="relative -z-0 flex flex-col gap-2  leading-none text-gray-50">
+    <div className="relative -z-0 flex w-full flex-col  gap-2 leading-none text-gray-50">
       <label className="w-full">
         <p className="mb-2 text-sm font-medium">{labelText}</p>
         <input className={`${className} ${textFieldStyles({ state })} pr-9`} {...props}></input>

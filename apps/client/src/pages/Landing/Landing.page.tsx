@@ -6,6 +6,7 @@ const Landing = () => {
   return (
     <div className="max-h-96">
       <Table
+        paginate
         rows={wordList}
         columns={{
           keyField: 'id',

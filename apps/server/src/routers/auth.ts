@@ -1,6 +1,6 @@
 import { privateProcedure, publicProcedure, router } from '../trpc';
-import { loginUserController, logoutUserController, registerUserController } from '../controllers/user.controller';
-import { loginUserSchema, registerUserSchema } from '../schemas/user.schema';
+import { loginUserController, logoutUserController, registerUserController } from '../controllers/auth.controller';
+import { loginUserSchema, registerUserSchema } from '../schemas/auth.schema';
 
 export const authRouter = router({
   login: publicProcedure.input(loginUserSchema).mutation((req) => loginUserController({ ctx: req.ctx, loginInput: req.input })),

@@ -7,17 +7,26 @@ import DragAndDrop from '../DragAndDrop/DragAndDrop.component';
 import LanguageComboInput from '../LanguageComboInput';
 import allCountries from '../../../../assets/static/allCountries';
 import { def } from '../../../../assets/static/temporary';
+import { trpc } from '../../../../utils/trpc';
 
 interface Props {
   submitButtonRef: React.RefObject<HTMLButtonElement>;
 }
 
 const CreateDatasourceForm = ({ submitButtonRef }: Props) => {
+  const createWordSource = trpc.wordSources.createWordSource.useMutation({});
   const formik = useFormik({
-    validationSchema: FormikDataResourceSchema,
+    // validationSchema: FormikDataResourceSchema,
     initialValues: { name: '', file: null, lang1: allCountries[0], lang2: allCountries[1], sharedWith: def },
     onSubmit: (data) => {
-      console.log('submit', data);
+      // console.log('submit', data);
+      createWordSource.mutate({
+        file: 'bla',
+        firstLanguage: { code: 'sk', languageName: 'Slovak' },
+        name: 'Prvy datasouce',
+        secondLanguage: { code: 'es', languageName: 'spanish' },
+        sharedWith: [],
+      });
     },
   });
 

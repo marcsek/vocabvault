@@ -6,7 +6,7 @@ import { FiEye, FiEyeOff } from 'react-icons/fi';
 import { toFormikValidationSchema } from '../../../utils/helpers/zodToFormik';
 import ErrorModal from './ErrorModal.component';
 import Heading from './Heading.component';
-import { loginUserSchema } from 'server/src/schemas/user.schema';
+import { loginUserSchema } from 'server/src/schemas/auth.schema';
 import { useLogin } from '../../../queries/user';
 
 const Login = () => {

@@ -1,4 +1,4 @@
-import TitleLayout from '@ui/TitleLayout/TitleLayout';
+import TitleLayout from '@ui/TitleLayout';
 import { useRef } from 'react';
 import Button from '@ui/Button';
 import { FiAperture } from 'react-icons/fi';

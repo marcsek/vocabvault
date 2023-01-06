@@ -20,7 +20,8 @@ model User {
   createdAt      DateTime     @default(now())
   updatedAt      DateTime     @updatedAt
   type           AccountType  @default(ADULT)
-  wordSource     WordSource[]
+  wordSource     WordSource[] @relation("createdSource")
+  sharedSources  WordSource[] @relation("sharedWithSources")
   sessionHistory Session[]
   Child          Child?
   Parent         Parent?
@@ -46,17 +47,20 @@ model Parent {
 }
 
 model WordSource {
-  id             String     @id @default(uuid())
-  name           String
-  creator        User       @relation(fields: [creatorId], references: [id])
-  creatorId      String
-  documentType   String
-  createdAt      DateTime   @default(now())
-  firstLanguage  String
-  secondLanguage String
-  wordPairs      WordPair[]
+  id                 String     @id @default(uuid())
+  name               String
+  creator            User       @relation("createdSource", fields: [creatorId], references: [id])
+  creatorId          String
+  usersWithAccess    User[]     @relation("sharedWithSources")
+  documentType       String
+  createdAt          DateTime   @default(now())
+  firstLanguage      Language   @relation("first", fields: [firstLanguageCode], references: [code])
+  secondLanguage     Language   @relation("second", fields: [secondLanguageCode], references: [code])
+  wordPairs          WordPair[]
+  firstLanguageCode  String
+  secondLanguageCode String
 
-  @@index([creatorId])
+  @@index([creatorId, firstLanguageCode, secondLanguageCode])
 }
 
 model WordPair {
@@ -67,6 +71,15 @@ model WordPair {
   wordSourceId String
 
   @@index([wordSourceId])
+}
+
+model Language {
+  languageName              String
+  code                      String       @unique
+  firstLanguageWordSources  WordSource[] @relation("first")
+  secondLanguageWordSources WordSource[] @relation("second")
+
+  @@index([code])
 }
 
 model Session {

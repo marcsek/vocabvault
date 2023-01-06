@@ -1,25 +1,12 @@
 import BackgroundImage from '@ui/utils/BackgroundImage';
 import Divider from '@ui/Divider';
-import { useEffect } from 'react';
-import { Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 import Logo from '../../components/Header/Components/Logo';
-import { useUser } from '../../providers/UserContext.provider';
 import AuthProviderPopup from './components/AuthProviderPupup';
+import useProtectAuth from './hooks/useProtectAuth';
 
 const AuthPage = () => {
-  const { pathname } = useLocation();
-  const navigate = useNavigate();
-  const { user } = useUser();
-
-  useEffect(() => {
-    const path = pathname.split('/').at(-1) ?? '';
-    if (path === 'auth') {
-      navigate('/auth/login');
-    }
-    if (user) {
-      navigate('/protected', { replace: true });
-    }
-  }, [pathname]);
+  useProtectAuth();
 
   return (
     <>

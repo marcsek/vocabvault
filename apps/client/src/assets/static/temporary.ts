@@ -26,3 +26,12 @@ export const users = [
 ];
 
 export const def = { id: '-1', name: 'Please Select', profilePicture: '' };
+
+export const wordList = [
+  { lang1: 'Ahoj', lang2: 'Halo', id: 1 },
+  { lang1: 'Cau', lang2: 'Tschus', id: 2 },
+  { lang1: 'Mama', lang2: 'Mutter', id: 3 },
+  { lang1: 'Brat', lang2: 'Bruder', id: 5 },
+  { lang1: 'Otec', lang2: 'Vater', id: 6 },
+  { lang1: 'Babka', lang2: 'Oma', id: 7 },
+];

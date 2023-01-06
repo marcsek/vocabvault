@@ -18,9 +18,9 @@ const SidePanel = ({ isOpen, onClose }: Props) => {
 
   return (
     <Dialog open={isOpen} onClose={onClose} className="relative z-50">
-      <div className="fixed inset-0 bg-gray-800/30 backdrop-blur-[2px]" aria-hidden="true" />
+      <div className="fixed inset-0 bg-gray-800/30 backdrop-blur-sm" aria-hidden="true" />
 
-      <div className="rounded-l-default fixed top-0 bottom-0 right-0 flex w-full items-center justify-center bg-gray-800 shadow-[-1px_4px_32px_1px_#00000088] backdrop-blur-sm sm:w-[320px] sm:bg-gray-800/50">
+      <div className="rounded-l-default fixed top-0 bottom-0 right-0 flex w-full items-center justify-center bg-gray-800 shadow-[-1px_4px_32px_1px_#00000088] backdrop-blur-md sm:w-[320px] sm:bg-gray-800/50">
         <Dialog.Panel className="flex h-full flex-1 flex-col gap-6 p-9">
           <Dialog.Title className="flex justify-between">
             <Logo />

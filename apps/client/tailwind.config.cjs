@@ -69,6 +69,9 @@ module.exports = {
       maxWidth: {
         '8xl': '90rem',
       },
+      gridTemplateColumns: {
+        tableRow: 'repeat(auto-fit, minmax(10px, 1fr))',
+      },
     },
   },
   // plugins: [require('@tailwindcss/forms')],

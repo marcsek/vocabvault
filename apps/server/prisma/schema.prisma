@@ -12,25 +12,25 @@ datasource db {
 }
 
 model User {
-  id             String       @id @default(uuid())
-  name           String
-  email          String       @unique
-  password       String?
-  profileImage   String
-  createdAt      DateTime     @default(now())
-  updatedAt      DateTime     @updatedAt
-  type           AccountType  @default(ADULT)
-  wordSource     WordSource[] @relation("createdSource")
-  sharedSources  WordSource[] @relation("sharedWithSources")
-  sessionHistory Session[]
-  Child          Child?
-  Parent         Parent?
+  id                    String                 @id @default(uuid())
+  name                  String
+  email                 String                 @unique
+  password              String?
+  profileImage          String
+  createdAt             DateTime               @default(now())
+  updatedAt             DateTime               @updatedAt
+  type                  AccountType            @default(ADULT)
+  createdSources        WordSource[]           @relation("createdSource")
+  otherAvailableSources UserAvailableSources[]
+  sessionHistory        Session[]
+  Child                 Child?
+  Parent                Parent?
 }
 
 model Child {
-  parent Parent @relation(fields: [parentId], references: [userId])
+  parent Parent @relation(fields: [parentId], references: [userId], onDelete: Cascade)
 
-  user     User   @relation(fields: [userId], references: [id])
+  user     User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId   String @unique
   parentId String
 
@@ -39,35 +39,48 @@ model Child {
 }
 
 model Parent {
-  user     User    @relation(fields: [userId], references: [id])
+  user     User    @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId   String  @unique
   children Child[]
 
   @@id([userId])
 }
 
-model WordSource {
-  id                 String     @id @default(uuid())
-  name               String
-  creator            User       @relation("createdSource", fields: [creatorId], references: [id])
-  creatorId          String
-  usersWithAccess    User[]     @relation("sharedWithSources")
-  documentType       String
-  createdAt          DateTime   @default(now())
-  firstLanguage      Language   @relation("first", fields: [firstLanguageCode], references: [code])
-  secondLanguage     Language   @relation("second", fields: [secondLanguageCode], references: [code])
-  wordPairs          WordPair[]
-  firstLanguageCode  String
-  secondLanguageCode String
+model UserAvailableSources {
+  wordSource   WordSource @relation(fields: [wordSourceId], references: [id], onDelete: Cascade)
+  wordSourceId String
+  user         User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId       String
 
-  @@index([creatorId, firstLanguageCode, secondLanguageCode])
+  @@id([wordSourceId, userId])
+  @@index([wordSourceId])
+  @@index([userId])
+}
+
+model WordSource {
+  id                   String                 @id @default(uuid())
+  name                 String
+  creator              User                   @relation("createdSource", fields: [creatorId], references: [id], onDelete: Cascade)
+  creatorId            String
+  userAvailableSources UserAvailableSources[]
+  documentType         String
+  createdAt            DateTime               @default(now())
+  firstLanguage        Language               @relation("firstLanguage", fields: [firstLanguageCode], references: [code])
+  secondLanguage       Language               @relation("secondLanguage", fields: [secondLanguageCode], references: [code])
+  wordPairs            WordPair[]
+  firstLanguageCode    String
+  secondLanguageCode   String
+
+  @@index([creatorId])
+  @@index([firstLanguageCode])
+  @@index([secondLanguageCode])
 }
 
 model WordPair {
   id           Int        @id @default(autoincrement())
   firstValue   String
   secondValue  String
-  wordSource   WordSource @relation(fields: [wordSourceId], references: [id])
+  wordSource   WordSource @relation(fields: [wordSourceId], references: [id], onDelete: Cascade)
   wordSourceId String
 
   @@index([wordSourceId])
@@ -76,8 +89,8 @@ model WordPair {
 model Language {
   languageName              String
   code                      String       @unique
-  firstLanguageWordSources  WordSource[] @relation("first")
-  secondLanguageWordSources WordSource[] @relation("second")
+  firstLanguageWordSources  WordSource[] @relation("firstLanguage")
+  secondLanguageWordSources WordSource[] @relation("secondLanguage")
 
   @@index([code])
 }

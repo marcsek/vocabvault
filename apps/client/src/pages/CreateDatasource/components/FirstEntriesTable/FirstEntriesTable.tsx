@@ -1,13 +1,16 @@
 import Table from '@ui/Table/Table';
 import React from 'react';
 import { VscTable } from 'react-icons/vsc';
-import { wordList } from '../../../../assets/static/temporary';
+import { useWordPairPreview } from '../../context/filePreviewContext/wordPairsPreviewContext';
 
 const FirstEntriesTable = () => {
+  const { wordPairsPreview } = useWordPairPreview();
+  const leftOverEntries = wordPairsPreview.total - Math.min(wordPairsPreview.total, 6);
+
   return (
     <div className="flex flex-col gap-6 lg:col-span-2">
       <h1 className="text-base font-semibold text-gray-50">Word pairs</h1>
-      {!wordList.length ? (
+      {!wordPairsPreview.pairs.length ? (
         <div className="flex min-h-[22rem] flex-col items-center justify-center gap-4 border border-gray-600">
           <VscTable size={50} className="text-gray-500" />
           <div className="flex flex-col items-center gap-2">
@@ -18,16 +21,16 @@ const FirstEntriesTable = () => {
       ) : (
         <>
           <Table
-            rows={wordList}
+            rows={wordPairsPreview.pairs}
             columns={{
-              keyField: 'id',
+              keyField: 'firstValue',
               data: [
-                { field: 'lang1', headerName: 'Column 1 (Slovak)' },
-                { field: 'lang2', headerName: 'Column 2 (German)' },
+                { field: 'firstValue', headerName: `Column 1 (${wordPairsPreview.firstColumnName})` },
+                { field: 'secondValue', headerName: `Column 2 (${wordPairsPreview.firstColumnName})` },
               ],
             }}
           />
-          <p className="m-auto text-sm leading-none text-gray-400">And 894 more...</p>
+          {!!leftOverEntries && <p className="m-auto text-sm leading-none text-gray-400">{`And ${leftOverEntries} more...`}</p>}
         </>
       )}
     </div>

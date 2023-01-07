@@ -25,7 +25,7 @@ const GoogleStrategy = new PassportGoogle.Strategy(
 
       return done(null, userID);
     } catch (e) {
-      return done(new Error('Error occured'));
+      return done(new Error('Error occured in google auth'));
     }
   }
 );

@@ -62,7 +62,7 @@ const Register = () => {
             />
             <Button
               loading={register.isLoading}
-              disabled={!isValid || (!touched.email && !touched.password) || register.isLoading}
+              disabled={!isValid || (!touched.email && !touched.password && !touched.name) || register.isLoading}
               type="submit"
               className="mt-4 w-full"
             >

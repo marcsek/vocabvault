@@ -11,14 +11,12 @@ const UploadFileModal = ({ handleClickRef }: Props) => {
       <MdOutlineDriveFolderUpload className="text-gray-500" size={50} />
       <div>
         <div className="flex gap-1 text-sm leading-none">
-          <button onClick={() => handleClickRef.current?.click()} className="text-primary-200 hover:underline">
+          <button type="button" onClick={() => handleClickRef.current?.click()} className="text-primary-200 hover:underline">
             Upload a database
           </button>
           <p className="text-gray-400"> or drag and drop</p>
         </div>
-        <span className="mt-2 block w-full text-center text-xs font-medium leading-none text-gray-400">
-          .xlsx, .xlsxm, .accdb up to 10MB
-        </span>
+        <span className="mt-2 block w-full text-center text-xs font-medium leading-none text-gray-400">.xlsx, .xlsxm, .xls up to 1MB</span>
       </div>
     </section>
   );

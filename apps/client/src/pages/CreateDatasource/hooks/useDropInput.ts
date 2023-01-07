@@ -36,7 +36,7 @@ const useDropInput = () => {
     const fileExtension = file.name.split('.').at(-1) ?? '';
 
     //10MB
-    if (fileSize > 1000 * 1000 * 10) return console.log('too big');
+    if (fileSize > 1000 * 1000 * 1) return console.log('too big');
 
     if (!allowedExtensions.includes(fileExtension)) return console.log('wrong file extension');
 

@@ -15,6 +15,7 @@ export const WordPairSchema = z.object({
 export type TWordPair = z.TypeOf<typeof WordPairSchema>;
 
 export const WordPairArraySchema = z.array(WordPairSchema).nonempty();
+export const WordPairOptimizedArraySchema = z.object({ wordPairs: z.array(z.any()).nonempty() });
 
 export type TWordPairArray = z.TypeOf<typeof WordPairArraySchema>;
 

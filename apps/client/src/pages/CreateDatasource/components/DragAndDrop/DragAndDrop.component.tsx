@@ -1,17 +1,15 @@
 import { useRef } from 'react';
-import useOnChange from '../../../../hooks/useOnChange';
 import useDropInput from '../../hooks/useDropInput';
 import FilePreview from './FilePreview.component';
 import UploadFileModal from './UploadFileModal.component';
 
 interface Props {
-  onChange: (value: File | null | undefined) => void;
+  customValidation: (file: File) => boolean;
 }
 
-const DragAndDrop = ({ onChange }: Props) => {
-  const { dragActive, activeFile, handleDrag, handleDrop, handleChange } = useDropInput();
+const DragAndDrop = ({ customValidation }: Props) => {
+  const { dragActive, activeFile, handleDrag, handleDrop, handleChange } = useDropInput({ customValidation });
   const inputRef = useRef<HTMLInputElement>(null);
-  useOnChange({ changedValue: activeFile, onChange });
 
   return (
     <div onDragEnter={handleDrag} className="rounded-default relative box-border h-full outline-dashed outline-1 outline-gray-600">

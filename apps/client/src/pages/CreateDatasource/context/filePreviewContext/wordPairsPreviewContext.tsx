@@ -6,7 +6,7 @@ export type TWordPairsPreview = {
   secondColumnName: string;
   total: number;
   pairs: TWordPair[];
-};
+} | null;
 
 type TWordPairsPreviewContext = {
   wordPairsPreview: TWordPairsPreview;

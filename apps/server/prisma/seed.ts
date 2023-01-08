@@ -20,14 +20,14 @@ async function main() {
     },
   });
 
-  await prisma.user.update({
-    where: { id: id },
-    data: {
-      wordSource: {
-        create: { secondLanguage: 'german', firstLanguage: 'slovak', documentType: 'Excel', name: 'Moje slovicka' },
-      },
-    },
-  });
+  // await prisma.user.update({
+  //   where: { id: id },
+  //   data: {
+  //     wordSource: {
+  //       create: { secondLanguage: 'german', firstLanguage: 'slovak', documentType: 'Excel', name: 'Moje slovicka' },
+  //     },
+  //   },
+  // });
 }
 main()
   .then(async () => {

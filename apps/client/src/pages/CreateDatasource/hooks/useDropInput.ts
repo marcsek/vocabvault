@@ -1,8 +1,13 @@
 import React, { useState } from 'react';
+import { toast } from 'react-toastify';
 
 const allowedExtensions = ['xlsx', 'png', 'jpg', 'svg'];
 
-const useDropInput = () => {
+interface Props {
+  customValidation: (file: File) => boolean;
+}
+
+const useDropInput = ({ customValidation }: Props) => {
   const [dragActive, setDragActive] = useState(false);
   const [activeFile, setActivefile] = useState<File | null>();
 
@@ -36,9 +41,11 @@ const useDropInput = () => {
     const fileExtension = file.name.split('.').at(-1) ?? '';
 
     //10MB
-    if (fileSize > 1000 * 1000 * 1) return console.log('too big');
+    if (fileSize > 1000 * 1000 * 1) return toast.error('The file is over the maximum file size (1MB).');
 
-    if (!allowedExtensions.includes(fileExtension)) return console.log('wrong file extension');
+    if (!allowedExtensions.includes(fileExtension)) return toast.error('The file has unsupported file extension.');
+
+    if (!customValidation(file)) return;
 
     setActivefile(file);
   };

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import TextField from '@ui/TextField';
 import { useFormik } from 'formik';
 import UserSelect from '../../../../components/UserSelect/UserSelect.component';
@@ -8,20 +8,22 @@ import allCountries from '../../../../assets/static/allCountries';
 import { trpc } from '../../../../utils/trpc';
 import { useWordPairPreview } from '../../context/filePreviewContext/wordPairsPreviewContext';
 import { toFormikValidationSchema } from '../../../../utils/helpers/zodToFormik';
-import { createWordSourceSchema, TWordPair, TWordPairArray } from 'server/src/schemas/wordSource.schema';
+import { createWordSourceSchema, TWordPair, TWordPairArray, WordPairOptimizedArraySchema } from 'server/src/schemas/wordSource.schema';
 import handleXlsxFile from '../../utils/handleXlsxFile';
+import Button, { ButtonProps } from '@ui/Button';
+import { FiAperture } from 'react-icons/fi';
 
 interface Props {
-  submitButtonRef: React.RefObject<HTMLButtonElement>;
-  disableButton: (input: { disabled: boolean; loading: boolean }) => void;
+  submitFormButton: (value: React.ReactElement<ButtonProps>) => void;
 }
 
-const CreateDatasourceForm = ({ submitButtonRef, disableButton }: Props) => {
+const CreateDatasourceForm = ({ submitFormButton }: Props) => {
   const createWordSource = trpc.wordSources.createWordSource.useMutation({});
   const { setWordPairsPreview } = useWordPairPreview();
+  const submitButtonRef = useRef<HTMLButtonElement>(null);
 
   const formik = useFormik({
-    validationSchema: toFormikValidationSchema(createWordSourceSchema.omit({ wordPairs: true })),
+    validationSchema: toFormikValidationSchema(createWordSourceSchema.omit({ wordPairs: true }).merge(WordPairOptimizedArraySchema)),
     validateOnBlur: false,
     initialValues: {
       name: '',
@@ -43,10 +45,15 @@ const CreateDatasourceForm = ({ submitButtonRef, disableButton }: Props) => {
     },
   });
 
+  //TODO:Toto treba uz nejak fixnut - mozno tak ze liftnem state ?
   const handleFileInputChange = (e: File | undefined | null) => {
-    if (!e) return;
+    if (!e) return false;
+    let error: Error | null = null;
 
-    handleXlsxFile(e, (parsedArray) => {
+    handleXlsxFile(e, (parsedArray, parseError) => {
+      error = parseError;
+      console.log(error);
+      if (error) return setWordPairsPreview(null);
       setWordPairsPreview({
         total: parsedArray.length,
         secondColumnName: formik.values.secondLanguage.languageName,
@@ -55,13 +62,24 @@ const CreateDatasourceForm = ({ submitButtonRef, disableButton }: Props) => {
       });
       formik.setFieldValue('wordPairs', parsedArray);
     });
+    console.log(error);
+    return Boolean(!error);
   };
 
+  //💀 ja uz neviem
   useEffect(() => {
-    if (formik.touched.name) {
-      disableButton({ disabled: !formik.isValid, loading: createWordSource.isLoading });
-    }
-  }, [formik.isValid, formik.touched.name]);
+    submitFormButton(
+      <Button
+        disabled={!formik.isValid}
+        loading={createWordSource.isLoading}
+        type="submit"
+        Icon={<FiAperture />}
+        onClick={() => submitButtonRef.current?.click()}
+      >
+        Create
+      </Button>
+    );
+  }, [createWordSource.isLoading, formik.isValid]);
 
   return (
     <form onSubmit={formik.handleSubmit} className="flex w-full flex-col gap-10 md:gap-8 lg:flex-row">
@@ -83,7 +101,7 @@ const CreateDatasourceForm = ({ submitButtonRef, disableButton }: Props) => {
         </div>
       </div>
       <div className="min-h-[15rem] flex-1 lg:h-full">
-        <DragAndDrop onChange={handleFileInputChange} />
+        <DragAndDrop customValidation={handleFileInputChange} />
       </div>
       <button className="hidden" ref={submitButtonRef} disabled={!formik.isValid && formik.touched.name} type="submit">
         Submit

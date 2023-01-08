@@ -1,0 +1,41 @@
+@keyframes swirl-in-fwd {
+  0% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0%);
+    opacity: 1;
+  }
+}
+
+.swirl-in-fwd {
+  animation: swirl-in-fwd 0.3s cubic-bezier(0.48, 0.4, 0.2, 1) both;
+}
+
+@keyframes swirl-out-bck {
+  0% {
+    transform: translateX(0%);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+.swirl-out-bck {
+  animation: swirl-out-bck 0.3s cubic-bezier(0.48, 0.4, 0.2, 1) both;
+}
+
+:root {
+  --toastify-color-light: #fff !important;
+  --toastify-color-dark: rgb(23, 23, 23) !important;
+  --toastify-color-success: #00aa55 !important;
+
+  --toastify-icon-color-success: var(--toastify-color-success);
+  --toastify-icon-color-warning: var(--toastify-color-warning);
+  --toastify-icon-color-error: var(--toastify-color-error);
+
+  --toastify-toast-min-height: 55px !important;
+}

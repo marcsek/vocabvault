@@ -4,11 +4,12 @@ import FilePreview from './FilePreview.component';
 import UploadFileModal from './UploadFileModal.component';
 
 interface Props {
-  customValidation: (file: File) => boolean;
+  activeFile?: File | null;
+  setActiveFile: (e: File | null) => void;
 }
 
-const DragAndDrop = ({ customValidation }: Props) => {
-  const { dragActive, activeFile, handleDrag, handleDrop, handleChange } = useDropInput({ customValidation });
+const DragAndDrop = ({ activeFile, setActiveFile }: Props) => {
+  const { dragActive, handleDrag, handleDrop, handleChange } = useDropInput({ setActiveFile });
   const inputRef = useRef<HTMLInputElement>(null);
 
   return (

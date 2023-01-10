@@ -24,3 +24,9 @@ export const createWordSourceSchema = z
   .merge(LanguageDuoSchema);
 
 export type CreateWordSourceInput = z.TypeOf<typeof createWordSourceSchema>;
+
+export const GetAllUserSourcesSchema = z.object({
+  userId: z.string().optional(),
+});
+
+export type TGetAllUserSources = z.TypeOf<typeof GetAllUserSourcesSchema>;

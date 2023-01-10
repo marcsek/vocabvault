@@ -12,6 +12,7 @@ import { createWordSourceSchema, TWordPair, TWordPairArray, WordPairOptimizedArr
 import handleXlsxFile from '../../utils/handleXlsxFile';
 import Button, { ButtonProps } from '@ui/Button';
 import { FiAperture } from 'react-icons/fi';
+import { toast } from 'react-toastify';
 
 interface Props {
   submitFormButton: (value: React.ReactElement<ButtonProps>) => void;
@@ -31,10 +32,12 @@ const CreateDatasourceForm = ({ submitFormButton }: Props) => {
       firstLanguage: allCountries[0],
       secondLanguage: allCountries[1],
       sharedWith: [],
+      activeFile: null,
     },
     onSubmit: (data) => {
       //TODO: shared with ma returnovat id
       // have to parse because ts doesn't formik validates this as not empty
+      console.log('Submit');
       createWordSource.mutate({
         name: data.name,
         wordPairs: data.wordPairs as TWordPairArray,
@@ -45,25 +48,25 @@ const CreateDatasourceForm = ({ submitFormButton }: Props) => {
     },
   });
 
-  //TODO:Toto treba uz nejak fixnut - mozno tak ze liftnem state ?
-  const handleFileInputChange = (e: File | undefined | null) => {
-    if (!e) return false;
-    let error: Error | null = null;
+  const handleFileInputChange = (newValue: File | undefined | null) => {
+    if (!newValue) return;
 
-    handleXlsxFile(e, (parsedArray, parseError) => {
-      error = parseError;
-      console.log(error);
-      if (error) return setWordPairsPreview(null);
-      setWordPairsPreview({
-        total: parsedArray.length,
-        secondColumnName: formik.values.secondLanguage.languageName,
-        firstColumnName: formik.values.firstLanguage.languageName,
-        pairs: parsedArray.slice(0, Math.min(parsedArray.length + 1, 6)),
+    handleXlsxFile(newValue)
+      .then((parsedArray) => {
+        setWordPairsPreview({
+          total: parsedArray.length,
+          secondColumnName: formik.values.secondLanguage.languageName,
+          firstColumnName: formik.values.firstLanguage.languageName,
+          pairs: parsedArray.slice(0, Math.min(parsedArray.length + 1, 6)),
+        });
+        formik.setFieldValue('activeFile', newValue);
+        formik.setFieldValue('wordPairs', parsedArray);
+      })
+      .catch(() => {
+        toast.error('Could not parse this file.');
+        formik.setFieldValue('activeFile', null);
+        setWordPairsPreview(null);
       });
-      formik.setFieldValue('wordPairs', parsedArray);
-    });
-    console.log(error);
-    return Boolean(!error);
   };
 
   //💀 ja uz neviem
@@ -101,7 +104,7 @@ const CreateDatasourceForm = ({ submitFormButton }: Props) => {
         </div>
       </div>
       <div className="min-h-[15rem] flex-1 lg:h-full">
-        <DragAndDrop customValidation={handleFileInputChange} />
+        <DragAndDrop activeFile={formik.values.activeFile} setActiveFile={(e) => handleFileInputChange(e)} />
       </div>
       <button className="hidden" ref={submitButtonRef} disabled={!formik.isValid && formik.touched.name} type="submit">
         Submit

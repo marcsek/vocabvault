@@ -4,12 +4,11 @@ import { toast } from 'react-toastify';
 const allowedExtensions = ['xlsx', 'png', 'jpg', 'svg'];
 
 interface Props {
-  customValidation: (file: File) => boolean;
+  setActiveFile: (file: File) => void;
 }
 
-const useDropInput = ({ customValidation }: Props) => {
+const useDropInput = ({ setActiveFile }: Props) => {
   const [dragActive, setDragActive] = useState(false);
-  const [activeFile, setActivefile] = useState<File | null>();
 
   const handleDrag = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
@@ -45,12 +44,10 @@ const useDropInput = ({ customValidation }: Props) => {
 
     if (!allowedExtensions.includes(fileExtension)) return toast.error('The file has unsupported file extension.');
 
-    if (!customValidation(file)) return;
-
-    setActivefile(file);
+    setActiveFile(file);
   };
 
-  return { dragActive, activeFile, handleDrag, handleDrop, handleChange };
+  return { dragActive, handleDrag, handleDrop, handleChange };
 };
 
 export default useDropInput;

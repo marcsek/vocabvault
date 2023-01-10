@@ -15,7 +15,7 @@ const FilePreview = ({ file, handleClickRef }: Props) => {
       <div className="box-border flex flex-col items-center gap-2">
         <p className="text-sm leading-none text-gray-200">{file.name}</p>
         <span className="text-xs leading-none text-gray-400">{new Date(file.lastModified).toDateString()}</span>
-        <button onClick={() => handleClickRef.current?.click()} className="text-primary-200 text-xs hover:underline">
+        <button type="button" onClick={() => handleClickRef.current?.click()} className="text-primary-200 text-xs hover:underline">
           Change
         </button>
       </div>

@@ -9,5 +9,5 @@ export const wordSourceRouter = router({
 
   getAllUserAvailableWordSources: privateProcedure
     .input(GetAllUserSourcesSchema)
-    .mutation((req) => getAllUserAvailableSourcesController({ ctx: req.ctx, input: req.input })),
+    .query((req) => getAllUserAvailableSourcesController({ ctx: req.ctx, input: req.input })),
 });

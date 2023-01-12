@@ -30,3 +30,18 @@ export const GetAllUserSourcesSchema = z.object({
 });
 
 export type TGetAllUserSources = z.TypeOf<typeof GetAllUserSourcesSchema>;
+
+export const GetAllUserSourcesOutputSchema = z.object({
+  id: z.string(),
+  type: z.enum(['created', 'shared']),
+  name: z.string(),
+  createdAt: z.date(),
+  firstLanguage: z.object({ languageName: z.string(), code: z.string() }),
+  secondLanguage: z.object({ languageName: z.string(), code: z.string() }),
+  documentType: z.string(),
+  userAvailableSources: z.array(z.object({ user: z.object({ profileImage: z.string() }) })).optional(),
+  wordPairs: z.array(WordPairSchema),
+  creator: z.object({ id: z.string(), name: z.string(), profileImage: z.string().optional() }),
+});
+
+export type TGetAllUserSourcesOutput = z.TypeOf<typeof GetAllUserSourcesOutputSchema>;

@@ -1,6 +1,11 @@
 import { Prisma } from '@prisma/client';
 import { TRPCError } from '@trpc/server';
-import { CreateWordSourceInput, TGetAllUserSources } from '../schemas/wordSource.schema';
+import {
+  CreateWordSourceInput,
+  GetAllUserSourcesOutputSchema,
+  TGetAllUserSources,
+  TGetAllUserSourcesOutput,
+} from '../schemas/wordSource.schema';
 import { Context } from '../trpc/context';
 
 export const createWordSourceController = async ({ ctx: { prisma, userID }, input }: { ctx: Context; input: CreateWordSourceInput }) => {
@@ -29,12 +34,11 @@ export const createWordSourceController = async ({ ctx: { prisma, userID }, inpu
           },
         },
         userAvailableSources: {
-          create: { userId: '3e087aa0-7542-4646-9e6f-c996ed5f0627' },
-          // createMany: {
-          //   data: input.sharedWith.map((e) => {
-          //     return { userId: e };
-          //   }),
-          // },
+          createMany: {
+            data: input.sharedWith.map((e) => {
+              return { userId: e };
+            }),
+          },
         },
       },
     });
@@ -60,8 +64,9 @@ export const getAllUserAvailableSourcesController = async ({
     select: {
       createdSources: {
         select: {
+          id: true,
           createdAt: true,
-          creator: { select: { id: true, name: true } },
+          creator: { select: { id: true, profileImage: true, name: true } },
           name: true,
           firstLanguage: true,
           secondLanguage: true,
@@ -74,6 +79,7 @@ export const getAllUserAvailableSourcesController = async ({
         select: {
           wordSource: {
             select: {
+              id: true,
               createdAt: true,
               creator: { select: { name: true, profileImage: true, id: true } },
               name: true,
@@ -88,6 +94,15 @@ export const getAllUserAvailableSourcesController = async ({
     },
   });
 
-  console.log(result);
-  return result;
+  const parsedCreatedSources: TGetAllUserSourcesOutput[] =
+    result?.createdSources.map((e) => {
+      return { ...e, type: 'created' };
+    }) ?? [];
+
+  const parsedOtherSources: TGetAllUserSourcesOutput[] =
+    result?.otherAvailableSources.map(({ wordSource: e }) => {
+      return { ...e, type: 'shared' };
+    }) ?? [];
+
+  return [...parsedCreatedSources, ...parsedOtherSources];
 };

@@ -1,25 +1,24 @@
 import Button from '@ui/Button';
+import Link from '@ui/Link';
+import TextField from '@ui/TextField';
 import TitleLayout from '@ui/TitleLayout';
-import { trpc } from '../../utils/trpc';
+import { useGetAvailableWordSources } from '../../queries/wordSource';
+import SourceBoard from './Components/SourceBoard/SourceBoard.component';
 
 const WordSources = () => {
-  const create = trpc.wordSources.getAllUserAvailableWordSources.useMutation({
-    onSettled(data) {
-      console.log(data);
-    },
-  });
+  const create = useGetAvailableWordSources();
 
   return (
     <TitleLayout
-      headingLeft={<h1>input</h1>}
+      headingLeft={<TextField labelText="Keyword" className="w-80" />}
       button={
-        <Button intent="primary" onClick={() => create.mutate({})}>
+        <Button as={Link} to="/create-datasource" intent="primary" className="w-max">
           New wordsource
         </Button>
       }
     >
       <div className="flex w-full flex-col gap-10 md:gap-8">
-        <p>Word Sources</p>
+        <SourceBoard />
       </div>
     </TitleLayout>
   );

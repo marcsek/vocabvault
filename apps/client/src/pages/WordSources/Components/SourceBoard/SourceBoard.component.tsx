@@ -1,14 +1,17 @@
-import React from 'react';
-import { useGetAvailableWordSources } from '../../../../queries/wordSource';
-import SourceCard from './SourceCard.component';
+import { TGetAllUserSourcesOutput } from 'server/src/schemas/wordSource.schema';
+import SourceCard from '../SourceCard/SourceCard.component';
 
-const SourceBoard = () => {
-  const sources = useGetAvailableWordSources();
+interface Props {
+  filteredSources: TGetAllUserSourcesOutput[];
+}
 
+const SourceBoard = ({ filteredSources }: Props) => {
   return (
-    <div className="flex gap-8">
-      {sources.data?.map((e) => (
-        <SourceCard cardData={{ ...e, createdAt: new Date(e.createdAt) }} />
+    <div className="grid grid-cols-1 gap-12 md:grid-cols-[repeat(auto-fill,minmax(310px,1fr))]">
+      {filteredSources?.map((e) => (
+        <div key={e.id}>
+          <SourceCard cardData={{ ...e, createdAt: new Date(e.createdAt) }} />
+        </div>
       ))}
     </div>
   );

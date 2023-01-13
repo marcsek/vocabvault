@@ -1,11 +1,6 @@
 import { Prisma } from '@prisma/client';
 import { TRPCError } from '@trpc/server';
-import {
-  CreateWordSourceInput,
-  GetAllUserSourcesOutputSchema,
-  TGetAllUserSources,
-  TGetAllUserSourcesOutput,
-} from '../schemas/wordSource.schema';
+import { CreateWordSourceInput, TGetAllUserSourcesOutput } from '../schemas/wordSource.schema';
 import { Context } from '../trpc/context';
 
 export const createWordSourceController = async ({ ctx: { prisma, userID }, input }: { ctx: Context; input: CreateWordSourceInput }) => {
@@ -52,13 +47,7 @@ export const createWordSourceController = async ({ ctx: { prisma, userID }, inpu
   return true;
 };
 
-export const getAllUserAvailableSourcesController = async ({
-  ctx: { prisma, userID },
-  input,
-}: {
-  ctx: Context;
-  input: TGetAllUserSources;
-}) => {
+export const getAllUserAvailableSourcesController = async ({ ctx: { prisma, userID } }: { ctx: Context }) => {
   const result = await prisma.user.findUnique({
     where: { id: userID ?? '' },
     select: {
@@ -71,7 +60,7 @@ export const getAllUserAvailableSourcesController = async ({
           firstLanguage: true,
           secondLanguage: true,
           documentType: true,
-          userAvailableSources: { select: { user: { select: { profileImage: true } } } },
+          userAvailableSources: { select: { user: { select: { profileImage: true, id: true, name: true } } } },
           wordPairs: { select: { firstValue: true, secondValue: true } },
         },
       },
@@ -96,12 +85,12 @@ export const getAllUserAvailableSourcesController = async ({
 
   const parsedCreatedSources: TGetAllUserSourcesOutput[] =
     result?.createdSources.map((e) => {
-      return { ...e, type: 'created' };
+      return { ...e, type: !!e.userAvailableSources?.length ? 'shared' : 'private', createdAt: e.createdAt.toString() };
     }) ?? [];
 
   const parsedOtherSources: TGetAllUserSourcesOutput[] =
     result?.otherAvailableSources.map(({ wordSource: e }) => {
-      return { ...e, type: 'shared' };
+      return { ...e, type: 'watched', createdAt: e.createdAt.toString() };
     }) ?? [];
 
   return [...parsedCreatedSources, ...parsedOtherSources];

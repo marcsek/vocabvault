@@ -30,7 +30,7 @@ const SourceStatus = ({ type, creator, watchers }: Props) => {
           Shared with:
           <div className="flex">
             {watchers?.map(({ user }) => (
-              <img className="h-5 w-5 rounded-full" src={users[0].profilePicture}></img>
+              <img key={user.id} className="h-5 w-5 rounded-full" src={users[0].profilePicture}></img>
             ))}
           </div>
         </div>

@@ -6,13 +6,11 @@ import DragAndDrop from '../DragAndDrop/DragAndDrop.component';
 import LanguageComboInput from '../LanguageComboInput';
 import allCountries from '../../../../assets/static/allCountries';
 import { trpc } from '../../../../utils/trpc';
-import { useWordPairPreview } from '../../context/filePreviewContext/wordPairsPreviewContext';
 import { toFormikValidationSchema } from '../../../../utils/helpers/zodToFormik';
 import { createWordSourceSchema, TWordPair, TWordPairArray, WordPairOptimizedArraySchema } from 'server/src/schemas/wordSource.schema';
-import handleXlsxFile from '../../utils/handleXlsxFile';
 import Button, { ButtonProps } from '@ui/Button';
 import { FiAperture } from 'react-icons/fi';
-import { toast } from 'react-toastify';
+import useHandleDropInputChange from '../../hooks/useHandleDropInputChange';
 
 interface Props {
   submitFormButton: (value: React.ReactElement<ButtonProps>) => void;
@@ -20,7 +18,6 @@ interface Props {
 
 const CreateDatasourceForm = ({ submitFormButton }: Props) => {
   const createWordSource = trpc.wordSources.createWordSource.useMutation({});
-  const { setWordPairsPreview } = useWordPairPreview();
   const submitButtonRef = useRef<HTMLButtonElement>(null);
 
   const formik = useFormik({
@@ -48,26 +45,7 @@ const CreateDatasourceForm = ({ submitFormButton }: Props) => {
     },
   });
 
-  const handleFileInputChange = (newValue: File | undefined | null) => {
-    if (!newValue) return;
-
-    handleXlsxFile(newValue)
-      .then((parsedArray) => {
-        setWordPairsPreview({
-          total: parsedArray.length,
-          secondColumnName: formik.values.secondLanguage.languageName,
-          firstColumnName: formik.values.firstLanguage.languageName,
-          pairs: parsedArray.slice(0, Math.min(parsedArray.length + 1, 6)),
-        });
-        formik.setFieldValue('activeFile', newValue);
-        formik.setFieldValue('wordPairs', parsedArray);
-      })
-      .catch(() => {
-        toast.error('Could not parse this file.');
-        formik.setFieldValue('activeFile', null);
-        setWordPairsPreview(null);
-      });
-  };
+  const handleDropInputChange = useHandleDropInputChange({ formik });
 
   //💀 ja uz neviem
   useEffect(() => {
@@ -78,6 +56,7 @@ const CreateDatasourceForm = ({ submitFormButton }: Props) => {
         type="submit"
         Icon={<FiAperture />}
         onClick={() => submitButtonRef.current?.click()}
+        className="min-w-[94px]"
       >
         Create
       </Button>
@@ -104,7 +83,7 @@ const CreateDatasourceForm = ({ submitFormButton }: Props) => {
         </div>
       </div>
       <div className="min-h-[15rem] flex-1 lg:h-full">
-        <DragAndDrop activeFile={formik.values.activeFile} setActiveFile={(e) => handleFileInputChange(e)} />
+        <DragAndDrop activeFile={formik.values.activeFile} setActiveFile={(e) => handleDropInputChange(e)} />
       </div>
       <button className="hidden" ref={submitButtonRef} disabled={!formik.isValid && formik.touched.name} type="submit">
         Submit

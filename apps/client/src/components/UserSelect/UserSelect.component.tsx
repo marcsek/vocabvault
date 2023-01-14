@@ -13,16 +13,17 @@ interface User {
 
 type Props = Omit<ListBoxProps<User>, 'disabledKeys' | 'items' | 'onChange' | 'value'> & {
   onChange: (value: User[]) => void;
+  flow?: 'horizontal' | 'vertical';
 };
 
 //TODO: kamosov treba fetchovat tu
-const UserSelect = ({ onChange, ...props }: Props) => {
+const UserSelect = ({ onChange, flow = 'horizontal', ...props }: Props) => {
   const [selectedItem, setSelectedItem] = useState(def);
   const { selectedItems, handleUnselect } = useSelectedItems(selectedItem);
   useOnChange({ changedValue: selectedItems, onChange });
 
   return (
-    <div className="grid-row-2 grid w-full gap-6 md:grid-cols-2">
+    <div className={`w-full ${flow === 'horizontal' ? 'grid-row-2 grid gap-6 md:grid-cols-2' : 'grid grid-cols-1 gap-6 lg:gap-0'}`}>
       <ListBox
         {...props}
         items={users}
@@ -30,7 +31,7 @@ const UserSelect = ({ onChange, ...props }: Props) => {
         onChange={(e) => setSelectedItem(e)}
         disabledKeys={selectedItems.map((item) => item.id)}
       />
-      <SelectedUsersContainer selectedUsers={selectedItems} handleUserUnselect={handleUnselect} />
+      <SelectedUsersContainer selectedUsers={selectedItems} handleUserUnselect={handleUnselect} flow={flow} />
     </div>
   );
 };

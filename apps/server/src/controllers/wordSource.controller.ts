@@ -1,6 +1,13 @@
 import { Prisma } from '@prisma/client';
 import { TRPCError } from '@trpc/server';
-import { CreateWordSourceInput, TGetAllUserSourcesOutput } from '../schemas/wordSource.schema';
+import {
+  CreateWordSourceInput,
+  TDeleteWordSourceInput,
+  TGetAllUserSourcesOutput,
+  TGetSourceByIdOutputOutput,
+  TGetWordSourceByIDInput,
+  TUpdateWordSourceInput,
+} from '../schemas/wordSource.schema';
 import { Context } from '../trpc/context';
 
 export const createWordSourceController = async ({ ctx: { prisma, userID }, input }: { ctx: Context; input: CreateWordSourceInput }) => {
@@ -94,4 +101,79 @@ export const getAllUserAvailableSourcesController = async ({ ctx: { prisma, user
     }) ?? [];
 
   return [...parsedCreatedSources, ...parsedOtherSources];
+};
+
+export const getWordSourceByIDController = async ({ ctx: { prisma }, input }: { ctx: Context; input: TGetWordSourceByIDInput }) => {
+  let res: unknown;
+
+  try {
+    res = await prisma.wordSource.findUnique({
+      where: { id: input.id },
+      select: {
+        name: true,
+        id: true,
+        firstLanguage: true,
+        secondLanguage: true,
+        userAvailableSources: { select: { user: { select: { name: true, id: true, profileImage: true } } } },
+      },
+    });
+    if (!res) {
+      //TODO:normalny error
+      throw new TRPCError({ message: 'Couldnt create record.', code: 'BAD_REQUEST' });
+    }
+  } catch (e) {
+    //TODO:normalny error
+    throw new TRPCError({ message: 'Couldnt create record.', code: 'BAD_REQUEST' });
+  }
+  return res as TGetSourceByIdOutputOutput;
+};
+
+export const updateWordSourceController = async ({
+  ctx: { prisma, userID },
+  input: { id, ...input },
+}: {
+  ctx: Context;
+  input: TUpdateWordSourceInput;
+}) => {
+  try {
+    await prisma.user.update({
+      where: { id: userID ?? '' },
+      data: {
+        createdSources: {
+          update: {
+            where: { id: id ?? '' },
+            data: {
+              name: input.name,
+              firstLanguage: { connectOrCreate: { where: { code: input.firstLanguage.code }, create: { ...input.firstLanguage } } },
+              secondLanguage: { connectOrCreate: { where: { code: input.secondLanguage.code }, create: { ...input.secondLanguage } } },
+              //TODO: potom ked sa budu dat normalne selectovat userovia
+              // userAvailableSources: {
+              //   set: input.sharedWith.map((e) => {
+              //     return { wordSourceId_userId: { userId: e, wordSourceId: id } };
+              //   }),
+              // },
+            },
+          },
+        },
+      },
+    });
+  } catch (e) {
+    //TODO:normalny error
+    console.log(e);
+    throw new TRPCError({ message: 'Couldnt create record.', code: 'BAD_REQUEST' });
+  }
+
+  return true;
+};
+
+export const deleteWordSourceController = async ({ ctx: { prisma, userID }, input }: { ctx: Context; input: TDeleteWordSourceInput }) => {
+  try {
+    await prisma.user.update({ where: { id: userID ?? '' }, data: { createdSources: { delete: { id: input.id } } } });
+  } catch (e) {
+    //TODO:normalny error
+    console.log(e);
+    throw new TRPCError({ message: 'Couldnt create record.', code: 'BAD_REQUEST' });
+  }
+
+  return true;
 };

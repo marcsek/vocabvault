@@ -17,7 +17,7 @@ export interface ListBoxProps<T> {
 
 const ListBox = <T extends TListBoxInput>({ items, label, value, onChange, fieldKey, fieldValue, disabledKeys, name }: ListBoxProps<T>) => {
   return (
-    <div className="w-full">
+    <div className="h-fit w-full">
       <Listbox value={value} onChange={onChange} name={name}>
         <div className="relative flex flex-col gap-2">
           <Listbox.Label className="text-sm text-gray-50">{label}</Listbox.Label>

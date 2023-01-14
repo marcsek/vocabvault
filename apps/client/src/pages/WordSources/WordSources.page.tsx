@@ -5,6 +5,7 @@ import { useGetAvailableWordSources } from '../../queries/wordSource';
 import SourceBoard from './Components/SourceBoard/SourceBoard.component';
 import SourceFilters from './Components/SourceFilters/SourceFilters';
 import useFilters from './hooks/useFilters';
+import { HiOutlineDocumentAdd } from 'react-icons/hi';
 
 const WordSources = () => {
   const { data } = useGetAvailableWordSources();
@@ -14,7 +15,7 @@ const WordSources = () => {
     <TitleLayout
       headingLeft={<SourceFilters setF={setFilters} />}
       button={
-        <Button as={Link} to="/create-datasource" intent="primary" className="w-max">
+        <Button as={Link} to="/create-datasource" intent="primary" className="w-max" Icon={<HiOutlineDocumentAdd size={20} />}>
           New wordsource
         </Button>
       }

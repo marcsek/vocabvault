@@ -6,7 +6,7 @@ import { TbCalendarTime } from 'react-icons/tb';
 interface Props {
   wordPairs: number;
   docType: string;
-  creationDate: Date;
+  creationDate: string;
 }
 
 const SourceStats = ({ wordPairs, docType, creationDate }: Props) => {

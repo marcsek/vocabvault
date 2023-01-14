@@ -14,6 +14,7 @@ import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary';
 import DefaultErrorBoundary from './components/ErrorBoundary/DefaultErrorBoundary';
 import CreateDatasource from './pages/CreateDatasource/CreateDatasource.page';
 import WordSources from './pages/WordSources/WordSources.page';
+import WordSourceDetail from './pages/WordSourceDetail/WordSourceDetail';
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
                     <Route path="/protected" element={<div className="font-medium text-gray-50">Procted</div>}></Route>
                     <Route path="/create-datasource" element={<CreateDatasource />} />
                     <Route path="/word-sources" element={<WordSources />} />
+                    <Route path="/word-sources/:id" element={<WordSourceDetail />} />
                   </Route>
                 </Route>
                 <Route path="/auth/success" element={<AuthSuccess />} />

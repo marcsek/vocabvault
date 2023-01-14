@@ -16,12 +16,12 @@ const SourceHeading = ({ name, firstLangCode, secondLangCode, creator }: Props) 
       <h3 className="font-semibold">{name}</h3>
       <div className="flex items-center gap-6 text-xl font-bold leading-none">
         <div className="flex items-center gap-2">
-          <img className="box-border h-5 rounded-sm" src={countryFlagURL(firstLangCode)} alt={firstLangCode}></img>
+          <img className="box-border h-5 w-8 rounded-sm" src={countryFlagURL(firstLangCode)} alt={firstLangCode}></img>
           <p className="uppercase">{firstLangCode}</p>
         </div>
         <Divider className="h-1 w-6 rounded-full" />
         <div className="flex items-center gap-2">
-          <img className="box-border h-5 rounded-sm" src={countryFlagURL(secondLangCode)} alt={secondLangCode}></img>
+          <img className="box-border h-5 w-8 rounded-sm" src={countryFlagURL(secondLangCode)} alt={secondLangCode}></img>
           <p className="uppercase">{secondLangCode}</p>
         </div>
       </div>

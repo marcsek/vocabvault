@@ -29,8 +29,8 @@ const SourceFilters = ({ setF }: Props) => {
   }, [filters]);
 
   return (
-    <div className="flex flex-col gap-4">
-      <TextField value={filters.keyword} labelText="Keyword" className="md:w-80" onChange={handleKeyWordChange} />
+    <div className="flex w-full flex-col gap-4 md:w-80">
+      <TextField value={filters.keyword} labelText="Keyword" className="w-full" onChange={handleKeyWordChange} />
       <TypeFilters handleGroupClick={handleTypeChange} checked={filters.type} />
     </div>
   );

@@ -22,8 +22,25 @@ export type TWordPairArray = z.TypeOf<typeof WordPairArraySchema>;
 export const createWordSourceSchema = z
   .object({ name: z.string(), wordPairs: WordPairArraySchema, sharedWith: z.array(z.string()) })
   .merge(LanguageDuoSchema);
-
 export type CreateWordSourceInput = z.TypeOf<typeof createWordSourceSchema>;
+
+export const updateWordSourceSchema = z
+  .object({ id: z.string().uuid(), name: z.string(), sharedWith: z.array(z.string()) })
+  .merge(LanguageDuoSchema);
+export type TUpdateWordSourceInput = z.TypeOf<typeof updateWordSourceSchema>;
+
+export const deleteWordSourceSchema = z.object({ id: z.string().uuid() });
+export type TDeleteWordSourceInput = z.TypeOf<typeof deleteWordSourceSchema>;
+
+export const useAvailableSourcesSchema = z.array(
+  z.object({ user: z.object({ profileImage: z.string(), name: z.string(), id: z.string() }) })
+);
+
+export const getSourceByIdOutputSchema = z
+  .object({ name: z.string(), id: z.string(), userAvailableSources: useAvailableSourcesSchema })
+  .merge(LanguageDuoSchema);
+
+export type TGetSourceByIdOutputOutput = z.TypeOf<typeof getSourceByIdOutputSchema>;
 
 export const GetAllUserSourcesOutputSchema = z.object({
   id: z.string(),
@@ -33,9 +50,13 @@ export const GetAllUserSourcesOutputSchema = z.object({
   firstLanguage: z.object({ languageName: z.string(), code: z.string() }),
   secondLanguage: z.object({ languageName: z.string(), code: z.string() }),
   documentType: z.string(),
-  userAvailableSources: z.array(z.object({ user: z.object({ profileImage: z.string(), name: z.string(), id: z.string() }) })).optional(),
+  userAvailableSources: useAvailableSourcesSchema.optional(),
   wordPairs: z.array(WordPairSchema),
   creator: z.object({ id: z.string(), name: z.string(), profileImage: z.string().optional() }),
 });
 
 export type TGetAllUserSourcesOutput = z.TypeOf<typeof GetAllUserSourcesOutputSchema>;
+
+export const GetWordSourceByIDShema = z.object({ id: z.string().uuid() });
+
+export type TGetWordSourceByIDInput = z.TypeOf<typeof GetWordSourceByIDShema>;

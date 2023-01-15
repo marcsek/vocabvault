@@ -28,7 +28,9 @@ const useHandleDropInputChange = <T extends TLanguageDuo>({ formik }: Props<T>) 
       .catch(() => {
         toast.error('Could not parse this file.');
         formik.setFieldValue('activeFile', null);
-        setWordPairsPreview(null);
+        setWordPairsPreview((prev) => {
+          return { ...prev, pairs: [] };
+        });
       });
   };
 };

@@ -1,11 +1,13 @@
 import { Prisma } from '@prisma/client';
 import { TRPCError } from '@trpc/server';
+import { use } from 'passport';
 import {
   CreateWordSourceInput,
   TDeleteWordSourceInput,
   TGetAllUserSourcesOutput,
   TGetSourceByIdOutputOutput,
   TGetWordSourceByIDInput,
+  TGetWordSourceWordPairsInput,
   TUpdateWordSourceInput,
 } from '../schemas/wordSource.schema';
 import { Context } from '../trpc/context';
@@ -176,4 +178,40 @@ export const deleteWordSourceController = async ({ ctx: { prisma, userID }, inpu
   }
 
   return true;
+};
+
+export const getWordSourceWordPairs = async ({ ctx: { prisma, userID }, input }: { ctx: Context; input: TGetWordSourceWordPairsInput }) => {
+  let skip = undefined;
+  let take = undefined;
+
+  if (input.pagination) {
+    skip = input.pagination.page * input.pagination.perPage;
+    take = input.pagination.perPage;
+  }
+
+  try {
+    const res = await prisma.user.findUnique({
+      where: { id: userID ?? '' },
+      select: {
+        createdSources: {
+          where: { id: input.sourceID },
+          select: {
+            wordPairs: {
+              skip,
+              take,
+              select: {
+                id: true,
+                firstValue: true,
+                secondValue: true,
+              },
+            },
+            _count: { select: { wordPairs: true } },
+            secondLanguage: true,
+            firstLanguage: true,
+          },
+        },
+      },
+    });
+    return res?.createdSources[0];
+  } catch (e) {}
 };

@@ -1,13 +1,27 @@
 import ListBox from '@ui/ListBox';
 import { FormikProps } from 'formik';
+import { useEffect } from 'react';
 import { TLanguageDuo } from 'server/src/schemas/wordSource.schema';
 import allCountries from '../../../assets/static/allCountries';
+import { useWordPairPreview } from '../context/filePreviewContext/wordPairsPreviewContext';
 
 interface Props<T> {
   formik: FormikProps<T>;
 }
 
 const LanguageComboInput = <T extends TLanguageDuo>({ formik }: Props<T>) => {
+  const { setWordPairsPreview } = useWordPairPreview();
+
+  useEffect(() => {
+    setWordPairsPreview((prev) => {
+      return {
+        ...prev,
+        secondColumnName: formik.values.secondLanguage.languageName,
+        firstColumnName: formik.values.firstLanguage.languageName,
+      };
+    });
+  }, [formik.values.firstLanguage, formik.values.secondLanguage]);
+
   return (
     <>
       <h1 className="text-base font-semibold leading-none">Languages</h1>

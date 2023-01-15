@@ -4,11 +4,13 @@ import {
   getWordSourceByIDController,
   updateWordSourceController,
   deleteWordSourceController,
+  getWordSourceWordPairs,
 } from '../controllers/wordSource.controller';
 import {
   createWordSourceSchema,
   deleteWordSourceSchema,
   GetWordSourceByIDShema,
+  GetWordSourceWordPairsSchema,
   updateWordSourceSchema,
 } from '../schemas/wordSource.schema';
 import { router, privateProcedure } from '../trpc';
@@ -30,4 +32,8 @@ export const wordSourceRouter = router({
   deleteWordSource: privateProcedure
     .input(deleteWordSourceSchema)
     .mutation((req) => deleteWordSourceController({ ctx: req.ctx, input: req.input })),
+
+  getWordSourceWordPairs: privateProcedure
+    .input(GetWordSourceWordPairsSchema)
+    .query((req) => getWordSourceWordPairs({ ctx: req.ctx, input: req.input })),
 });

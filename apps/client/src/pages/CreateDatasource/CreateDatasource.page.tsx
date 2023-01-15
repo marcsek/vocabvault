@@ -10,7 +10,7 @@ const CreateDatasource = () => {
 
   return (
     <TitleLayout button={submitButton} headingLeft={<h1 className="text-xl font-bold leading-none md:text-2xl">Create new datasource</h1>}>
-      <div className="flex w-full flex-col gap-10 md:gap-8">
+      <div className="flex w-full flex-col gap-10 lg:gap-14">
         <WordPairPreviewContextProvider>
           <CreateDatasourceForm submitFormButton={setSubmitButton} />
           <FirstEntriesTable />

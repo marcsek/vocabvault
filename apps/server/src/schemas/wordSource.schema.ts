@@ -58,5 +58,10 @@ export const GetAllUserSourcesOutputSchema = z.object({
 export type TGetAllUserSourcesOutput = z.TypeOf<typeof GetAllUserSourcesOutputSchema>;
 
 export const GetWordSourceByIDShema = z.object({ id: z.string().uuid() });
-
 export type TGetWordSourceByIDInput = z.TypeOf<typeof GetWordSourceByIDShema>;
+
+export const GetWordSourceWordPairsSchema = z.object({
+  sourceID: z.string().uuid(),
+  pagination: z.object({ page: z.number().nonnegative(), perPage: z.number().min(1).max(50) }).optional(),
+});
+export type TGetWordSourceWordPairsInput = z.TypeOf<typeof GetWordSourceWordPairsSchema>;

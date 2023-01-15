@@ -31,7 +31,13 @@ const ProfilePopOver = () => {
               <Popover.Button as={Link} hoverEffect to="#" className="block py-1 px-3 text-gray-300" Icon={<RiHistoryFill size={16} />}>
                 History
               </Popover.Button>
-              <Popover.Button as={Link} hoverEffect to="#" className="block py-1 px-3 text-gray-300" Icon={<TbSettings size={16} />}>
+              <Popover.Button
+                as={Link}
+                hoverEffect
+                to="/settings"
+                className="block py-1 px-3 text-gray-300"
+                Icon={<TbSettings size={16} />}
+              >
                 Settings
               </Popover.Button>
             </div>

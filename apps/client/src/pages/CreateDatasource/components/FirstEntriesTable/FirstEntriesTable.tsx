@@ -11,7 +11,7 @@ const FirstEntriesTable = () => {
     <div className="flex flex-col gap-6 lg:col-span-2">
       <h1 className="text-base font-semibold text-gray-50">Word pairs</h1>
       {!wordPairsPreview || wordPairsPreview.pairs.length === 0 ? (
-        <div className="flex min-h-[22rem] flex-col items-center justify-center gap-4 border border-gray-600">
+        <div className="rounded-default flex min-h-[22rem] flex-col items-center justify-center gap-4 border border-gray-600">
           <VscTable size={50} className="text-gray-500" />
           <div className="flex flex-col items-center gap-2">
             <p className="text-sm leading-none text-gray-50">You first need to upload your database.</p>
@@ -26,7 +26,7 @@ const FirstEntriesTable = () => {
               keyField: 'firstValue',
               data: [
                 { field: 'firstValue', headerName: `Column 1 (${wordPairsPreview.firstColumnName})` },
-                { field: 'secondValue', headerName: `Column 2 (${wordPairsPreview.firstColumnName})` },
+                { field: 'secondValue', headerName: `Column 2 (${wordPairsPreview.secondColumnName})` },
               ],
             }}
           />

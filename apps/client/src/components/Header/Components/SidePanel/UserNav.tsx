@@ -21,10 +21,10 @@ const UserNav = ({ onClose, withLogout = false }: Props) => {
         {({ activeLink, elementClicked }) => (
           <>
             <Link to="/" active={activeLink === '/'} onClick={elementClicked}>
-              Dasboard
+              History
             </Link>
-            <Link to="/auth/login" active={activeLink === '/auth/login'} onClick={elementClicked}>
-              Word Sources
+            <Link to="/settings" active={activeLink === '/settings'} onClick={elementClicked}>
+              Settings
             </Link>
             {withLogout && (
               <Link to="#" onClick={() => logout.mutate()} active={activeLink === '/auth/login'}>

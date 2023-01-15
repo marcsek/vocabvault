@@ -1,6 +1,6 @@
 import { Prisma } from '@prisma/client';
 import { TRPCError } from '@trpc/server';
-import { use } from 'passport';
+
 import {
   CreateWordSourceInput,
   TDeleteWordSourceInput,
@@ -70,7 +70,7 @@ export const getAllUserAvailableSourcesController = async ({ ctx: { prisma, user
           secondLanguage: true,
           documentType: true,
           userAvailableSources: { select: { user: { select: { profileImage: true, id: true, name: true } } } },
-          wordPairs: { select: { firstValue: true, secondValue: true } },
+          _count: { select: { wordPairs: true } },
         },
       },
       otherAvailableSources: {
@@ -84,7 +84,7 @@ export const getAllUserAvailableSourcesController = async ({ ctx: { prisma, user
               firstLanguage: true,
               secondLanguage: true,
               documentType: true,
-              wordPairs: { select: { firstValue: true, secondValue: true } },
+              _count: { select: { wordPairs: true } },
             },
           },
         },
@@ -92,15 +92,22 @@ export const getAllUserAvailableSourcesController = async ({ ctx: { prisma, user
     },
   });
 
-  const parsedCreatedSources: TGetAllUserSourcesOutput[] =
-    result?.createdSources.map((e) => {
-      return { ...e, type: !!e.userAvailableSources?.length ? 'shared' : 'private', createdAt: e.createdAt.toString() };
-    }) ?? [];
+  if (!result) return [];
 
-  const parsedOtherSources: TGetAllUserSourcesOutput[] =
-    result?.otherAvailableSources.map(({ wordSource: e }) => {
-      return { ...e, type: 'watched', createdAt: e.createdAt.toString() };
-    }) ?? [];
+  const parsedCreatedSources: TGetAllUserSourcesOutput[] = result.createdSources.map((e) => {
+    const { _count, ...rest } = e;
+    return {
+      ...rest,
+      type: !!e.userAvailableSources?.length ? 'shared' : 'private',
+      createdAt: e.createdAt.toString(),
+      wordPairsCount: _count.wordPairs,
+    };
+  });
+
+  const parsedOtherSources: TGetAllUserSourcesOutput[] = result.otherAvailableSources.map(({ wordSource: e }) => {
+    const { _count, ...rest } = e;
+    return { ...rest, type: 'watched', createdAt: e.createdAt.toString(), wordPairsCount: _count.wordPairs };
+  });
 
   return [...parsedCreatedSources, ...parsedOtherSources];
 };

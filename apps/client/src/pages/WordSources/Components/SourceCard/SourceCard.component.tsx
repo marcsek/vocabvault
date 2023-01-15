@@ -10,7 +10,7 @@ interface Props {
 }
 
 const SourceCard = ({
-  cardData: { createdAt, creator, documentType, firstLanguage, secondLanguage, name, wordPairs, userAvailableSources, type, id },
+  cardData: { createdAt, creator, documentType, firstLanguage, secondLanguage, name, wordPairsCount, userAvailableSources, type, id },
 }: Props) => {
   const navigate = useNavigate();
 
@@ -25,7 +25,7 @@ const SourceCard = ({
         ></SourceHeading>
         <Divider className=" w-full rounded-full outline-dashed outline-1 outline-gray-600" />
         <div className="flex h-full flex-col justify-between leading-none">
-          <SourceStats creationDate={createdAt} docType={documentType} wordPairs={wordPairs.length} />
+          <SourceStats creationDate={createdAt} docType={documentType} wordPairs={wordPairsCount} />
           <SourceStatus creator={creator} watchers={userAvailableSources} type={type} />
         </div>
       </div>

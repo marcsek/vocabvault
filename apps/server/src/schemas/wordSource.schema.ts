@@ -51,7 +51,7 @@ export const GetAllUserSourcesOutputSchema = z.object({
   secondLanguage: z.object({ languageName: z.string(), code: z.string() }),
   documentType: z.string(),
   userAvailableSources: useAvailableSourcesSchema.optional(),
-  wordPairs: z.array(WordPairSchema),
+  wordPairsCount: z.number(),
   creator: z.object({ id: z.string(), name: z.string(), profileImage: z.string().optional() }),
 });
 

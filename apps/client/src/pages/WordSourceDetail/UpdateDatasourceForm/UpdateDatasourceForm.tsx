@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import TextField from '@ui/TextField';
 import { useFormik } from 'formik';
 
-import { TGetSourceByIdOutputOutput, updateWordSourceSchema } from 'server/src/schemas/wordSource.schema';
+import { TGetSourceByIdOutputOutput, UpdateWordSourceSchema } from 'server/src/schemas/wordSource.schema';
 import Button, { ButtonProps } from '@ui/Button';
 import { FiAperture } from 'react-icons/fi';
 import { toFormikValidationSchema } from '../../../utils/helpers/zodToFormik';
@@ -20,7 +20,7 @@ const UpdateDatasourceForm = ({ submitFormButton, initialDetails }: Props) => {
   const update = useUpdateWordSource();
 
   const formik = useFormik({
-    validationSchema: toFormikValidationSchema(updateWordSourceSchema.omit({ sharedWith: true, id: true })),
+    validationSchema: toFormikValidationSchema(UpdateWordSourceSchema.omit({ sharedWith: true, id: true })),
     validateOnBlur: false,
     initialValues: {
       name: initialDetails.name,

@@ -51,3 +51,16 @@ export const useLogout = () => {
     },
   });
 };
+
+export const useUpdateUser = () => {
+  // const trpcContext = trpc.useContext();
+
+  return trpc.user.updateUser.useMutation({
+    onSuccess(data) {
+      if (!data || !Object.keys(data).length) return;
+
+      // trpcContext.user.getUser.setData(undefined, { ...data });
+      console.log(data);
+    },
+  });
+};

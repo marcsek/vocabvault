@@ -7,7 +7,7 @@ import LanguageComboInput from '../LanguageComboInput';
 import allCountries from '../../../../assets/static/allCountries';
 import { trpc } from '../../../../utils/trpc';
 import { toFormikValidationSchema } from '../../../../utils/helpers/zodToFormik';
-import { createWordSourceSchema, TWordPair, TWordPairArray, WordPairOptimizedArraySchema } from 'server/src/schemas/wordSource.schema';
+import { CreateWordSourceSchema, TWordPair, TWordPairArray, WordPairOptimizedArraySchema } from 'server/src/schemas/wordSource.schema';
 import Button, { ButtonProps } from '@ui/Button';
 import { FiAperture } from 'react-icons/fi';
 import useHandleDropInputChange from '../../hooks/useHandleDropInputChange';
@@ -21,7 +21,7 @@ const CreateDatasourceForm = ({ submitFormButton }: Props) => {
   const submitButtonRef = useRef<HTMLButtonElement>(null);
 
   const formik = useFormik({
-    validationSchema: toFormikValidationSchema(createWordSourceSchema.omit({ wordPairs: true }).merge(WordPairOptimizedArraySchema)),
+    validationSchema: toFormikValidationSchema(CreateWordSourceSchema.omit({ wordPairs: true }).merge(WordPairOptimizedArraySchema)),
     validateOnBlur: false,
     initialValues: {
       name: '',

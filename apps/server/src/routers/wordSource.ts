@@ -7,17 +7,17 @@ import {
   getWordSourceWordPairs,
 } from '../controllers/wordSource.controller';
 import {
-  createWordSourceSchema,
-  deleteWordSourceSchema,
+  CreateWordSourceSchema,
+  DeleteWordSourceSchema,
   GetWordSourceByIDShema,
   GetWordSourceWordPairsSchema,
-  updateWordSourceSchema,
+  UpdateWordSourceSchema,
 } from '../schemas/wordSource.schema';
 import { router, privateProcedure } from '../trpc';
 
 export const wordSourceRouter = router({
   createWordSource: privateProcedure
-    .input(createWordSourceSchema)
+    .input(CreateWordSourceSchema)
     .mutation((req) => createWordSourceController({ ctx: req.ctx, input: req.input })),
 
   getAllUserAvailableWordSources: privateProcedure.query((req) => getAllUserAvailableSourcesController({ ctx: req.ctx })),
@@ -26,11 +26,11 @@ export const wordSourceRouter = router({
     .query((req) => getWordSourceByIDController({ ctx: req.ctx, input: req.input })),
 
   updateWordSource: privateProcedure
-    .input(updateWordSourceSchema)
+    .input(UpdateWordSourceSchema)
     .mutation((req) => updateWordSourceController({ ctx: req.ctx, input: req.input })),
 
   deleteWordSource: privateProcedure
-    .input(deleteWordSourceSchema)
+    .input(DeleteWordSourceSchema)
     .mutation((req) => deleteWordSourceController({ ctx: req.ctx, input: req.input })),
 
   getWordSourceWordPairs: privateProcedure

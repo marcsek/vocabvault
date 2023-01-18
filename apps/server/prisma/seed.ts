@@ -3,15 +3,19 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 async function main() {
+  await prisma.user.create({
+    data: {
+      email: 'jakubmarcek95@gmail.com',
+      name: 'Jakub Marcek',
+      profileImage: '/daco',
+      type: 'ADULT',
+      id: 'd0683cd7-02b3-4835-9d51-eb0b4292867b',
+      Parent: { create: {} },
+    },
+  });
+
   await prisma.user.createMany({
     data: [
-      {
-        email: 'jakubmarcek95@gmail.com',
-        name: 'Jakub Marcek',
-        profileImage: '/daco',
-        type: 'ADULT',
-        id: 'd0683cd7-02b3-4835-9d51-eb0b4292867b',
-      },
       { email: 'marek@gmail.com', name: 'Marek', profileImage: '/daco', type: 'ADULT', id: '64c8e1fa-82f4-44f3-8eaf-61d92172f74a' },
       { email: 'dado@gmail.com', name: 'Dado', profileImage: '/daco', type: 'ADULT', id: 'f8383cfe-a0ee-44b0-9ac1-79ba349b3e27' },
     ],

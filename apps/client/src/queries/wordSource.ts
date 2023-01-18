@@ -19,25 +19,60 @@ export const useGetDataSourceByID = (id: string) => {
       },
       initialData: () => {
         const data = queryClient.wordSources.getAllUserAvailableWordSources.getData()?.find((e) => e.id === id);
-        if (data) return { ...data };
+        if (data) return data;
       },
-      staleTime: Infinity,
+      staleTime: 1000 * 60 * 5,
     }
   );
+};
+
+export const useCreateWordSource = () => {
+  const trpcContext = trpc.useContext();
+
+  return trpc.wordSources.createWordSource.useMutation({
+    onSuccess(data) {
+      const previousData = trpcContext.wordSources.getAllUserAvailableWordSources.getData();
+
+      if (!data || !previousData) return;
+      trpcContext.wordSources.getAllUserAvailableWordSources.setData(undefined, [...previousData, data]);
+      console.log(data);
+    },
+  });
 };
 
 export const useUpdateWordSource = () => {
   const queryClient = trpc.useContext();
   return trpc.wordSources.updateWordSource.useMutation({
-    onSuccess(_data, { id }) {
-      queryClient.wordSources.getWordSourceByID.invalidate({ id });
-      queryClient.wordSources.getAllUserAvailableWordSources.refetch();
+    onSuccess(data, { id }) {
+      const previousData = queryClient.wordSources.getWordSourceByID.getData({ id });
+      const newData = data.createdSources.at(0);
+
+      if (!previousData || !newData) return;
+
+      queryClient.wordSources.getWordSourceByID.setData({ id }, { ...previousData, ...newData });
+
+      const previousWordSourceData = queryClient.wordSources.getAllUserAvailableWordSources.getData();
+
+      if (!previousWordSourceData) return;
+      const newWordSourceData = previousWordSourceData.map((e) => (e.id !== id ? e : { ...e, ...newData }));
+
+      queryClient.wordSources.getAllUserAvailableWordSources.setData(undefined, newWordSourceData);
     },
   });
 };
 
 export const useDeleteWordSource = () => {
-  return trpc.wordSources.deleteWordSource.useMutation();
+  const trpcContext = trpc.useContext();
+  return trpc.wordSources.deleteWordSource.useMutation({
+    onSuccess(_data, { id }) {
+      const previousData = trpcContext.wordSources.getAllUserAvailableWordSources.getData();
+
+      if (!previousData) return;
+      const newData = previousData.filter((e) => e.id !== id);
+
+      trpcContext.wordSources.getAllUserAvailableWordSources.setData(undefined, newData);
+    },
+  });
 };
 
 export const useGetWordSourceWordPairs = (id: string, { page, perPage }: { page: number; perPage: number }) => {
@@ -49,7 +84,7 @@ export const useGetWordSourceWordPairs = (id: string, { page, perPage }: { page:
         console.log(data);
       },
       staleTime: Infinity,
-      cacheTime: 1000 * 60,
+      cacheTime: 1000 * 60 * 1,
     }
   );
 };

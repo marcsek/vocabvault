@@ -15,7 +15,7 @@ import { Context } from '../trpc/context';
 export const createWordSourceController = async ({ ctx: { prisma, userID }, input }: { ctx: Context; input: CreateWordSourceInput }) => {
   console.log(input);
   try {
-    await prisma.wordSource.create({
+    const newWordSource = await prisma.wordSource.create({
       data: {
         documentType: 'excel',
         firstLanguage: {
@@ -45,15 +45,32 @@ export const createWordSourceController = async ({ ctx: { prisma, userID }, inpu
           },
         },
       },
+      select: {
+        id: true,
+        createdAt: true,
+        creator: { select: { id: true, profileImage: true, name: true } },
+        name: true,
+        firstLanguage: true,
+        secondLanguage: true,
+        documentType: true,
+        userAvailableSources: { select: { user: { select: { profileImage: true, id: true, name: true } } } },
+        _count: { select: { wordPairs: true } },
+      },
     });
+    const { _count, ...rest } = newWordSource;
+    const daco: TGetAllUserSourcesOutput = {
+      ...newWordSource,
+      type: rest.userAvailableSources?.length ? 'shared' : 'private',
+      createdAt: rest.createdAt.toString(),
+      wordPairsCount: _count.wordPairs,
+    };
+    return daco;
   } catch (e) {
     if (e instanceof Prisma.PrismaClientKnownRequestError) {
       throw new TRPCError({ message: 'Couldnt create record.', code: 'BAD_REQUEST', cause: { prismaCode: e.code } });
     }
     throw new TRPCError({ message: 'Couldnt create record.', code: 'INTERNAL_SERVER_ERROR', cause: { error: e } });
   }
-
-  return true;
 };
 
 export const getAllUserAvailableSourcesController = async ({ ctx: { prisma, userID } }: { ctx: Context }) => {
@@ -145,7 +162,7 @@ export const updateWordSourceController = async ({
   input: TUpdateWordSourceInput;
 }) => {
   try {
-    await prisma.user.update({
+    const updatedWordSource = await prisma.user.update({
       where: { id: userID ?? '' },
       data: {
         createdSources: {
@@ -165,14 +182,15 @@ export const updateWordSourceController = async ({
           },
         },
       },
+      select: { createdSources: { where: { id: id ?? '' }, select: { name: true, firstLanguage: true, secondLanguage: true } } },
     });
+
+    return updatedWordSource;
   } catch (e) {
     //TODO:normalny error
     console.log(e);
     throw new TRPCError({ message: 'Couldnt create record.', code: 'BAD_REQUEST' });
   }
-
-  return true;
 };
 
 export const deleteWordSourceController = async ({ ctx: { prisma, userID }, input }: { ctx: Context; input: TDeleteWordSourceInput }) => {

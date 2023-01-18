@@ -1,6 +1,5 @@
 import { TUpdateUserInput } from '../schemas/user.schema';
 import { Context } from '../trpc/context';
-import { transformFields } from '../utils/transformFields';
 
 export const getUserController = async ({ ctx: { prisma, userID } }: { ctx: Context }) => {
   const user = await prisma.user.findUnique({
@@ -29,8 +28,8 @@ export const updateUserController = async ({ ctx: { prisma, userID }, input }: {
       ...restOfInput,
     },
     //TODO: po update returnut aj child
-    select: { ...transformFields(restOfInput) },
-    // select: { name: true, email: true, id: true, type: true, profileImage: true },
+    // select: { ...transformFields(restOfInput) },
+    select: { name: true, email: true },
   });
 
   return updatedUser;

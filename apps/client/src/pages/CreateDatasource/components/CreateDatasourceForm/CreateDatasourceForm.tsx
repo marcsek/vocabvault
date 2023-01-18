@@ -5,19 +5,19 @@ import UserSelect from '../../../../components/UserSelect/UserSelect.component';
 import DragAndDrop from '../DragAndDrop/DragAndDrop.component';
 import LanguageComboInput from '../LanguageComboInput';
 import allCountries from '../../../../assets/static/allCountries';
-import { trpc } from '../../../../utils/trpc';
 import { toFormikValidationSchema } from '../../../../utils/helpers/zodToFormik';
 import { CreateWordSourceSchema, TWordPair, TWordPairArray, WordPairOptimizedArraySchema } from 'server/src/schemas/wordSource.schema';
 import Button, { ButtonProps } from '@ui/Button';
 import { FiAperture } from 'react-icons/fi';
 import useHandleDropInputChange from '../../hooks/useHandleDropInputChange';
+import { useCreateWordSource } from '../../../../queries/wordSource';
 
 interface Props {
   submitFormButton: (value: React.ReactElement<ButtonProps>) => void;
 }
 
 const CreateDatasourceForm = ({ submitFormButton }: Props) => {
-  const createWordSource = trpc.wordSources.createWordSource.useMutation({});
+  const createWordSource = useCreateWordSource();
   const submitButtonRef = useRef<HTMLButtonElement>(null);
 
   const formik = useFormik({

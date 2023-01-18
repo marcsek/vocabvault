@@ -1,10 +1,10 @@
 import { z } from 'zod';
-import { EmailStandard, UserNameStandard } from './_standards';
+import { EmailStandard, UserNameStandard, UuidStandard } from './_standards';
 
 export const UpdateUserSchema = z.object({
   name: UserNameStandard,
   email: EmailStandard,
-  children: z.array(z.string().uuid()).optional(),
+  children: z.array(UuidStandard).optional(),
 });
 
 export type TUpdateUserInput = z.TypeOf<typeof UpdateUserSchema>;

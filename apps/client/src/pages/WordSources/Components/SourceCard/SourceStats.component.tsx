@@ -13,7 +13,7 @@ const SourceStats = ({ wordPairs, docType, creationDate }: Props) => {
   return (
     <div className="flex flex-col gap-4">
       <div className="flex items-end gap-1 text-sm">
-        <img src={WordsIcon} className="w-5 object-fill"></img>
+        <img src={WordsIcon} className="h-5 w-5 object-fill"></img>
         <p className="leading-none">{wordPairs}</p>
         <p className="leading-none text-gray-400">word pairs</p>
       </div>

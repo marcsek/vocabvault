@@ -53,13 +53,14 @@ export const useLogout = () => {
 };
 
 export const useUpdateUser = () => {
-  // const trpcContext = trpc.useContext();
+  const trpcContext = trpc.useContext();
 
   return trpc.user.updateUser.useMutation({
     onSuccess(data) {
-      if (!data || !Object.keys(data).length) return;
+      const previousData = trpcContext.user.getUser.getData();
+      if (!data || !previousData) return;
 
-      // trpcContext.user.getUser.setData(undefined, { ...data });
+      trpcContext.user.getUser.setData(undefined, { ...previousData, ...data });
       console.log(data);
     },
   });

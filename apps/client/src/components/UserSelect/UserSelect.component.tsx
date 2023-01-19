@@ -23,7 +23,7 @@ const UserSelect = ({ onChange, flow = 'horizontal', ...props }: Props) => {
   useOnChange({ changedValue: selectedItems, onChange });
 
   return (
-    <div className={`w-full ${flow === 'horizontal' ? 'grid-row-2 grid gap-6 md:grid-cols-2' : 'grid grid-cols-1 gap-6 lg:gap-0'}`}>
+    <div className={`w-full ${flow === 'horizontal' ? 'grid-row-2 grid gap-6 md:grid-cols-2' : 'flex flex-col gap-6'}`}>
       <ListBox
         {...props}
         items={users}

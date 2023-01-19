@@ -1,7 +1,9 @@
 import { createContext, useContext, useEffect } from 'react';
 import { useGetUser } from '../queries/user';
 
-const UserContext = createContext<{ user: { name: string; email: string; id: string } | null | undefined }>({ user: null });
+const UserContext = createContext<{ user: { name: string; email: string; id: string; type: 'CHILD' | 'ADULT' } | null | undefined }>({
+  user: null,
+});
 
 export const UserContextProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { data: user } = useGetUser();

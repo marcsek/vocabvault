@@ -28,11 +28,11 @@ model User {
 }
 
 model Child {
-  parent Parent @relation(fields: [parentId], references: [userId], onDelete: Cascade)
+  parent Parent? @relation(fields: [parentId], references: [userId], onDelete: SetNull)
 
-  user     User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId   String @unique
-  parentId String
+  user     User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId   String  @unique
+  parentId String?
 
   @@id([userId])
   @@index([parentId])
@@ -127,4 +127,5 @@ enum SessionType {
 enum AccountType {
   ADULT
   CHILD
+  TEST
 }

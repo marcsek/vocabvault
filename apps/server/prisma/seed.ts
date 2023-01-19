@@ -14,6 +14,17 @@ async function main() {
     },
   });
 
+  await prisma.user.create({
+    data: {
+      email: 'jakubmarcek955@gmail.com',
+      name: 'Jakub Marcek',
+      profileImage: '/daco',
+      type: 'CHILD',
+      id: 'b31fd8af-ac15-4d91-af3c-27ae3537e9ed',
+      Child: { create: { parentId: 'd0683cd7-02b3-4835-9d51-eb0b4292867b' } },
+    },
+  });
+
   await prisma.user.createMany({
     data: [
       { email: 'marek@gmail.com', name: 'Marek', profileImage: '/daco', type: 'ADULT', id: '64c8e1fa-82f4-44f3-8eaf-61d92172f74a' },

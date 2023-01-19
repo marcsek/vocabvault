@@ -17,8 +17,9 @@ import WordSources from './pages/WordSources/WordSources.page';
 import WordSourceDetail from './pages/WordSourceDetail/WordSourceDetail.page';
 import Settings from './pages/Settings/Settings.page';
 import General from './pages/Settings/views/General';
-import Children from './pages/Settings/views/Children';
+import Children from './pages/Settings/views/Children/Children';
 import Security from './pages/Settings/views/Security';
+import Role from './pages/Settings/views/Role/Role';
 
 function App() {
   return (
@@ -44,6 +45,7 @@ function App() {
                     <Route path="/settings" element={<Settings />}>
                       <Route path="" element={<General />} />
                       <Route path="children" element={<Children />} />
+                      <Route path="role" element={<Role />} />
                       <Route path="security" element={<Security />} />
                     </Route>
                   </Route>

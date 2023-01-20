@@ -9,8 +9,8 @@ interface Props {
   setActiveRole: React.Dispatch<React.SetStateAction<{ name: string; desc: string }>>;
 }
 
-const SettingsRadioGroup = ({ activeRole, setActiveRole, allRoles }: Props) => {
-  const { user } = useUser();
+const RoleRadioGroup = ({ activeRole, setActiveRole, allRoles }: Props) => {
+  const user = useUser();
 
   return (
     <RadioGroup value={activeRole} onChange={setActiveRole}>
@@ -55,4 +55,4 @@ const CheckRounded = ({ size }: { size: string | number }) => {
   );
 };
 
-export default SettingsRadioGroup;
+export default RoleRadioGroup;

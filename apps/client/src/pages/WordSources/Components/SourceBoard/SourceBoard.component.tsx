@@ -1,8 +1,8 @@
-import { TGetAllUserSourcesOutput } from 'server/src/schemas/wordSource.schema';
+import { TGetAllWordSourcesOutput } from '../../WordSources.page';
 import SourceCard from '../SourceCard/SourceCard.component';
 
 interface Props {
-  filteredSources: TGetAllUserSourcesOutput[];
+  filteredSources: TGetAllWordSourcesOutput;
 }
 
 const SourceBoard = ({ filteredSources }: Props) => {

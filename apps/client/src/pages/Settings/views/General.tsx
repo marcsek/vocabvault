@@ -9,7 +9,7 @@ import { toFormikValidationSchema } from '../../../utils/helpers/zodToFormik';
 
 const General = () => {
   const update = useUpdateUser();
-  const { user } = useUser();
+  const user = useUser();
 
   const formik = useFormik({
     validationSchema: toFormikValidationSchema(UpdateUserSchema),

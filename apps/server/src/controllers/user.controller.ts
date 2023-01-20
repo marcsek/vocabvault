@@ -1,22 +1,31 @@
+import { TRPCError } from '@trpc/server';
 import { TChangeUserType, TUpdateUserInput } from '../schemas/user.schema';
 import { Context } from '../trpc/context';
+import { getUserInfo } from '../use-cases/user';
 
 export const getUserController = async ({ ctx: { prisma, userID } }: { ctx: Context }) => {
-  const user = await prisma.user.findUnique({
-    where: { id: userID ?? '' },
-    select: { name: true, email: true, id: true, type: true, profileImage: true },
-  });
+  const user = await getUserInfo({ prisma, input: { id: userID ?? '' } });
+
+  if (!user) throw new TRPCError({ message: 'User not found', code: 'NOT_FOUND' });
 
   return user;
 };
 
-export const updateUserController = async ({ ctx: { prisma, userID }, input }: { ctx: Context; input: TUpdateUserInput }) => {
-  const { children, type, parent, ...restOfInput } = input;
+export const getUserChildren = async ({ ctx: { prisma, userID } }: { ctx: Context }) => {
+  const children = await prisma.user.findUnique({
+    where: { id: userID ?? '' },
+    select: { Parent: { select: { children: { select: { user: { select: { id: true, name: true, profileImage: true } } } } } } },
+  });
 
-  const typeUpdateShape =
-    type === 'adult'
-      ? { type: 'ADULT', Child: { delete: true }, Parent: { create: {} } }
-      : { type: 'CHILD', Parent: { delete: true }, Child: { create: {} } };
+  const parsedChildren = children?.Parent?.children.map((child) => {
+    return { id: child.user.id, name: child.user.name, profilePicture: child.user.profileImage };
+  });
+
+  return parsedChildren;
+};
+
+export const updateUserController = async ({ ctx: { prisma, userID }, input }: { ctx: Context; input: TUpdateUserInput }) => {
+  const { children, parent, ...restOfInput } = input;
 
   const updatedUser = await prisma.user.update({
     where: { id: userID ?? '' },

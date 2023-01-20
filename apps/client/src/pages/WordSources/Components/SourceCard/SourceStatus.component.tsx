@@ -1,14 +1,10 @@
-import React from 'react';
 import { AiOutlineLock } from 'react-icons/ai';
 import { users } from '../../../../assets/static/temporary';
+import { TGetAllWordSourcesOutput } from '../../WordSources.page';
 
-interface Props {
-  type: 'private' | 'shared' | 'watched';
-  creator?: { profilePicture?: string; name: string };
-  watchers?: { user: { id: string; name: string; profileImage: string } }[];
-}
+type Props = Pick<TGetAllWordSourcesOutput[number], 'type' | 'creator' | 'userAvailableSources'>;
 
-const SourceStatus = ({ type, creator, watchers }: Props) => {
+const SourceStatus = ({ type, creator, userAvailableSources: watchers }: Props) => {
   return (
     <div className="flex">
       {type === 'private' && (

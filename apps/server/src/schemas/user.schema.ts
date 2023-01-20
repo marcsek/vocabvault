@@ -6,7 +6,6 @@ export const UpdateUserSchema = z.object({
   email: EmailStandard.optional(),
   children: z.array(UuidStandard).optional(),
   parent: UuidStandard.optional(),
-  type: z.enum(['adult', 'child']).optional(),
 });
 export type TUpdateUserInput = z.TypeOf<typeof UpdateUserSchema>;
 

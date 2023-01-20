@@ -15,10 +15,10 @@ export interface ListBoxProps<T> {
   disabledKeys?: string[] | string;
 }
 
-const ListBox = <T extends TListBoxInput>({ items, label, value, onChange, fieldKey, fieldValue, disabledKeys, name }: ListBoxProps<T>) => {
+const ListBox = <T extends TListBoxInput>({ items, label, value, fieldKey, fieldValue, disabledKeys, ...props }: ListBoxProps<T>) => {
   return (
     <div className="h-fit w-full">
-      <Listbox value={value} onChange={onChange} name={name}>
+      <Listbox value={value} {...props}>
         <div className="relative flex flex-col gap-2">
           <Listbox.Label className="text-sm text-gray-50">{label}</Listbox.Label>
           <Listbox.Button className="focus:outline-primary-300 box-border flex cursor-default justify-between rounded-[4px] bg-gray-800 px-3 py-2.5 text-base font-medium leading-5 outline outline-1 outline-gray-500 duration-75 focus:outline-2 disabled:bg-gray-700 disabled:text-gray-400 disabled:outline-gray-600">

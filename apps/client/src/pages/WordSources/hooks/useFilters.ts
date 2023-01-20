@@ -1,12 +1,12 @@
 import { useState } from 'react';
-import { TGetAllUserSourcesOutput } from 'server/src/schemas/wordSource.schema';
+import { TGetAllWordSourcesOutput } from '../WordSources.page';
 
 export type TSourceFilters = {
   type: { shared: boolean; private: boolean; watched: boolean };
   keyword: string;
 };
 
-const useFilters = (data: TGetAllUserSourcesOutput[]) => {
+const useFilters = (data: TGetAllWordSourcesOutput) => {
   const [filters, setFilters] = useState<TSourceFilters>({ type: { shared: true, private: true, watched: true }, keyword: '' });
 
   const filtered = data.filter((e) => {
@@ -16,7 +16,7 @@ const useFilters = (data: TGetAllUserSourcesOutput[]) => {
     return true;
   });
 
-  return { filtered, setFilters };
+  return { filtered, setFilters, filters };
 };
 
 export default useFilters;

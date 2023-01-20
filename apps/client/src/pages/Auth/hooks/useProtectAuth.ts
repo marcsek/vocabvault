@@ -5,7 +5,7 @@ import { useUser } from '../../../providers/UserContext.provider';
 const useProtectAuth = () => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
-  const { user } = useUser();
+  const user = useUser();
 
   useEffect(() => {
     const path = pathname.split('/').at(-1) ?? '';

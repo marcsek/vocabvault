@@ -23,7 +23,7 @@ const SettingsTabs = () => {
 
   return (
     <div className="h-fit overflow-x-auto sm:overflow-x-visible">
-      <nav className="flex min-w-max gap-6 sm:flex-col">
+      <nav className="flex min-w-max gap-4 sm:flex-col">
         <SettingTabLink text="General" Icon={<BiUser size={20} />} isActive={currentTab === 'general'} to="" />
         <SettingTabLink text="Role" Icon={<RiParentLine size={20} />} isActive={currentTab === 'role'} to="role" />
         <SettingTabLink text="My children" Icon={<MdChildCare size={20} />} isActive={currentTab === 'children'} to="children" />

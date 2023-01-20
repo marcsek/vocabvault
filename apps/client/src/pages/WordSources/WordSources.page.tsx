@@ -6,14 +6,18 @@ import SourceBoard from './Components/SourceBoard/SourceBoard.component';
 import SourceFilters from './Components/SourceFilters/SourceFilters';
 import useFilters from './hooks/useFilters';
 import { HiOutlineDocumentAdd } from 'react-icons/hi';
+import { inferProcedureOutput } from '@trpc/server';
+import { wordSourceRouter } from 'server/src/routers/wordSource';
+
+export type TGetAllWordSourcesOutput = inferProcedureOutput<typeof wordSourceRouter.getAllUserAvailableWordSources>;
 
 const WordSources = () => {
   const { data } = useGetAvailableWordSources();
-  const { filtered, setFilters } = useFilters(data ?? []);
+  const { filtered, setFilters, filters } = useFilters(data ?? []);
 
   return (
     <TitleLayout
-      headingLeft={<SourceFilters setF={setFilters} />}
+      headingLeft={<SourceFilters setFilters={setFilters} filters={filters} />}
       button={
         <Button as={Link} to="/create-datasource" intent="primary" className="w-max" Icon={<HiOutlineDocumentAdd size={20} />}>
           New wordsource

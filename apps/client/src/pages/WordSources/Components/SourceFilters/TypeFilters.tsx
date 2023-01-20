@@ -11,8 +11,8 @@ const TypeFilters = ({ checked, handleGroupClick }: Props) => {
           <button name="shared" className="flex items-center gap-2" onClick={() => handleGroupClick('shared')}>
             <div
               className={`${
-                checked.shared ? 'bg-primary-300' : 'transparent'
-              } border-primary-200 bottom-3 mb-1 box-border h-5 w-5 rounded-full border-[3px]`}
+                checked.shared ? 'bg-secondary-300' : 'transparent'
+              } border-secondary-200 bottom-3 mb-1 box-border h-5 w-5 rounded-full border-[3px]`}
             ></div>
             <label htmlFor="shared" className={`leading-none ${checked.shared ? 'text-gray-50' : 'text-gray-400'} cursor-pointer`}>
               Shared
@@ -23,8 +23,8 @@ const TypeFilters = ({ checked, handleGroupClick }: Props) => {
           <button name="watched" className="flex items-center gap-2" onClick={() => handleGroupClick('watched')}>
             <div
               className={`${
-                checked.watched ? 'bg-secondary-300' : 'transparent'
-              } border-secondary-200 bottom-3 mb-1 box-border h-5 w-5 rounded-full border-[3px]`}
+                checked.watched ? 'bg-primary-300' : 'transparent'
+              } border-primary-200 bottom-3 mb-1 box-border h-5 w-5 rounded-full border-[3px]`}
             ></div>
             <label htmlFor="watched" className={`leading-none ${checked.watched ? 'text-gray-50' : 'text-gray-400'} cursor-pointer`}>
               Watched

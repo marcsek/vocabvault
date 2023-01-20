@@ -16,7 +16,7 @@ const Header = () => {
   const hasScrolled = useHasScrolled();
   const isWindowMobile = useMediaQuery('(max-width: 1024px)');
   const [sidePanelOpen, setSidePanelOpen] = useState(false);
-  const { user } = useUser();
+  const user = useUser();
 
   return (
     <header className={`fixed z-30 flex w-full justify-center ${hasScrolled && 'bg-gray-800/50 shadow-md backdrop-blur-md'}`}>

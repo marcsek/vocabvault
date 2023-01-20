@@ -1,15 +1,13 @@
 import TextField from '@ui/TextField';
-import { useEffect, useState } from 'react';
 import { TSourceFilters } from '../../hooks/useFilters';
 import TypeFilters from './TypeFilters';
 
 interface Props {
-  setF: React.Dispatch<React.SetStateAction<TSourceFilters>>;
+  filters: TSourceFilters;
+  setFilters: React.Dispatch<React.SetStateAction<TSourceFilters>>;
 }
 
-const SourceFilters = ({ setF }: Props) => {
-  const [filters, setFilters] = useState({ type: { shared: true, private: true, watched: true }, keyword: '' });
-
+const SourceFilters = ({ setFilters, filters }: Props) => {
   const handleTypeChange = (name: 'shared' | 'private' | 'watched') => {
     setFilters((prev) => {
       if (prev.type[name] && Object.values(prev.type).filter((value) => value === false).length === 2) return prev;
@@ -23,10 +21,6 @@ const SourceFilters = ({ setF }: Props) => {
       return { ...prev, keyword: e.target.value };
     });
   };
-
-  useEffect(() => {
-    setF(filters);
-  }, [filters]);
 
   return (
     <div className="flex w-full flex-col gap-4 md:w-80">

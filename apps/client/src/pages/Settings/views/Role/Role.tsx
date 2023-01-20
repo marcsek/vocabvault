@@ -1,7 +1,7 @@
 import Button from '@ui/Button';
 import { useState } from 'react';
 import { trpc } from '../../../../utils/trpc';
-import SettingsRadioGroup from './SettingsRadioGroup';
+import SettingsRadioGroup from './RoleRadioGroup';
 
 const accoutRole = [
   { name: 'adult', desc: 'As a parent account you can manage children account’s.' },

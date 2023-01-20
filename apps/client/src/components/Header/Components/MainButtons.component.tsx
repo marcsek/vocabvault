@@ -12,7 +12,7 @@ interface Props {
 }
 
 const MainButtons = ({ onClose = () => null }: Props) => {
-  const { user } = useUser();
+  const user = useUser();
   const isWindowMobile = useMediaQuery('(max-width: 1024px)');
 
   return (

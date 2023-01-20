@@ -14,7 +14,7 @@ interface Props {
 }
 
 const SidePanel = ({ isOpen, onClose }: Props) => {
-  const { user } = useUser();
+  const user = useUser();
 
   return (
     <Dialog open={isOpen} onClose={onClose} className="relative z-50">

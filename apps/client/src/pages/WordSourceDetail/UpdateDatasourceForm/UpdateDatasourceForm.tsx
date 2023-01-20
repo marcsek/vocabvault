@@ -2,17 +2,21 @@ import React, { useEffect, useRef } from 'react';
 import TextField from '@ui/TextField';
 import { useFormik } from 'formik';
 
-import { TGetSourceByIdOutputOutput, UpdateWordSourceSchema } from 'server/src/schemas/wordSource.schema';
+import { UpdateWordSourceSchema } from 'server/src/schemas/wordSource.schema';
 import Button, { ButtonProps } from '@ui/Button';
 import { FiAperture } from 'react-icons/fi';
 import { toFormikValidationSchema } from '../../../utils/helpers/zodToFormik';
 import LanguageComboInput from '../../CreateDatasource/components/LanguageComboInput';
 import UserSelect from '../../../components/UserSelect/UserSelect.component';
 import { useUpdateWordSource } from '../../../queries/wordSource';
+import { inferProcedureOutput } from '@trpc/server';
+import { wordSourceRouter } from 'server/src/routers/wordSource';
+
+export type TGetSourceByIdOuput = inferProcedureOutput<typeof wordSourceRouter.getWordSourceByID>;
 
 interface Props {
   submitFormButton: (value: React.ReactElement<ButtonProps>) => void;
-  initialDetails: TGetSourceByIdOutputOutput;
+  initialDetails: TGetSourceByIdOuput;
 }
 
 const UpdateDatasourceForm = ({ submitFormButton, initialDetails }: Props) => {

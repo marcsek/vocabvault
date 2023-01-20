@@ -22,31 +22,35 @@ interface Props
   helperText?: string;
   labelText: string;
   Icon?: ReactElement<IconType>;
+  IconLeft?: ReactElement<IconType>;
   handleIconClick?: () => void;
 }
 
-const TextField = ({ helperText, labelText, className, state, Icon, handleIconClick, ...props }: Props) => {
+const TextField = ({ helperText, labelText, className, state, Icon, IconLeft, handleIconClick, ...props }: Props) => {
   return (
     <div className="relative -z-0 flex w-full flex-col gap-2 text-gray-50">
       <label className="w-full">
         <p className="mb-2 text-sm font-medium">{labelText}</p>
-        <input className={`${className} ${textFieldStyles({ state })} pr-9`} {...props}></input>
+        <input className={`${className} ${textFieldStyles({ state })} ${!!Icon ? 'pr-9' : !!IconLeft ? 'pl-9' : ''}`} {...props}></input>
       </label>
-      {!!Icon && (
-        <button
-          id="show-password"
-          type="button"
-          role="switch"
-          aria-pressed="false"
-          onClick={handleIconClick}
-          className="absolute top-[34px] right-3 rounded-full p-1 text-lg text-gray-300 ring-gray-700 focus:ring"
-        >
-          {Icon}
-        </button>
-      )}
-      {!!helperText && (
-        <span className={`text-xs font-medium ${state === 'error' ? 'text-error-200' : 'text-gray-400'}`}>{helperText}</span>
-      )}
+      <>
+        <div className="absolute top-[39px] left-3 text-lg">{IconLeft}</div>
+        {!!Icon && (
+          <button
+            id="show-password"
+            type="button"
+            role="switch"
+            aria-pressed="false"
+            onClick={handleIconClick}
+            className="absolute top-[34px] right-3 rounded-full p-1 text-lg text-gray-300 ring-gray-700 focus:ring"
+          >
+            {Icon}
+          </button>
+        )}
+        {!!helperText && (
+          <span className={`text-xs font-medium ${state === 'error' ? 'text-error-200' : 'text-gray-400'}`}>{helperText}</span>
+        )}
+      </>
     </div>
   );
 };

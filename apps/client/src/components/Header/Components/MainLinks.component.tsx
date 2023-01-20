@@ -7,7 +7,7 @@ interface Props {
 }
 
 const MainLinks = ({ onClose = () => null }: Props) => {
-  const { user } = useUser();
+  const user = useUser();
 
   return (
     <NavWrapper className="flex flex-col gap-8 lg:flex-row" elementClicked={onClose}>

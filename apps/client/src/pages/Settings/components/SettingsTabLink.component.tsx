@@ -14,7 +14,7 @@ const SettingsTabLink = ({ isActive, Icon, text, to }: Props) => {
   return (
     <Link
       to={to}
-      className={`relative flex w-max flex-col items-center gap-1 !text-base duration-200 hover:!text-gray-50 ${
+      className={`relative flex w-max flex-col items-center gap-1 text-sm duration-200 hover:!text-gray-50 ${
         isActive ? 'text-gray-50' : 'text-gray-400'
       }`}
     >

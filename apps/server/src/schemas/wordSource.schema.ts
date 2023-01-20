@@ -40,29 +40,8 @@ export const UserAvailableSourcesSchema = z.array(
 export const GetWordSourceByIDShema = z.object({ id: UuidStandard });
 export type TGetWordSourceByIDInput = z.TypeOf<typeof GetWordSourceByIDShema>;
 
-export const GetSourceByIdOutputSchema = z
-  .object({ name: z.string(), id: z.string(), userAvailableSources: UserAvailableSourcesSchema })
-  .merge(LanguageDuoSchema);
-
-export type TGetSourceByIdOutputOutput = z.TypeOf<typeof GetSourceByIdOutputSchema>;
-
 export const GetWordSourceWordPairsSchema = z.object({
   sourceID: UuidStandard,
   pagination: z.object({ page: z.number().nonnegative(), perPage: z.number().min(1).max(50) }).optional(),
 });
 export type TGetWordSourceWordPairsInput = z.TypeOf<typeof GetWordSourceWordPairsSchema>;
-
-export const GetAllUserSourcesOutputSchema = z
-  .object({
-    id: z.string(),
-    type: z.enum(['private', 'shared', 'watched']),
-    name: z.string(),
-    createdAt: z.string(),
-    documentType: z.string(),
-    userAvailableSources: UserAvailableSourcesSchema.optional(),
-    wordPairsCount: z.number(),
-    creator: z.object({ id: z.string(), name: z.string(), profileImage: z.string().optional() }),
-  })
-  .merge(LanguageDuoSchema);
-
-export type TGetAllUserSourcesOutput = z.TypeOf<typeof GetAllUserSourcesOutputSchema>;

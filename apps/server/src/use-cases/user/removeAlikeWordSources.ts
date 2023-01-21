@@ -6,7 +6,7 @@ export const removeAlikeWordSources = async ({
   input,
 }: {
   prisma: PrismaClient;
-  input: { childId: string; wordSourcesWithChildIds: string[] };
+  input: { childId: string; wordSourcesWithChildIds: { id: string }[] };
 }) => {
   try {
     if (input.wordSourcesWithChildIds === null) throw new TRPCError({ message: 'Failed to find parent.', code: 'BAD_REQUEST' });
@@ -16,7 +16,7 @@ export const removeAlikeWordSources = async ({
       data: {
         otherAvailableSources: {
           deleteMany: input.wordSourcesWithChildIds.map((e) => {
-            return { userId: input.childId, wordSourceId: e };
+            return { userId: input.childId, wordSourceId: e.id };
           }),
         },
       },

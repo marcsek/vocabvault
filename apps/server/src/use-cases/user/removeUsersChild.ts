@@ -1,5 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 import { TRPCError } from '@trpc/server';
+import { removeAlikeWordSources } from './removeAlikeWordSources';
 
 export const removeUsersChild = async ({ prisma, input }: { prisma: PrismaClient; input: { childId: string; parentId: string } }) => {
   try {
@@ -9,16 +10,11 @@ export const removeUsersChild = async ({ prisma, input }: { prisma: PrismaClient
       select: { createdSources: { where: { userAvailableSources: { some: { userId: input.childId } } }, select: { id: true } } },
     });
 
-    return await prisma.user.update({
-      where: { id: input.childId },
-      data: {
-        otherAvailableSources: {
-          deleteMany: wordSourcesWithChildIds.createdSources.map((e) => {
-            return { userId: input.childId, wordSourceId: e.id };
-          }),
-        },
-      },
-      select: { id: true },
+    if (wordSourcesWithChildIds.createdSources.length === 0) return { id: input.childId };
+
+    return await removeAlikeWordSources({
+      prisma,
+      input: { childId: input.childId, wordSourcesWithChildIds: wordSourcesWithChildIds.createdSources },
     });
   } catch (e) {
     throw new TRPCError({ message: 'Failed to remove child.', code: 'INTERNAL_SERVER_ERROR' });

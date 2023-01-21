@@ -1,8 +1,9 @@
 import { TRPCError } from '@trpc/server';
-import { presentUserChildren } from '../presenters/user';
+import { presentUserChildren, presentUserParent } from '../presenters/user';
 import { TAddChildInput, TChangeUserType, TRemoveChildInput, TUpdateUserInput } from '../schemas/user.schema';
 import { Context } from '../trpc/context';
 import { addUsersChild, getUserChildren, getUserInfo, removeUsersChild, updateUserType } from '../use-cases/user';
+import { getUserParent } from '../use-cases/user/getUserParent';
 import { updateUser } from '../use-cases/user/updateUser';
 
 export const getUserController = async ({ ctx: { prisma, userID } }: { ctx: Context }) => {
@@ -11,6 +12,14 @@ export const getUserController = async ({ ctx: { prisma, userID } }: { ctx: Cont
   if (!user) throw new TRPCError({ message: 'User not found', code: 'NOT_FOUND' });
 
   return user;
+};
+
+export const getUserParentController = async ({ ctx: { prisma, userID } }: { ctx: Context }) => {
+  const parent = await getUserParent({ prisma, input: { id: userID ?? '' } });
+
+  if (!parent) throw new TRPCError({ message: 'Parent not found', code: 'NOT_FOUND' });
+
+  return presentUserParent(parent);
 };
 
 export const getAllUserChildrenController = async ({ ctx: { prisma, userID } }: { ctx: Context }) => {
@@ -36,10 +45,5 @@ export const updateUserController = async ({ ctx: { prisma, userID }, input }: {
 };
 
 export const changeUserTypeController = async ({ ctx: { prisma, userID }, input }: { ctx: Context; input: TChangeUserType }) => {
-  const typeUpdateShape: { type: 'CHILD' | 'ADULT'; [key: string]: unknown } =
-    input.type === 'child'
-      ? { type: 'CHILD', Parent: { delete: true }, Child: { create: {} } }
-      : { type: 'ADULT', Child: { delete: true }, Parent: { create: {} } };
-
-  return await updateUserType({ prisma, userId: userID ?? '', input: typeUpdateShape });
+  return await updateUserType({ prisma, userId: userID ?? '', input: { type: input.type } });
 };

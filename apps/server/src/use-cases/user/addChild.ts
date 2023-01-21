@@ -3,7 +3,12 @@ import { TRPCError } from '@trpc/server';
 
 export const addUsersChild = async ({ prisma, input }: { prisma: PrismaClient; input: { socialId: number; parentId: string } }) => {
   try {
-    const childToAdd = await prisma.user.findUnique({ where: { socialId: input.socialId }, select: { type: true, id: true } });
+    const childToAdd = await prisma.user.findUnique({
+      where: { socialId: input.socialId },
+      select: { type: true, id: true, Child: { select: { parentId: true } } },
+    });
+
+    if (childToAdd?.Child?.parentId) throw new TRPCError({ message: 'Child already has a parent.', code: 'BAD_REQUEST' });
 
     if (!childToAdd) throw new TRPCError({ message: 'Child not found.', code: 'NOT_FOUND' });
 

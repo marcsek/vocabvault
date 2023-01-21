@@ -5,6 +5,7 @@ import { HiChevronUpDown } from 'react-icons/hi2';
 export type TListBoxInput = { [key: string]: string };
 
 export interface ListBoxProps<T> {
+  disabled: boolean;
   items: T[];
   label: string;
   name?: string;
@@ -21,7 +22,7 @@ const ListBox = <T extends TListBoxInput>({ items, label, value, fieldKey, field
       <Listbox value={value} {...props}>
         <div className="relative flex flex-col gap-2">
           <Listbox.Label className="text-sm text-gray-50">{label}</Listbox.Label>
-          <Listbox.Button className="focus:outline-primary-300 box-border flex cursor-default justify-between rounded-[4px] bg-gray-800 px-3 py-2.5 text-base font-medium leading-5 outline outline-1 outline-gray-500 duration-75 focus:outline-2 disabled:bg-gray-700 disabled:text-gray-400 disabled:outline-gray-600">
+          <Listbox.Button className="focus:outline-primary-300 box-border flex cursor-default justify-between rounded-[4px] bg-gray-800 px-3 py-2.5 text-base font-medium leading-5 outline outline-1 outline-gray-500 duration-75 focus:outline-2 disabled:bg-gray-800 disabled:text-gray-400 disabled:outline-gray-600">
             {value[fieldValue]}
             <HiChevronUpDown size={20} />
           </Listbox.Button>

@@ -4,6 +4,7 @@ import {
   changeUserTypeController,
   getAllUserChildrenController,
   getUserController,
+  getUserParentController,
   removeChildController,
   updateUserController,
 } from '../controllers/user.controller';
@@ -11,6 +12,7 @@ import { AddChild, ChangeUserTypeSchema, RemoveChildSchema, UpdateUserSchema } f
 
 export const userRouter = router({
   getUser: privateProcedure.query((req) => getUserController({ ctx: req.ctx })),
+  getUserParent: privateProcedure.query((req) => getUserParentController({ ctx: req.ctx })),
   getUserChildren: privateProcedure.query((req) => getAllUserChildrenController({ ctx: req.ctx })),
   updateUser: privateProcedure.input(UpdateUserSchema).mutation((req) => updateUserController({ ctx: req.ctx, input: req.input })),
   changeType: privateProcedure.input(ChangeUserTypeSchema).mutation((req) => changeUserTypeController({ ctx: req.ctx, input: req.input })),

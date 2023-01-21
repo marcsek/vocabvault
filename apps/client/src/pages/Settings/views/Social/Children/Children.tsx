@@ -1,4 +1,4 @@
-import IdSocialCopy from './IdSocialCopy';
+import IdSocialCopy from '../IdSocialCopy';
 import ManageChildren from './ManageChildren';
 
 const Children = () => {

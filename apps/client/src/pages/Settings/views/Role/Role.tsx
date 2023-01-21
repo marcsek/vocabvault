@@ -1,6 +1,6 @@
 import Button from '@ui/Button';
 import { useState } from 'react';
-import { trpc } from '../../../../utils/trpc';
+import { useChangeUserRole } from '../../../../queries/user';
 import SettingsRadioGroup from './RoleRadioGroup';
 
 const accoutRole = [
@@ -10,7 +10,7 @@ const accoutRole = [
 
 const Role = () => {
   const [activeRole, setActiveRole] = useState(accoutRole[0]);
-  const role = trpc.user.changeType.useMutation();
+  const role = useChangeUserRole();
 
   const handleButtonClick = () => {
     role.mutate({ type: activeRole.name as 'child' | 'adult' });

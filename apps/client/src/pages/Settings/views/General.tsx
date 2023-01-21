@@ -1,26 +1,20 @@
 import Button from '@ui/Button';
 import TextField from '@ui/TextField';
 import { useFormik } from 'formik';
-import React from 'react';
 import { UpdateUserSchema } from 'server/src/schemas/user.schema';
 import { useUser } from '../../../providers/UserContext.provider';
 import { useUpdateUser } from '../../../queries/user';
 import { toFormikValidationSchema } from '../../../utils/helpers/zodToFormik';
-import { trpc } from '../../../utils/trpc';
 
 const General = () => {
   const update = useUpdateUser();
-  const deleteChild = trpc.user.removeChild.useMutation();
-  const addChild = trpc.user.addChild.useMutation();
   const user = useUser();
 
   const formik = useFormik({
     validationSchema: toFormikValidationSchema(UpdateUserSchema),
     initialValues: { name: user?.name ?? '', email: user?.email ?? '' },
     onSubmit: (data) => {
-      // update.mutate({ ...data });
-      // deleteChild.mutate({ childId: 'b31fd8af-ac15-4d91-af3c-27ae3537e9ed' });
-      addChild.mutate({ socialId: 7266914 });
+      update.mutate({ ...data });
     },
   });
 

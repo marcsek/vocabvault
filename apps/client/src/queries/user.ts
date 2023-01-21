@@ -18,6 +18,65 @@ export const useGetUser = () => {
   });
 };
 
+export const useGetParent = () => {
+  return trpc.user.getUserParent.useQuery();
+};
+
+export const useGetChildren = () => {
+  return trpc.user.getUserChildren.useQuery();
+};
+
+export const useChangeUserRole = () => {
+  const trpcContext = trpc.useContext();
+  return trpc.user.changeType.useMutation({
+    onSuccess(data) {
+      trpcContext.user.getUser.setData(undefined, data);
+    },
+
+    onError() {
+      toast.error("Coldn't change role.");
+    },
+  });
+};
+
+export const useAddChild = () => {
+  const trpcContext = trpc.useContext();
+
+  return trpc.user.addChild.useMutation({
+    onSuccess(data) {
+      const previousChildren = trpcContext.user.getUserChildren.getData();
+
+      if (!previousChildren) return;
+
+      trpcContext.user.getUserChildren.setData(undefined, [...previousChildren, ...data]);
+    },
+
+    onError() {
+      toast.error("Couldn't add child.");
+    },
+  });
+};
+
+export const useRemoveChild = () => {
+  const trpcContext = trpc.useContext();
+
+  return trpc.user.removeChild.useMutation({
+    onSuccess(data) {
+      const previousChildren = trpcContext.user.getUserChildren.getData();
+
+      if (!previousChildren) return;
+
+      const newChildren = previousChildren.filter((child) => child.id !== data.id);
+
+      trpcContext.user.getUserChildren.setData(undefined, newChildren);
+    },
+
+    onError() {
+      toast.error("Couldn't delete child");
+    },
+  });
+};
+
 export const useLogin = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();

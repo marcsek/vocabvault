@@ -1,10 +1,12 @@
 import { PrismaClient } from '@prisma/client';
+import { generateSocialId } from '../src/utils/generateSocialId';
 
 const prisma = new PrismaClient();
 
 async function main() {
   await prisma.user.create({
     data: {
+      socialId: generateSocialId(),
       email: 'jakubmarcek95@gmail.com',
       name: 'Jakub Marcek',
       profileImage: '/daco',
@@ -16,6 +18,7 @@ async function main() {
 
   await prisma.user.create({
     data: {
+      socialId: generateSocialId(),
       email: 'jakubmarcek955@gmail.com',
       name: 'Jakub Marcek',
       profileImage: '/daco',
@@ -27,8 +30,22 @@ async function main() {
 
   await prisma.user.createMany({
     data: [
-      { email: 'marek@gmail.com', name: 'Marek', profileImage: '/daco', type: 'ADULT', id: '64c8e1fa-82f4-44f3-8eaf-61d92172f74a' },
-      { email: 'dado@gmail.com', name: 'Dado', profileImage: '/daco', type: 'ADULT', id: 'f8383cfe-a0ee-44b0-9ac1-79ba349b3e27' },
+      {
+        email: 'marek@gmail.com',
+        socialId: generateSocialId(),
+        name: 'Marek',
+        profileImage: '/daco',
+        type: 'ADULT',
+        id: '64c8e1fa-82f4-44f3-8eaf-61d92172f74a',
+      },
+      {
+        email: 'dado@gmail.com',
+        socialId: generateSocialId(),
+        name: 'Dado',
+        profileImage: '/daco',
+        type: 'ADULT',
+        id: 'f8383cfe-a0ee-44b0-9ac1-79ba349b3e27',
+      },
     ],
   });
 
@@ -167,7 +184,7 @@ async function main() {
         },
       },
       userAvailableSources: {
-        createMany: { data: [{ userId: '64c8e1fa-82f4-44f3-8eaf-61d92172f74a' }] },
+        createMany: { data: [{ userId: '64c8e1fa-82f4-44f3-8eaf-61d92172f74a' }, { userId: 'b31fd8af-ac15-4d91-af3c-27ae3537e9ed' }] },
       },
     },
   });

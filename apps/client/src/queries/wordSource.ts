@@ -1,3 +1,4 @@
+import { toast } from 'react-toastify';
 import { trpc } from '../utils/trpc';
 
 export const useGetAvailableWordSources = () => {
@@ -37,6 +38,9 @@ export const useCreateWordSource = () => {
       trpcContext.wordSources.getAllUserAvailableWordSources.setData(undefined, [...previousData, data]);
       console.log(data);
     },
+    onError() {
+      toast.error('Failed to create datasource');
+    },
   });
 };
 
@@ -58,6 +62,9 @@ export const useUpdateWordSource = () => {
 
       queryClient.wordSources.getAllUserAvailableWordSources.setData(undefined, newWordSourceData);
     },
+    onError() {
+      toast.error('Failed to update datasource');
+    },
   });
 };
 
@@ -71,6 +78,9 @@ export const useDeleteWordSource = () => {
       const newData = previousData.filter((e) => e.id !== id);
 
       trpcContext.wordSources.getAllUserAvailableWordSources.setData(undefined, newData);
+    },
+    onError() {
+      toast.error('Failed to delete word source');
     },
   });
 };

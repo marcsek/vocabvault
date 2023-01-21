@@ -9,7 +9,8 @@
     "dev": "concurrently \"npx tsc --watch --preserveWatchOutput\" \"nodemon -q dist/index.js\"",
     "lint": "eslint src --fix",
     "db:generate": "prisma generate",
-    "db:push": "prisma db push --skip-generate --accept-data-loss"
+    "db:push": "prisma db push --skip-generate --accept-data-loss",
+    "db:push-reset": "prisma db push --force-reset"
   },
   "prisma": {
     "seed": "ts-node prisma/seed.ts"

@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import handleSucessRedirect from '../pages/Auth/components/utils/handleSucessRedirect';
 import { trpc } from '../utils/trpc';
 import Cookies from 'js-cookie';
+import { toast } from 'react-toastify';
 
 export const useGetUser = () => {
   const hasCookie = Boolean(Cookies.get('is_loggedin'));
@@ -49,6 +50,9 @@ export const useLogout = () => {
       const userKey = trpc.user.getUser.getQueryKey(undefined, 'query');
       queryClient.setQueryData(userKey, null);
     },
+    onError() {
+      toast.error('Failed to logout.');
+    },
   });
 };
 
@@ -62,6 +66,9 @@ export const useUpdateUser = () => {
 
       trpcContext.user.getUser.setData(undefined, { ...previousData, ...data });
       console.log(data);
+    },
+    onError() {
+      toast.error('Failed to update profile.');
     },
   });
 };

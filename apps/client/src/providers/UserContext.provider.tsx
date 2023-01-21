@@ -5,7 +5,7 @@ import { userRouter } from 'server/src/routers/user';
 
 type TUserProcedureOutput = inferProcedureOutput<typeof userRouter.getUser>;
 
-const UserContext = createContext<TUserProcedureOutput>(null);
+const UserContext = createContext<TUserProcedureOutput | null>(null);
 
 export const UserContextProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { data: user } = useGetUser();

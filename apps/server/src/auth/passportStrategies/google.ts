@@ -1,5 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 import PassportGoogle from 'passport-google-oauth20';
+import { generateSocialId } from '../../utils/generateSocialId';
 import { parseAuthProviderProfile } from '../helpers/parseProfile';
 
 const prisma = new PrismaClient();
@@ -18,7 +19,7 @@ const GoogleStrategy = new PassportGoogle.Strategy(
     try {
       const { id: userID } = await prisma.user.upsert({
         where: { email: user.email },
-        create: { email: user.email, name: user.name, profileImage: user.picture, Parent: { create: {} } },
+        create: { email: user.email, name: user.name, profileImage: user.picture, Parent: { create: {} }, socialId: generateSocialId() },
         update: {},
         select: { id: true },
       });

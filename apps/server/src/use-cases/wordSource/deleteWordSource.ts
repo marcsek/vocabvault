@@ -6,7 +6,6 @@ export const deleteWordSource = async ({ prisma, input }: { prisma: PrismaClient
     return await prisma.user.update({
       where: { id: input.userId },
       data: { createdSources: { delete: { id: input.wordSourceId } } },
-      select: {},
     });
   } catch (e) {
     throw new TRPCError({ message: "Wasn't able to delete this record", code: 'INTERNAL_SERVER_ERROR' });

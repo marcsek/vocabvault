@@ -3,6 +3,7 @@ import { PrismaClient } from '@prisma/client';
 // importing google because github strategy doesn't have type of done function in callback
 import PassportGoogle from 'passport-google-oauth20';
 import { parseAuthProviderProfile } from '../helpers/parseProfile';
+import { generateSocialId } from '../../utils/generateSocialId';
 
 const prisma = new PrismaClient();
 
@@ -20,7 +21,7 @@ const Github = new PassportGithub.Strategy(
     try {
       const { id: userID } = await prisma.user.upsert({
         where: { email: user.email },
-        create: { email: user.email, name: user.name, profileImage: user.picture, Parent: { create: {} } },
+        create: { email: user.email, name: user.name, profileImage: user.picture, Parent: { create: {} }, socialId: generateSocialId() },
         update: {},
         select: { id: true },
       });

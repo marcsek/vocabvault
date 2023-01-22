@@ -65,5 +65,5 @@ export const getWordSourceWordPairs = async ({ ctx: { prisma, userID }, input }:
 
   if (!wordPairs) throw new TRPCError({ message: "Coldn't find any word pairs.", code: 'NOT_FOUND' });
 
-  return wordPairs.createdSources[0];
+  return wordPairs;
 };

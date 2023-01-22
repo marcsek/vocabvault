@@ -9,17 +9,17 @@ interface Props {
   loading: boolean;
 }
 
-const RemoveChildDialog = ({ isOpen, onButtonClick, onClose, loading }: Props) => {
+const ChangeRoleDialog = ({ isOpen, onButtonClick, onClose, loading }: Props) => {
   return (
     <DialogTemplate
       isOpen={isOpen}
       onClose={onClose}
-      title={'Removing a child'}
-      body={'Are you sure you want to remove this child from. The child will no longer have acess to shared sources'}
+      title={'Changing role'}
+      body={'Are you sure you want to change your role? You will no longer have access to shared sources.'}
       foot={
         <div className="flex gap-2">
           <Button onClick={onButtonClick} className="w-fit" intent="warning" size="small" loading={loading}>
-            Remove
+            Change
           </Button>
           <Button onClick={onClose} intent="asWrapper" className="text-gray-400">
             Cancel
@@ -30,4 +30,4 @@ const RemoveChildDialog = ({ isOpen, onButtonClick, onClose, loading }: Props) =
   );
 };
 
-export default RemoveChildDialog;
+export default ChangeRoleDialog;

@@ -3,9 +3,11 @@ import { createWordSource, getAllWordSources } from '../use-cases/wordSource';
 type TPresentWordSourceInput = Awaited<ReturnType<typeof createWordSource>>;
 
 type TWordSourceOutput =
-  | Omit<TPresentWordSourceInput, '_count'> & {
+  | Omit<TPresentWordSourceInput, '_count' | 'createdAt' | 'userAvailableSources'> & {
       type: 'shared' | 'private' | 'watched';
+      createdAt: string;
       wordPairsCount: number;
+      userAvailableSources: { name: string; id: string; profileImage: string }[];
     };
 
 export const presentWordSource = (wordSourceToParse: TPresentWordSourceInput): TWordSourceOutput => {
@@ -13,7 +15,11 @@ export const presentWordSource = (wordSourceToParse: TPresentWordSourceInput): T
   return {
     ...wordSourceToParse,
     type: rest.userAvailableSources?.length ? 'shared' : 'private',
+    createdAt: rest.createdAt.toString(),
     wordPairsCount: _count.wordPairs,
+    userAvailableSources: wordSourceToParse.userAvailableSources.map((e) => {
+      return { id: e.user.id, name: e.user.name, profileImage: e.user.profileImage };
+    }),
   };
 };
 
@@ -27,13 +33,23 @@ export const presentAvailableWordSources = (wordSourcesToParse: TPresentAvailabl
     return {
       ...rest,
       type: !!e.userAvailableSources?.length ? 'shared' : 'private',
+      createdAt: rest.createdAt.toString(),
       wordPairsCount: _count.wordPairs,
+      userAvailableSources: rest.userAvailableSources.map((e) => {
+        return { id: e.user.id, name: e.user.name, profileImage: e.user.profileImage };
+      }),
     };
   });
 
   const parsedOtherSources: TWordSourceOutput[] = wordSourcesToParse.otherAvailableSources.map(({ wordSource: e }) => {
     const { _count, ...rest } = e;
-    return { ...rest, type: 'watched', userAvailableSources: [], wordPairsCount: _count.wordPairs };
+    return {
+      ...rest,
+      type: 'watched',
+      userAvailableSources: [],
+      createdAt: rest.createdAt.toString(),
+      wordPairsCount: _count.wordPairs,
+    };
   });
 
   return [...parsedCreatedSources, ...parsedOtherSources];

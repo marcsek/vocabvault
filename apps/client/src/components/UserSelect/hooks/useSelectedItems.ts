@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useIsFirstRender } from 'usehooks-ts';
 
-const useSelectedItems = <T extends { id: string }>(pickedItem: T) => {
-  const [selectedItems, setSelectedItems] = useState<T[]>([]);
+const useSelectedItems = <T extends { id: string }>(pickedItem: T, initialData: T[]) => {
+  const [selectedItems, setSelectedItems] = useState<T[]>(initialData);
   const firstRender = useIsFirstRender();
 
   useEffect(() => {

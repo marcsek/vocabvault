@@ -5,7 +5,7 @@ import { HiChevronUpDown } from 'react-icons/hi2';
 export type TListBoxInput = { [key: string]: string };
 
 export interface ListBoxProps<T> {
-  disabled: boolean;
+  disabled?: boolean;
   items: T[];
   label: string;
   name?: string;

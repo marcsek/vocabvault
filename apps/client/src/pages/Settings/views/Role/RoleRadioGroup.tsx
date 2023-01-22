@@ -5,19 +5,19 @@ import { useUser } from '../../../../providers/UserContext.provider';
 
 interface Props {
   allRoles: { name: string; desc: string }[];
-  activeRole: { name: string; desc: string };
-  setActiveRole: React.Dispatch<React.SetStateAction<{ name: string; desc: string }>>;
+  activeRole: string;
+  handleRoleChange: (role: string) => void;
 }
 
-const RoleRadioGroup = ({ activeRole, setActiveRole, allRoles }: Props) => {
+const RoleRadioGroup = ({ activeRole, handleRoleChange, allRoles }: Props) => {
   const user = useUser();
 
   return (
-    <RadioGroup value={activeRole} onChange={setActiveRole}>
+    <RadioGroup value={activeRole} onChange={(e) => handleRoleChange(e)}>
       <RadioGroup.Label className="sr-only">Account Role</RadioGroup.Label>
       <div className="flex flex-col gap-6">
         {allRoles.map((role) => (
-          <RadioGroup.Option key={role.name} value={role}>
+          <RadioGroup.Option key={role.name} value={role.name}>
             {({ active, checked }) => (
               <li
                 className={` rounded-default flex cursor-pointer list-none justify-between px-6 py-4 shadow-lg outline outline-1 outline-gray-500 duration-75 ${
@@ -36,7 +36,7 @@ const RoleRadioGroup = ({ activeRole, setActiveRole, allRoles }: Props) => {
                   <p className="text-sm leading-none text-gray-400">{role.desc}</p>
                 </div>
                 <div className={`ml-5 flex flex-col items-center justify-center gap-1.5 ${checked ? 'visible' : 'invisible'}`}>
-                  <CheckRounded size={28} />{' '}
+                  <CheckRounded size={28} />
                 </div>
               </li>
             )}

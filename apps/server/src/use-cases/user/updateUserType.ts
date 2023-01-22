@@ -13,16 +13,16 @@ export const updateUserType = async ({ prisma, input, userId }: { prisma: Prisma
         },
       });
 
-      if (!child?.Child?.parentId) throw new TRPCError({ message: 'Failed to update user.', code: 'INTERNAL_SERVER_ERROR' });
+      if (child?.Child?.parentId) {
+        const data = await prisma.user.findUnique({
+          where: { id: child.Child.parentId },
+          select: { createdSources: { where: { userAvailableSources: { some: { userId } } }, select: { id: true } } },
+        });
 
-      const data = await prisma.user.findUnique({
-        where: { id: child.Child.parentId },
-        select: { createdSources: { where: { userAvailableSources: { some: { userId } } }, select: { id: true } } },
-      });
+        if (!data) throw new TRPCError({ message: 'Failed to update user.', code: 'INTERNAL_SERVER_ERROR' });
 
-      if (!data) throw new TRPCError({ message: 'Failed to update user.', code: 'INTERNAL_SERVER_ERROR' });
-
-      await removeAlikeWordSources({ prisma, input: { childId: userId, wordSourcesWithChildIds: data.createdSources } });
+        await removeAlikeWordSources({ prisma, input: { childId: userId, wordSourcesWithChildIds: data.createdSources } });
+      }
 
       return await prisma.user.update({
         where: { id: userId },

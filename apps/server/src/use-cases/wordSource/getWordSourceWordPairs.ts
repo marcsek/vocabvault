@@ -9,26 +9,21 @@ export const getWordPairs = async ({
   input: { userId: string; wordSourceId: string; skip: number | undefined; take: number | undefined };
 }) => {
   try {
-    return await prisma.user.findUnique({
-      where: { id: input.userId },
+    return await prisma.wordSource.findUnique({
+      where: { id: input.wordSourceId },
       select: {
-        createdSources: {
-          where: { id: input.wordSourceId },
+        wordPairs: {
+          skip: input.skip,
+          take: input.take,
           select: {
-            wordPairs: {
-              skip: input.skip,
-              take: input.take,
-              select: {
-                id: true,
-                firstValue: true,
-                secondValue: true,
-              },
-            },
-            _count: { select: { wordPairs: true } },
-            secondLanguage: true,
-            firstLanguage: true,
+            id: true,
+            firstValue: true,
+            secondValue: true,
           },
         },
+        _count: { select: { wordPairs: true } },
+        secondLanguage: true,
+        firstLanguage: true,
       },
     });
   } catch (e) {

@@ -1,13 +1,14 @@
 import UserPill from './UserPill';
 import { RxInfoCircled } from 'react-icons/rx';
+import { TGetChildrenOutput } from '../UserSelect/ChildSelect.component';
 
 interface Props {
-  selectedUsers: { id: string; name: string; profilePicture: string }[];
-  handleUserUnselect: (user: { id: string; name: string; profilePicture: string }) => void;
+  selectedUsers: TGetChildrenOutput;
+  handleUserUnselect: (user: TGetChildrenOutput[number]) => void;
   flow: 'horizontal' | 'vertical';
 }
 //TODO: Nieco s tym kontajnerom aby nebral viac width ako ma
-const SelectedUsersContainer = ({ selectedUsers, handleUserUnselect, flow }: Props) => {
+const ChildrenContainer = ({ selectedUsers, handleUserUnselect, flow }: Props) => {
   return (
     <div className="box-border flex h-full w-full flex-1 flex-grow basis-12 flex-col gap-2">
       <label className="text-sm text-gray-50 ">{`${selectedUsers.length} selected`}</label>
@@ -36,4 +37,4 @@ const SelectedUsersContainer = ({ selectedUsers, handleUserUnselect, flow }: Pro
   );
 };
 
-export default SelectedUsersContainer;
+export default ChildrenContainer;

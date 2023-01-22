@@ -13,6 +13,7 @@ export type TGetAllWordSourcesOutput = inferProcedureOutput<typeof wordSourceRou
 
 const WordSources = () => {
   const { data } = useGetAvailableWordSources();
+
   const { filtered, setFilters, filters } = useFilters(data ?? []);
 
   return (

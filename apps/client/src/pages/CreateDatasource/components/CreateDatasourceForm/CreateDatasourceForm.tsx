@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import TextField from '@ui/TextField';
 import { useFormik } from 'formik';
-import UserSelect from '../../../../components/UserSelect/UserSelect.component';
+import ChildSelect, { TGetChildrenOutput } from '../../../../components/UserSelect/ChildSelect.component';
 import DragAndDrop from '../DragAndDrop/DragAndDrop.component';
 import LanguageComboInput from '../LanguageComboInput';
 import allCountries from '../../../../assets/static/allCountries';
@@ -16,31 +16,33 @@ interface Props {
   submitFormButton: (value: React.ReactElement<ButtonProps>) => void;
 }
 
+const CreateWordSourceOptimizedSchema = CreateWordSourceSchema.omit({ wordPairs: true, sharedWith: true }).merge(
+  WordPairOptimizedArraySchema
+);
+
 const CreateDatasourceForm = ({ submitFormButton }: Props) => {
   const createWordSource = useCreateWordSource();
   const submitButtonRef = useRef<HTMLButtonElement>(null);
 
   const formik = useFormik({
-    validationSchema: toFormikValidationSchema(CreateWordSourceSchema.omit({ wordPairs: true }).merge(WordPairOptimizedArraySchema)),
+    validationSchema: toFormikValidationSchema(CreateWordSourceOptimizedSchema),
     validateOnBlur: false,
     initialValues: {
       name: '',
       wordPairs: [] as TWordPair[],
       firstLanguage: allCountries[0],
       secondLanguage: allCountries[1],
-      sharedWith: [],
+      sharedWith: [] as TGetChildrenOutput,
       activeFile: null,
     },
     onSubmit: (data) => {
-      //TODO: shared with ma returnovat id
       // have to parse because ts doesn't formik validates this as not empty
-      console.log('Submit');
       createWordSource.mutate({
         name: data.name,
         wordPairs: data.wordPairs as TWordPairArray,
         firstLanguage: data.firstLanguage,
         secondLanguage: data.secondLanguage,
-        sharedWith: [],
+        sharedWith: data.sharedWith.map((e) => e.id),
       });
     },
   });
@@ -56,7 +58,6 @@ const CreateDatasourceForm = ({ submitFormButton }: Props) => {
         type="submit"
         Icon={<FiAperture />}
         onClick={() => submitButtonRef.current?.click()}
-        className="min-w-[94px]"
       >
         Create
       </Button>
@@ -73,10 +74,10 @@ const CreateDatasourceForm = ({ submitFormButton }: Props) => {
           <LanguageComboInput formik={formik} />
         </div>
         <div className="flex justify-between gap-6">
-          <UserSelect
+          <ChildSelect
             fieldValue="name"
             fieldKey="id"
-            label="User"
+            label="Child select"
             name="user-select"
             onChange={(e) => formik.setFieldValue('sharedWith', e)}
           />

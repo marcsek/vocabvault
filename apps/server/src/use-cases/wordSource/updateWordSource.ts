@@ -22,12 +22,14 @@ export const updateWordSource = async ({
               name: input.name,
               firstLanguage: { connectOrCreate: { where: { code: input.firstLanguage.code }, create: { ...input.firstLanguage } } },
               secondLanguage: { connectOrCreate: { where: { code: input.secondLanguage.code }, create: { ...input.secondLanguage } } },
-              //TODO: potom ked sa budu dat normalne selectovat userovia
-              // userAvailableSources: {
-              //   set: input.sharedWith.map((e) => {
-              //     return { wordSourceId_userId: { userId: e, wordSourceId: id } };
-              //   }),
-              // },
+              userAvailableSources: {
+                deleteMany: {},
+                createMany: {
+                  data: input.sharedWith.map((e) => {
+                    return { userId: e };
+                  }),
+                },
+              },
             },
           },
         },

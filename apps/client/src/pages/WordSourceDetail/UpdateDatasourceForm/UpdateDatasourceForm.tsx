@@ -7,7 +7,7 @@ import Button, { ButtonProps } from '@ui/Button';
 import { FiAperture } from 'react-icons/fi';
 import { toFormikValidationSchema } from '../../../utils/helpers/zodToFormik';
 import LanguageComboInput from '../../CreateDatasource/components/LanguageComboInput';
-import UserSelect from '../../../components/UserSelect/UserSelect.component';
+import ChildSelect from '../../../components/UserSelect/ChildSelect.component';
 import { useUpdateWordSource } from '../../../queries/wordSource';
 import { inferProcedureOutput } from '@trpc/server';
 import { wordSourceRouter } from 'server/src/routers/wordSource';
@@ -33,7 +33,9 @@ const UpdateDatasourceForm = ({ submitFormButton, initialDetails }: Props) => {
       sharedWith: initialDetails.userAvailableSources,
     },
     onSubmit: ({ sharedWith, ...data }) => {
-      update.mutate({ sharedWith: [], id: initialDetails.id, ...data });
+      const childIds = sharedWith.map((e) => e.id);
+
+      update.mutate({ sharedWith: childIds, id: initialDetails.id, ...data });
     },
   });
 
@@ -46,7 +48,6 @@ const UpdateDatasourceForm = ({ submitFormButton, initialDetails }: Props) => {
         type="submit"
         Icon={<FiAperture />}
         onClick={() => submitButtonRef.current?.click()}
-        className="min-w-[98px]"
       >
         Update
       </Button>
@@ -64,12 +65,13 @@ const UpdateDatasourceForm = ({ submitFormButton, initialDetails }: Props) => {
         </div>
       </div>
       <div className="flex flex-1 justify-between gap-6">
-        <UserSelect
+        <ChildSelect
           fieldValue="name"
           fieldKey="id"
-          label="User"
+          label="Child select"
           name="user-select"
           flow="vertical"
+          initialChildren={initialDetails.userAvailableSources}
           onChange={(e) => formik.setFieldValue('sharedWith', e)}
         />
       </div>

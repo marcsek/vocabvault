@@ -1,6 +1,7 @@
-import Button from '@ui/Button';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useUser } from '../../../../providers/UserContext.provider';
 import { useChangeUserRole } from '../../../../queries/user';
+import ChangeRoleDialog from './ChangeRoleDialog';
 import SettingsRadioGroup from './RoleRadioGroup';
 
 const accoutRole = [
@@ -9,12 +10,25 @@ const accoutRole = [
 ];
 
 const Role = () => {
-  const [activeRole, setActiveRole] = useState(accoutRole[0]);
   const role = useChangeUserRole();
+  const user = useUser();
 
-  const handleButtonClick = () => {
-    role.mutate({ type: activeRole.name as 'child' | 'adult' });
+  const [activeRole, setActiveRole] = useState(user?.type.toLocaleLowerCase() as string);
+  const [dialogOpen, setDialogOpen] = useState(false);
+
+  const handleButtonClick = () => role.mutate({ type: user?.type === 'ADULT' ? 'child' : 'adult' });
+
+  const handleRoleChange = (e: string) => {
+    if (user?.type.toLowerCase() !== e) {
+      setDialogOpen(true);
+    } else {
+      setActiveRole(e);
+    }
   };
+
+  useEffect(() => {
+    setDialogOpen(false);
+  }, [role.isSuccess]);
 
   return (
     <div className="flex w-full max-w-xl flex-col gap-12">
@@ -22,10 +36,13 @@ const Role = () => {
         <h2 className="text-xl font-bold text-gray-50">Role</h2>
         <p className="text-sm text-gray-400">Choose role for your account.</p>
       </div>
-      <SettingsRadioGroup activeRole={activeRole} setActiveRole={setActiveRole} allRoles={accoutRole} />
-      <Button className="w-fit" onClick={handleButtonClick}>
-        Save role
-      </Button>
+      <SettingsRadioGroup activeRole={activeRole} handleRoleChange={handleRoleChange} allRoles={accoutRole} />
+      <ChangeRoleDialog
+        onButtonClick={handleButtonClick}
+        onClose={() => setDialogOpen(false)}
+        isOpen={dialogOpen}
+        loading={role.isLoading}
+      />
     </div>
   );
 };

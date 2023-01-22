@@ -20,7 +20,12 @@ const AddUserBySocialID = () => {
         labelText="Add new child with Social ID"
         IconLeft={<BiHash className="text-gray-400" />}
       />
-      <Button onClick={() => addChild.mutate({ socialId: parseInt(socialId) })} className="h-10 min-w-fit" size="small">
+      <Button
+        loading={addChild.isLoading}
+        onClick={() => addChild.mutate({ socialId: parseInt(socialId) })}
+        className="h-10 min-w-fit"
+        size="small"
+      >
         Add child
       </Button>
     </div>

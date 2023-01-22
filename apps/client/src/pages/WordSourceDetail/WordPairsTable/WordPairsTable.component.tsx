@@ -22,8 +22,14 @@ const WordPairsTable = () => {
           columns={{
             keyField: 'id',
             data: [
-              { field: 'firstValue', headerName: `Column 1 (${wordPairsPreview.firstColumnName})` },
-              { field: 'secondValue', headerName: `Column 2 (${wordPairsPreview.secondColumnName})` },
+              {
+                field: 'firstValue',
+                headerName: `Column 1 (${wordPairsPreview.firstColumnName || wordPairs?.firstLanguage.languageName})`,
+              },
+              {
+                field: 'secondValue',
+                headerName: `Column 2 (${wordPairsPreview.secondColumnName || wordPairs?.secondLanguage.languageName})`,
+              },
             ],
           }}
         />

@@ -14,6 +14,7 @@ const buttonStyles = cva(
         secondary: 'bg-gray-100 hover:bg-gray-50 text-gray-700 hover:shadow-[0px_4px_21px_-4px_#FFFFFF]',
         outlined: 'bg-transparent border border-gray-100 hover:bg-gray-100/5',
         asWrapper: 'bg-transparent hover:bg-gray-100/5 gap-0',
+        warning: 'text-error-200 border border-gray-600 hover:bg-gray-100/5',
       },
       size: {
         small: 'px-3 py-2 text-sm h-9',
@@ -32,19 +33,19 @@ export type ButtonProps = {
 } & VariantProps<typeof buttonStyles>;
 
 const defaultElement = 'button';
+
 const Button = <Element extends React.ElementType = typeof defaultElement>(props: PolymorphicProps<Element, ButtonProps>) => {
   const { as: Component = defaultElement, loading = false, className, intent, size, children, Icon, ...rest } = props;
 
   return (
     <Component className={`${buttonStyles({ intent, size })} ${className} ${loading ? 'disabled' : ''}`} {...rest}>
-      {loading ? (
+      <div className={`${loading ? 'visible' : 'invisible'} absolute`}>
         <SpinnerSmall />
-      ) : (
-        <>
-          {!!Icon && <p className="text-lg">{Icon}</p>}
-          {children ?? 'Button'}
-        </>
-      )}
+      </div>
+      <div className={`flex items-center justify-center gap-2 ${!loading ? 'visible' : 'invisible'}`}>
+        {!!Icon && <p className="text-lg">{Icon}</p>}
+        {children ?? 'Button'}
+      </div>
     </Component>
   );
 };

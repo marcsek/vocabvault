@@ -1,5 +1,4 @@
 import Link from '@ui/Link';
-import React from 'react';
 import { CgLock } from 'react-icons/cg';
 
 const AdultLock = () => {

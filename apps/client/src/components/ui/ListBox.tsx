@@ -1,5 +1,4 @@
 import { Listbox } from '@headlessui/react';
-import React from 'react';
 import { HiChevronUpDown } from 'react-icons/hi2';
 
 export type TListBoxInput = { [key: string]: string };

@@ -13,10 +13,10 @@ const Role = () => {
   const role = useChangeUserRole();
   const user = useUser();
 
-  const [activeRole, setActiveRole] = useState(user?.type.toLocaleLowerCase() as string);
+  const [activeRole, setActiveRole] = useState(user.type.toLocaleLowerCase());
   const [dialogOpen, setDialogOpen] = useState(false);
 
-  const handleButtonClick = () => role.mutate({ type: user?.type === 'ADULT' ? 'child' : 'adult' });
+  const handleButtonClick = () => role.mutate({ type: user.type === 'ADULT' ? 'child' : 'adult' });
 
   const handleRoleChange = (e: string) => {
     if (user?.type.toLowerCase() !== e) {

@@ -31,11 +31,11 @@ const TextField = ({ helperText, labelText, className, state, Icon, IconLeft, ha
     <div className="relative -z-0 flex w-full flex-col gap-2 text-gray-50">
       <label className="w-full">
         <p className="mb-2 text-sm font-medium">{labelText}</p>
-        <input className={`${className} ${textFieldStyles({ state })} ${!!Icon ? 'pr-9' : !!IconLeft ? 'pl-9' : ''}`} {...props}></input>
+        <input className={`${className} ${textFieldStyles({ state })} ${Icon ? 'pr-9' : IconLeft ? 'pl-9' : ''}`} {...props}></input>
       </label>
       <>
         <div className="absolute top-[39px] left-3 text-lg">{IconLeft}</div>
-        {!!Icon && (
+        {Icon && (
           <button
             id="show-password"
             type="button"
@@ -47,7 +47,7 @@ const TextField = ({ helperText, labelText, className, state, Icon, IconLeft, ha
             {Icon}
           </button>
         )}
-        {!!helperText && (
+        {helperText && (
           <span className={`text-xs font-medium ${state === 'error' ? 'text-error-200' : 'text-gray-400'}`}>{helperText}</span>
         )}
       </>

@@ -21,7 +21,7 @@ const MainButtons = ({ onClose = () => null }: Props) => {
         <>
           <Button
             size={isWindowMobile ? 'medium' : 'small'}
-            to={user ? '#' : '/auth/login'}
+            to={user ? '/new-session' : '/auth/login'}
             className="w-full"
             intent="outlined"
             Icon={user ? <IoStarSharp /> : <FiLogIn />}

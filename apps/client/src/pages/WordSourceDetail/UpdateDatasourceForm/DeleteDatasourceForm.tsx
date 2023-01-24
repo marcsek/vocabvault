@@ -1,5 +1,4 @@
 import Button from '@ui/Button';
-import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useDeleteWordSource } from '../../../queries/wordSource';
 

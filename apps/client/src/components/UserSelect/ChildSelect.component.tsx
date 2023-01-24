@@ -1,5 +1,4 @@
 import ListBox, { ListBoxProps } from '@ui/ListBox';
-import { useState } from 'react';
 import useOnChange from '../../hooks/useOnChange';
 import { useUser } from '../../providers/UserContext.provider';
 import useSelectedItems from './hooks/useSelectedItems';
@@ -21,10 +20,9 @@ const defaultListBoxValue = { id: '0', name: 'Select children', profileImage: '/
 
 const ChildSelect = ({ onChange, flow = 'horizontal', disabled, initialChildren = [], ...props }: Props) => {
   const user = useUser();
-  const { data: children } = useGetChildren();
+  const { data: allChildren } = useGetChildren();
 
-  const [selectedItem, setSelectedItem] = useState(defaultListBoxValue);
-  const { selectedItems, handleUnselect } = useSelectedItems(selectedItem, initialChildren);
+  const { selectedItems, handleSelect, handleUnselect } = useSelectedItems(initialChildren);
   useOnChange({ changedValue: selectedItems, onChange });
 
   return (
@@ -33,9 +31,9 @@ const ChildSelect = ({ onChange, flow = 'horizontal', disabled, initialChildren 
       <ListBox
         {...props}
         disabled={user?.type === 'CHILD' ? true : disabled}
-        items={children ?? []}
+        items={allChildren ?? []}
         value={defaultListBoxValue}
-        onChange={(e) => setSelectedItem(e)}
+        onChange={handleSelect}
         disabledKeys={selectedItems.map((item) => item.id)}
       />
       <ChildrenContainer selectedUsers={selectedItems} handleUserUnselect={handleUnselect} flow={flow} />

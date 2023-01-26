@@ -10,7 +10,7 @@ interface Props {
 const UserPill = ({ user, onClick }: Props) => {
   return (
     <li
-      className="bg-primary-400/30 box-border flex h-7 cursor-pointer list-none items-center gap-2 rounded-xl px-2 py-1.5"
+      className="bg-primary-400/30 hover:bg-primary-400/40 box-border flex h-7 cursor-pointer list-none items-center gap-2 rounded-xl px-2 py-1.5 duration-200"
       onClick={onClick}
     >
       <img src={user.profileImage} className="box-border h-4 w-4 rounded-full"></img>

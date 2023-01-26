@@ -13,14 +13,18 @@ const TabSelector = ({ currentTab, setCurrentTab }: Props) => {
     <nav className="flex w-full gap-6">
       <button
         onClick={() => setCurrentTab('details')}
-        className={`relative flex items-center gap-2 ${currentTab === 'details' ? 'text-gray-50' : 'text-gray-400'}`}
+        className={`relative flex items-center gap-2 duration-200 hover:!text-gray-50 ${
+          currentTab === 'details' ? 'text-gray-50' : 'text-gray-400'
+        }`}
       >
         <RxMagnifyingGlass /> Details
         {currentTab === 'details' && <Divider className="bg-primary-300 absolute -bottom-0.5 h-0.5 w-full rounded-full"></Divider>}
       </button>
       <button
         onClick={() => setCurrentTab('actions')}
-        className={`underlin relative flex items-center gap-2 ${currentTab === 'actions' ? 'text-gray-50' : 'text-gray-400'}`}
+        className={`underlin relative flex items-center gap-2 duration-200 hover:!text-gray-50 ${
+          currentTab === 'actions' ? 'text-gray-50' : 'text-gray-400'
+        }`}
       >
         <BsLightningCharge /> Actions
         {currentTab === 'actions' && <Divider className="bg-primary-300 absolute -bottom-0.5 h-0.5 w-full rounded-full"></Divider>}

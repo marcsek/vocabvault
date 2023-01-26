@@ -3,6 +3,8 @@ import TitleLayout from '@ui/TitleLayout';
 import { HiOutlineDocumentAdd } from 'react-icons/hi';
 import { Link } from 'react-router-dom';
 import NewSessionForm from './components/NewSessionForm/NewSessionForm';
+import NewSessionSelectedWords from './components/SelectedWords/NewSessionSelectedWords';
+import { SelectedWordsContextProvider } from './context/SelectedWordsContext';
 
 const NewSession = () => {
   return (
@@ -14,8 +16,11 @@ const NewSession = () => {
         </Button>
       }
     >
-      <div className="flex w-full flex-col gap-10 md:gap-8">
-        <NewSessionForm />
+      <div className="flex w-full flex-col gap-14 md:gap-14">
+        <SelectedWordsContextProvider>
+          <NewSessionForm />
+          <NewSessionSelectedWords />
+        </SelectedWordsContextProvider>
       </div>
     </TitleLayout>
   );

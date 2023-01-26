@@ -85,9 +85,12 @@ export const useDeleteWordSource = () => {
   });
 };
 
-export const useGetWordSourceWordPairs = (id: string, { page, perPage }: { page: number; perPage: number }) => {
+export const useGetWordSourceWordPairs = (
+  id: string,
+  format?: { pagination: { page: number; perPage: number } } | { takeSkip: { skip: number; take: number } }
+) => {
   return trpc.wordSources.getWordSourceWordPairs.useQuery(
-    { sourceID: id ?? '', pagination: { page, perPage } },
+    { sourceID: id ?? '', ...format },
     {
       keepPreviousData: true,
       onSettled(data) {

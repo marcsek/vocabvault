@@ -53,8 +53,8 @@ export const deleteWordSourceController = async ({ ctx: { prisma, userID }, inpu
 };
 
 export const getWordSourceWordPairs = async ({ ctx: { prisma, userID }, input }: { ctx: Context; input: TGetWordSourceWordPairsInput }) => {
-  let skip = undefined;
-  let take = undefined;
+  let skip = input.takeSkip?.skip;
+  let take = input.takeSkip?.take;
 
   if (input.pagination) {
     skip = input.pagination.page * input.pagination.perPage;

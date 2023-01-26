@@ -10,7 +10,7 @@ const WordPairsTable = () => {
   const { id: paramsID } = useParams();
   const { wordPairsPreview } = useWordPairPreview();
 
-  const { data: wordPairs } = useGetWordSourceWordPairs(paramsID ?? '', { page, perPage });
+  const { data: wordPairs } = useGetWordSourceWordPairs(paramsID ?? '', { pagination: { page, perPage } });
 
   return (
     <div className="flex flex-col gap-6 lg:col-span-2">

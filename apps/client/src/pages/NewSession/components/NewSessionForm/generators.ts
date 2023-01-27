@@ -1,3 +1,5 @@
+import { TNewSessionProps } from '../../types';
+
 export const generateAvailableNumberOfPairs = (wordPairsCount: number) => {
   const availableNumOfWordPairs: { id: string }[] = [];
   for (let i = 5; i <= 25; i += 5) {
@@ -19,3 +21,17 @@ export const generateAvailableGroupNumbers = (wordPairsCount: number, numberOfPa
 
   return availableGroupNumbers;
 };
+
+export const generateOutput = (data: TNewSessionProps) => {
+  return {
+    type: data.type.id as 'Practice' | 'Test',
+    documentId: data.document.id,
+    groupNumber: parseInt(data.groupNumber.id),
+    proofLanguage: data.allTranslationLanguages.find((e) => e.code !== data.translationLanguage.code) ?? data.translationLanguage,
+    translationLanguage: data.translationLanguage,
+    pairsInNumber: parseInt(data.numOfWordPairs.id),
+    repetitions: parseInt(data.numOfRepetition.id),
+  };
+};
+
+export type TNewSessionOutput = ReturnType<typeof generateOutput>;

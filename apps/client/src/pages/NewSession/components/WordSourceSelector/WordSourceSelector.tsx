@@ -13,11 +13,11 @@ interface Props {
   wordPairCount?: number;
 }
 
-const WordSourceSelector = (props: Props) => {
+const WordSourceSelector = ({ firstLanguageName, secondLanguageName, wordPairCount, ...props }: Props) => {
   return (
     <div className="flex w-full flex-col gap-4">
       <ListBox fieldKey="id" fieldValue="name" label="Select wordsource" {...props} />
-      <WordSourceDetailBox {...props} />
+      <WordSourceDetailBox firstLanguageName={firstLanguageName} secondLanguageName={secondLanguageName} wordPairCount={wordPairCount} />
     </div>
   );
 };

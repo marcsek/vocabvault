@@ -1,24 +1,21 @@
-import Button from '@ui/Button';
+import { ButtonProps } from '@ui/Button';
 import TitleLayout from '@ui/TitleLayout';
-import { HiOutlineDocumentAdd } from 'react-icons/hi';
-import { Link } from 'react-router-dom';
+import { useState } from 'react';
 import NewSessionForm from './components/NewSessionForm/NewSessionForm';
 import NewSessionSelectedWords from './components/SelectedWords/NewSessionSelectedWords';
 import { SelectedWordsContextProvider } from './context/SelectedWordsContext';
 
 const NewSession = () => {
+  const [submitButton, setSubmitButton] = useState<React.ReactElement<ButtonProps>>();
+
   return (
     <TitleLayout
       headingLeft={<h1 className="flex flex-col gap-1 text-xl font-bold leading-none md:text-2xl">New session</h1>}
-      button={
-        <Button as={Link} to="/create-datasource" intent="primary" className="w-max" Icon={<HiOutlineDocumentAdd size={20} />}>
-          Start session
-        </Button>
-      }
+      button={submitButton}
     >
       <div className="flex w-full flex-col gap-14 md:gap-14">
         <SelectedWordsContextProvider>
-          <NewSessionForm />
+          <NewSessionForm submitFormButton={setSubmitButton} />
           <NewSessionSelectedWords />
         </SelectedWordsContextProvider>
       </div>

@@ -1,19 +1,26 @@
 import Divider from '@ui/Divider';
 import ListBox from '@ui/ListBox';
 import { useFormik } from 'formik';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useGetAvailableWordSources } from '../../../../queries/wordSource';
 import { TGetAllWordSourcesOutput } from '../../../WordSources/WordSources.page';
 import { useSelectedWords } from '../../context/SelectedWordsContext';
 import { MdLockOutline } from 'react-icons/md';
 import SessionTypeSelector from '../SessionTypeSelector';
 import WordSourceSelector from '../WordSourceSelector/WordSourceSelector';
-import { generateAvailableGroupNumbers, generateAvailableNumberOfPairs } from './generators';
+import { generateAvailableGroupNumbers, generateAvailableNumberOfPairs, generateOutput } from './generators';
+import Button, { ButtonProps } from '@ui/Button';
+import { FiAperture } from 'react-icons/fi';
+import { useNavigate } from 'react-router-dom';
+import { TNewSessionProps } from '../../types';
 
 const typesOfSession = [
   { id: 'Practice', description: 'Practice to get better.' },
   { id: 'Test', description: 'Test your knowledge.' },
 ];
+
+export type TSessionTypes = typeof typesOfSession;
+
 const numbersOfRepetition = [{ id: '2' }, { id: '3' }, { id: '4' }];
 
 const defaultListBoxValue = { id: '0', name: 'Select wordsource' };
@@ -21,14 +28,20 @@ const defaultTranlastionLanguage = { code: '0', languageName: 'None' };
 const defaultNumberOfPairs = { id: '5' };
 const defaultGroupNumber = { id: '1' };
 
-const NewSessionForm = () => {
+interface Props {
+  submitFormButton: (value: React.ReactElement<ButtonProps>) => void;
+}
+
+const NewSessionForm = ({ submitFormButton }: Props) => {
   const { data: wordSources } = useGetAvailableWordSources();
   const { setSelectedWords } = useSelectedWords();
+  const navigate = useNavigate();
+  const submitButtonRef = useRef<HTMLButtonElement>(null);
 
   const strippedWordSources = wordSources?.map((e) => ({ id: e.id, name: e.name }));
   const getFullWordSource = (id: string, wordSources?: TGetAllWordSourcesOutput) => wordSources?.find((e) => e.id === id);
 
-  const formik = useFormik({
+  const formik = useFormik<TNewSessionProps>({
     initialValues: {
       type: typesOfSession[0],
       document: defaultListBoxValue,
@@ -40,8 +53,9 @@ const NewSessionForm = () => {
       allTranslationLanguages: [defaultTranlastionLanguage],
       numOfRepetition: numbersOfRepetition[0],
     },
-    onSubmit: (e) => {
-      console.log(e);
+    onSubmit: (data) => {
+      const output = generateOutput(data);
+      navigate('/session', { state: output });
     },
   });
 
@@ -83,9 +97,22 @@ const NewSessionForm = () => {
     }));
   };
 
+  useEffect(() => {
+    submitFormButton(
+      <Button
+        disabled={formik.values.document.id === '0'}
+        type="submit"
+        Icon={<FiAperture />}
+        onClick={() => submitButtonRef.current?.click()}
+      >
+        Start
+      </Button>
+    );
+  }, [formik.values.document.id]);
+
   return (
     <div>
-      <div className="flex flex-col gap-12">
+      <form onSubmit={formik.handleSubmit} className="flex flex-col gap-12">
         <div className="flex flex-col gap-10 xl:flex-row">
           <SessionTypeSelector items={typesOfSession} onChange={(e) => formik.setFieldValue('type', e)} value={formik.values.type} />
           <WordSourceSelector
@@ -147,7 +174,10 @@ const NewSessionForm = () => {
             />
           </div>
         </div>
-      </div>
+        <button className="hidden" ref={submitButtonRef} disabled={!formik.isValid} type="submit">
+          Submit
+        </button>
+      </form>
     </div>
   );
 };

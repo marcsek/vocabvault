@@ -21,6 +21,7 @@ import Security from './pages/Settings/views/Security';
 import Role from './pages/Settings/views/Role/Role';
 import Social from './pages/Settings/views/Social/Social';
 import NewSession from './pages/NewSession/NewSession.page';
+import Session from './pages/Session/Session.page';
 
 function App() {
   return (
@@ -50,6 +51,7 @@ function App() {
                       <Route path="security" element={<Security />} />
                     </Route>
                     <Route path="/new-session" element={<NewSession />} />
+                    <Route path="/session" element={<Session />} />
                   </Route>
                 </Route>
                 <Route path="/auth/success" element={<AuthSuccess />} />

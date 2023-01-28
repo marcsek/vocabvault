@@ -20,8 +20,8 @@ const SessionForm = ({ handleSubmit, validity, currentWord, answerValue, setAnsw
   };
 
   useEffect(() => {
-    focusRef.current?.focus();
-  }, [currentWord]);
+    if (!disabled) focusRef.current?.focus();
+  }, [disabled]);
 
   const submitOnEnter = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key == 'Enter' && !e.shiftKey) {
@@ -31,9 +31,9 @@ const SessionForm = ({ handleSubmit, validity, currentWord, answerValue, setAnsw
   };
 
   return (
-    <form onSubmit={onSubmit} className="flex w-full flex-col items-center gap-10">
+    <form onSubmit={onSubmit} className="flex w-full flex-col items-center gap-10 px-9">
       <h1
-        className={`text-center text-7xl font-bold leading-none ${
+        className={`text-center text-5xl font-bold leading-none md:text-6xl ${
           validity === 'VALID' ? 'text-success-200' : validity === 'INVALID' ? 'text-error-200' : 'text-gray-50'
         }`}
       >

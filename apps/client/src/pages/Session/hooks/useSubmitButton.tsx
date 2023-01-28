@@ -25,7 +25,7 @@ const useSubmitButton = ({ onIncorrectClick, validity: valid }: Props) => {
     focusRef.current?.focus();
   }, [submitButton]);
 
-  return { submitButton, submitButtonRef, setDisabled };
+  return { submitButton, submitButtonRef, setSubmitDisabled: setDisabled };
 };
 
 export default useSubmitButton;

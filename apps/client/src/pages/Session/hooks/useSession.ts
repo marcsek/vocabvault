@@ -9,7 +9,7 @@ interface Props {
   repetitions: number;
 }
 
-type THistoryMap = Map<string, { tries: number; correctTries: number }>;
+export type THistoryMap = Map<string, { tries: number; correctTries: number }>;
 
 const useSession = ({ wordPairs, handleCorrect, handleIncorrect, handleEnd, repetitions, handleRoundEnd }: Props) => {
   const [currentWord, setCurrentWord] = useState(0);

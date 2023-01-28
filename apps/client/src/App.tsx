@@ -36,6 +36,7 @@ function App() {
                     <Route path="login" element={<Login />} />
                     <Route path="register" element={<Register />} />
                   </Route>
+                  <Route path="/session" element={<Session />} />
                 </Route>
                 <Route element={<Layout hasHeader />}>
                   <Route path="/" element={<LandingPage />} />
@@ -51,7 +52,8 @@ function App() {
                       <Route path="security" element={<Security />} />
                     </Route>
                     <Route path="/new-session" element={<NewSession />} />
-                    <Route path="/session" element={<Session />} />
+                    {/* TODO: Session dat do routov bez headeru */}
+                    {/* <Route path="/session" element={<Session />} /> */}
                   </Route>
                 </Route>
                 <Route path="/auth/success" element={<AuthSuccess />} />

@@ -24,7 +24,7 @@ const Session = () => {
   console.log(sessionState);
 
   return (
-    <div>
+    <div className="!max-w-none !p-0">
       {isEnd ? (
         <div>End</div>
       ) : (

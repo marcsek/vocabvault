@@ -34,11 +34,14 @@ export type ButtonProps = {
 
 const defaultElement = 'button';
 
-const Button = <Element extends React.ElementType = typeof defaultElement>(props: PolymorphicProps<Element, ButtonProps>) => {
+const Button = <Element extends React.ElementType = typeof defaultElement>(
+  props: PolymorphicProps<Element, ButtonProps>,
+  ref: React.ForwardedRef<HTMLButtonElement>
+) => {
   const { as: Component = defaultElement, loading = false, className, intent, size, children, Icon, ...rest } = props;
 
   return (
-    <Component className={`${buttonStyles({ intent, size })} ${className} ${loading ? 'disabled' : ''}`} {...rest}>
+    <Component ref={ref} className={`${buttonStyles({ intent, size })} ${className} ${loading ? 'disabled' : ''}`} {...rest}>
       <div className={`${loading ? 'visible' : 'invisible'} absolute`}>
         <SpinnerSmall />
       </div>
@@ -50,4 +53,4 @@ const Button = <Element extends React.ElementType = typeof defaultElement>(props
   );
 };
 
-export default Button;
+export default React.forwardRef(Button);

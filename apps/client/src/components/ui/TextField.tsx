@@ -26,12 +26,19 @@ interface Props
   handleIconClick?: () => void;
 }
 
-const TextField = ({ helperText, labelText, className, state, Icon, IconLeft, handleIconClick, ...props }: Props) => {
+const TextField = (
+  { helperText, labelText, className, state, Icon, IconLeft, handleIconClick, ...props }: Props,
+  ref: React.ForwardedRef<HTMLInputElement>
+) => {
   return (
     <div className="relative -z-0 flex w-full flex-col gap-2 text-gray-50">
       <label className="w-full">
         <p className="mb-2 text-sm font-medium">{labelText}</p>
-        <input className={`${className} ${textFieldStyles({ state })} ${Icon ? 'pr-9' : IconLeft ? 'pl-9' : ''}`} {...props}></input>
+        <input
+          ref={ref}
+          className={`${className} ${textFieldStyles({ state })} ${Icon ? 'pr-9' : IconLeft ? 'pl-9' : ''}`}
+          {...props}
+        ></input>
       </label>
       <>
         <div className="absolute top-[39px] left-3 text-lg">{IconLeft}</div>
@@ -55,4 +62,4 @@ const TextField = ({ helperText, labelText, className, state, Icon, IconLeft, ha
   );
 };
 
-export default TextField;
+export default React.forwardRef(TextField);

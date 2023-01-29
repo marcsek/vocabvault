@@ -21,12 +21,12 @@ const typesOfSession = [
 
 export type TSessionTypes = typeof typesOfSession;
 
-const numbersOfRepetition = [{ id: '2' }, { id: '3' }, { id: '4' }];
+const numbersOfRepetition = [{ id: 1 }, { id: 3 }, { id: 4 }];
 
 const defaultListBoxValue = { id: '0', name: 'Select wordsource' };
 const defaultTranlastionLanguage = { code: '0', languageName: 'None' };
-const defaultNumberOfPairs = { id: '5' };
-const defaultGroupNumber = { id: '1' };
+const defaultNumberOfPairs = { id: 5 };
+const defaultGroupNumber = { id: 1 };
 
 interface Props {
   submitFormButton: (value: React.ReactElement<ButtonProps>) => void;
@@ -63,21 +63,19 @@ const NewSessionForm = ({ submitFormButton }: Props) => {
     setSelectedWords({
       id: formik.values.document.id,
       languageCode: formik.values.translationLanguage.code,
-      pairsInGroup: parseInt(formik.values.numOfWordPairs.id),
-      selectedGroup: parseInt(formik.values.groupNumber.id),
+      pairsInGroup: formik.values.numOfWordPairs.id,
+      selectedGroup: formik.values.groupNumber.id,
     });
   }, [formik.values.translationLanguage.code, formik.values.document.id, formik.values.numOfWordPairs.id, formik.values.groupNumber.id]);
 
-  useEffect(() => {
+  const handleNumOfPairsInGroupChange = (newValue: { id: number }) => {
     formik.setValues((e) => ({
       ...e,
-      groupNumber: { id: '1' },
-      availableGroupNumbers: generateAvailableGroupNumbers(
-        getFullWordSource(formik.values.document.id, wordSources)?.wordPairsCount ?? 0,
-        parseInt(formik.values.numOfWordPairs.id)
-      ),
+      groupNumber: { id: 1 },
+      numOfWordPairs: newValue,
+      availableGroupNumbers: generateAvailableGroupNumbers(getFullWordSource(e.document.id, wordSources)?.wordPairsCount ?? 0, newValue.id),
     }));
-  }, [formik.values.numOfWordPairs]);
+  };
 
   const handleWordSourceChange = (newDocument: { id: string; name: string }) => {
     const wordSource = getFullWordSource(newDocument.id, wordSources);
@@ -86,6 +84,7 @@ const NewSessionForm = ({ submitFormButton }: Props) => {
 
     const allTranslationLanguages = [wordSource.secondLanguage, wordSource.firstLanguage];
     const availableNumOfWordPairs = generateAvailableNumberOfPairs(wordSource.wordPairsCount);
+    const availableGroupNumbers = generateAvailableGroupNumbers(wordSource.wordPairsCount, availableNumOfWordPairs[0].id);
 
     formik.setValues((e) => ({
       ...e,
@@ -94,6 +93,7 @@ const NewSessionForm = ({ submitFormButton }: Props) => {
       availableNumOfWordPairs,
       translationLanguage: allTranslationLanguages[0],
       allTranslationLanguages,
+      availableGroupNumbers,
     }));
   };
 
@@ -140,7 +140,7 @@ const NewSessionForm = ({ submitFormButton }: Props) => {
               fieldValue="id"
               items={formik.values.availableNumOfWordPairs}
               label="Number of pairs in a group"
-              onChange={(e) => formik.setFieldValue('numOfWordPairs', e)}
+              onChange={handleNumOfPairsInGroupChange}
               value={formik.values.numOfWordPairs}
             />
             <ListBox

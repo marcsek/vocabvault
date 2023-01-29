@@ -22,6 +22,7 @@ import Role from './pages/Settings/views/Role/Role';
 import Social from './pages/Settings/views/Social/Social';
 import NewSession from './pages/NewSession/NewSession.page';
 import Session from './pages/Session/Session.page';
+import SessionStats from './pages/SessionStats/SessionStats.page';
 
 function App() {
   return (
@@ -38,6 +39,7 @@ function App() {
                   </Route>
                   <Route element={<RequireUser />}>
                     <Route path="/session" element={<Session />} />
+                    <Route path="/session-stats" element={<SessionStats />} />
                   </Route>
                 </Route>
                 <Route element={<Layout hasHeader />}>

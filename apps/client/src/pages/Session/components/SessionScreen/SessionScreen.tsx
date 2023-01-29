@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import useSession from '../../hooks/useSession';
 import useSubmitButton from '../../hooks/useSubmitButton';
+import useTimeSnapshot from '../../hooks/useTimeSnapshot';
 import SessionAnswerPopup from './SessionAnswerPopup';
 import SessionBar from './SessionBar';
 import SessionControls from './SessionControls';
@@ -14,21 +16,22 @@ interface Props {
   proofLanguageName: string;
   wordPairs: { value: string; proof: string }[];
   repetitions: number;
-  onEnd: () => void;
 }
 
 export type TAnswerValidity = { validity: 'VALID' | 'INVALID' | 'UNSET'; message: string };
 
-const SessionScreen = ({ translationLanguageName, proofLanguageName, wordPairs, onEnd, repetitions, type }: Props) => {
+const SessionScreen = ({ translationLanguageName, proofLanguageName, wordPairs, repetitions, type }: Props) => {
   const [answerValue, setAnswerValue] = useState('');
   const [answerValidity, setAnswerValidity] = useState<TAnswerValidity>({ validity: 'UNSET', message: '' });
   const [courtain, setCourtain] = useState(false);
+  const finishSnapshot = useTimeSnapshot();
   const session = useSession({ handleCorrect, handleIncorrect, handleEnd, handleRoundEnd, wordPairs, repetitions, type });
   const { submitButton, submitButtonRef, setSubmitDisabled } = useSubmitButton({
     validity: answerValidity.validity,
     onIncorrectClick: handleIncorrectClick,
     type,
   });
+  const navigate = useNavigate();
 
   const onSubmit = () => {
     session.handleWordSubmit(answerValue);
@@ -63,7 +66,10 @@ const SessionScreen = ({ translationLanguageName, proofLanguageName, wordPairs, 
   }
 
   function handleEnd() {
-    onEnd();
+    const snapshot = finishSnapshot();
+    const diff = snapshot[1].getTime() - snapshot[0].getTime();
+
+    navigate('/session-stats', { state: diff, replace: true });
   }
 
   function handleRoundEnd() {

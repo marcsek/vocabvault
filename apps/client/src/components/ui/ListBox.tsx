@@ -1,21 +1,29 @@
 import { Listbox } from '@headlessui/react';
 import { HiChevronUpDown } from 'react-icons/hi2';
 
-export type TListBoxInput = { [key: string]: string };
+export type TListBoxInput<K> = { [key: string]: K };
 
-export interface ListBoxProps<T> {
+export interface ListBoxProps<K, T, TKey> {
   disabled?: boolean;
   items: T[];
   label: string;
   name?: string;
   value: T;
   onChange: (value: T) => void;
-  fieldKey: string;
-  fieldValue: string;
-  disabledKeys?: string[] | string;
+  fieldKey: TKey;
+  fieldValue: TKey;
+  disabledKeys?: K[];
 }
 
-const ListBox = <T extends TListBoxInput>({ items, label, value, fieldKey, fieldValue, disabledKeys, ...props }: ListBoxProps<T>) => {
+const ListBox = <K extends string | number, T extends TListBoxInput<K>, TKey extends keyof T>({
+  items,
+  label,
+  value,
+  fieldKey,
+  fieldValue,
+  disabledKeys,
+  ...props
+}: ListBoxProps<K, T, TKey>) => {
   return (
     <div className="h-fit w-full">
       <Listbox value={value} {...props}>

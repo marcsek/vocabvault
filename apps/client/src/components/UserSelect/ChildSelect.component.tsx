@@ -10,7 +10,7 @@ import { userRouter } from 'server/src/routers/user';
 
 export type TGetChildrenOutput = NonNullable<inferProcedureOutput<typeof userRouter.getUserChildren>>;
 
-type Props = Omit<ListBoxProps<TGetChildrenOutput>, 'disabledKeys' | 'items' | 'onChange' | 'value'> & {
+type Props = Omit<ListBoxProps<TGetChildrenOutput, keyof TGetChildrenOutput[number]>, 'disabledKeys' | 'items' | 'onChange' | 'value'> & {
   onChange: (value: TGetChildrenOutput) => void;
   flow?: 'horizontal' | 'vertical';
   initialChildren?: TGetChildrenOutput;

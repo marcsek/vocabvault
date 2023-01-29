@@ -34,7 +34,7 @@ const LanguageComboInput = <T extends TLanguageDuo>({ formik }: Props<T>) => {
           onChange={(e) => formik.setFieldValue('firstLanguage', e)}
           fieldKey="code"
           fieldValue="languageName"
-          disabledKeys={formik.values.secondLanguage.code}
+          disabledKeys={[formik.values.secondLanguage.code]}
         />
         <ListBox
           items={allCountries}
@@ -43,7 +43,7 @@ const LanguageComboInput = <T extends TLanguageDuo>({ formik }: Props<T>) => {
           onChange={(e) => formik.setFieldValue('secondLanguage', e)}
           fieldKey="code"
           fieldValue="languageName"
-          disabledKeys={formik.values.firstLanguage.code}
+          disabledKeys={[formik.values.firstLanguage.code]}
         />
       </div>
     </>

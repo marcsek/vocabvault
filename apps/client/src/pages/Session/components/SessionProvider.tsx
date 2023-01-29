@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useGetWordSourceWordPairs } from '../../../queries/wordSource';
 import { TNewSessionOutput } from '../../NewSession/components/NewSessionForm/generators';
 import SessionScreen from './SessionScreen/SessionScreen';
@@ -10,8 +9,6 @@ interface Props {
 }
 
 const SessionProvider = ({ sessionState, skip, take }: Props) => {
-  const [isEnd, setIsEnd] = useState(false);
-
   const { data: wordPairs, isLoading } = useGetWordSourceWordPairs(sessionState.documentId, { takeSkip: { skip, take } });
   const isFirstLangPrimary = wordPairs?.firstLanguage.code === sessionState.translationLanguage.code;
 
@@ -22,21 +19,14 @@ const SessionProvider = ({ sessionState, skip, take }: Props) => {
 
   return (
     <div className="!max-w-none !p-0">
-      {isEnd ? (
-        <div>End</div>
-      ) : (
-        <>
-          {!isLoading && (
-            <SessionScreen
-              repetitions={sessionState.repetitions}
-              onEnd={() => setIsEnd(true)}
-              wordPairs={transferedWordPairs ?? []}
-              type={sessionState.type}
-              proofLanguageName={sessionState.proofLanguage.languageName}
-              translationLanguageName={sessionState.translationLanguage.languageName}
-            />
-          )}
-        </>
+      {!isLoading && (
+        <SessionScreen
+          repetitions={sessionState.repetitions}
+          wordPairs={transferedWordPairs ?? []}
+          type={sessionState.type}
+          proofLanguageName={sessionState.proofLanguage.languageName}
+          translationLanguageName={sessionState.translationLanguage.languageName}
+        />
       )}
     </div>
   );

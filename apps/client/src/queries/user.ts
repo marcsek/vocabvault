@@ -8,10 +8,20 @@ import { toast } from 'react-toastify';
 export const useGetUser = () => {
   const hasCookie = Boolean(Cookies.get('is_loggedin'));
   const windowIsPopup = window.opener && window.opener !== window;
+  const queryClient = useQueryClient();
 
   return trpc.user.getUser.useQuery(undefined, {
+    onError(error) {
+      if (error.data?.code === 'UNAUTHORIZED') {
+        //hack lebo z nejake dovodu nemozem setovat data na null aj ked default tanstack query je null
+        const q = [...trpc.user.getUser.getQueryKey(), { type: 'query' }];
+
+        queryClient.setQueryData(q, null);
+      }
+    },
+
     retry: false,
-    useErrorBoundary: true,
+    useErrorBoundary: false,
     suspense: true,
     refetchInterval: 600000,
     enabled: hasCookie && !windowIsPopup,

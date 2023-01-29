@@ -1,13 +1,13 @@
 import { TNewSessionProps } from '../../types';
 
 export const generateAvailableNumberOfPairs = (wordPairsCount: number) => {
-  const availableNumOfWordPairs: { id: string }[] = [];
+  const availableNumOfWordPairs: { id: number }[] = [];
   for (let i = 5; i <= 25; i += 5) {
     if (wordPairsCount <= i) {
-      availableNumOfWordPairs.push({ id: wordPairsCount.toString() });
+      availableNumOfWordPairs.push({ id: wordPairsCount });
       break;
     }
-    availableNumOfWordPairs.push({ id: i.toString() });
+    availableNumOfWordPairs.push({ id: i });
   }
   return availableNumOfWordPairs;
 };
@@ -16,27 +16,28 @@ export const generateAvailableGroupNumbers = (wordPairsCount: number, numberOfPa
   const availableGroupNumbers = [];
 
   for (let i = 0; i < wordPairsCount / numberOfPairsInGroup; i++) {
-    availableGroupNumbers.push({ id: (i + 1).toString() });
+    availableGroupNumbers.push({ id: i + 1 });
   }
 
   return availableGroupNumbers;
 };
 
 export const generateOutput = (data: TNewSessionProps) => {
-  let numOfRepetitions = data.numOfRepetition.id;
+  let repetitions = data.numOfRepetition.id;
+  const proofLanguage = data.allTranslationLanguages.find((e) => e.code !== data.translationLanguage.code) ?? data.translationLanguage;
 
   if (data.type.id === 'Test') {
-    numOfRepetitions = '1';
+    repetitions = 1;
   }
 
   return {
     type: data.type.id as 'Practice' | 'Test',
     documentId: data.document.id,
-    groupNumber: parseInt(data.groupNumber.id),
-    proofLanguage: data.allTranslationLanguages.find((e) => e.code !== data.translationLanguage.code) ?? data.translationLanguage,
+    groupNumber: data.groupNumber.id,
+    proofLanguage,
     translationLanguage: data.translationLanguage,
-    pairsInNumber: parseInt(data.numOfWordPairs.id),
-    repetitions: parseInt(numOfRepetitions),
+    pairsInNumber: data.numOfWordPairs.id,
+    repetitions,
   };
 };
 

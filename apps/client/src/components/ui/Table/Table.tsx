@@ -1,13 +1,17 @@
 import React from 'react';
 import Pagination from './Pagination';
 
-interface Props {
+interface Props<T, TKey> {
   pagination?: { page: number; perPage: number; setPage: React.Dispatch<React.SetStateAction<number>>; total: number };
-  columns: { keyField: string; data: { field: string; headerName: string }[] };
-  rows: { [key: string]: string | number }[];
+  columns: { keyField: TKey; data: { field: string; headerName: string }[] };
+  rows: T;
 }
 
-const Table = ({ columns, rows, pagination }: Props) => {
+const Table = <T extends { [key: string]: string | number }[], TKey extends keyof T[number]>({
+  columns,
+  rows,
+  pagination,
+}: Props<T, TKey>) => {
   return (
     <div className="flex h-full w-full flex-shrink flex-col items-end justify-between gap-4" aria-label="table">
       <div className="w-full flex-1 flex-shrink overflow-auto">

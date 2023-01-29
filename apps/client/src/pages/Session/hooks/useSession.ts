@@ -10,12 +10,14 @@ interface Props {
   type: 'Practice' | 'Test';
 }
 
-export type THistoryMap = Map<string, { tries: number; correctTries: number }>;
+export type THistoryMap = Map<string, { tries: number; correctTries: number; lastAnswer: string }>;
 
 const useSession = ({ wordPairs, handleCorrect, handleIncorrect, handleEnd, repetitions, handleRoundEnd, type }: Props) => {
   const [currentWord, setCurrentWord] = useState(0);
   const [availableWords, setAvailableWord] = useState(wordPairs);
-  const [history, setHistory] = useState<THistoryMap>(new Map(wordPairs.map((e) => [e.value, { tries: 0, correctTries: 0 }])));
+  const [history, setHistory] = useState<THistoryMap>(
+    new Map(wordPairs.map((e) => [e.value, { tries: 0, correctTries: 0, lastAnswer: '' }]))
+  );
   const [currentRound, setCurrentRound] = useState(1);
 
   const currentWordValue = availableWords[currentWord];
@@ -45,10 +47,11 @@ const useSession = ({ wordPairs, handleCorrect, handleIncorrect, handleEnd, repe
       map.set(currentWordValue.value, {
         correctTries: currentWordObj.correctTries + 1,
         tries: currentWordObj.tries + 1,
+        lastAnswer: value,
       });
       return handleCorrect();
     }
-    map.set(currentWordValue.value, { ...currentWordObj, tries: currentWordObj.tries + 1 });
+    map.set(currentWordValue.value, { ...currentWordObj, tries: currentWordObj.tries + 1, lastAnswer: value });
     handleIncorrect(currentWordValue.proof);
   };
 

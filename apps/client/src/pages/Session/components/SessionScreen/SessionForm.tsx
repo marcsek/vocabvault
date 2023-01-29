@@ -4,6 +4,7 @@ import { TAnswerValidity } from './SessionScreen';
 
 interface Props extends Pick<TAnswerValidity, 'validity'> {
   handleSubmit: () => void;
+  proofLanguageName: string;
   currentWord: string;
   answerValue: string;
   setAnswerValue: React.Dispatch<React.SetStateAction<string>>;
@@ -11,7 +12,16 @@ interface Props extends Pick<TAnswerValidity, 'validity'> {
   disabled: boolean;
 }
 
-const SessionForm = ({ handleSubmit, validity, currentWord, answerValue, setAnswerValue, submitButtonRef, disabled }: Props) => {
+const SessionForm = ({
+  handleSubmit,
+  validity,
+  currentWord,
+  answerValue,
+  setAnswerValue,
+  submitButtonRef,
+  disabled,
+  proofLanguageName,
+}: Props) => {
   const focusRef = useRef<HTMLTextAreaElement>(null);
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -40,7 +50,7 @@ const SessionForm = ({ handleSubmit, validity, currentWord, answerValue, setAnsw
         {currentWord}
       </h1>
       <div className="flex w-full max-w-[26rem] flex-col">
-        <p className="self-center text-sm leading-none text-gray-500">Type in Slovak</p>
+        <p className="self-center text-sm leading-none text-gray-500">Type in {proofLanguageName}</p>
         <TextArea
           disabled={disabled}
           type="text"

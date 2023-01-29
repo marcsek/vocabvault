@@ -7,11 +7,12 @@ interface Props {
   handleEnd: () => void;
   handleRoundEnd: () => void;
   repetitions: number;
+  type: 'Practice' | 'Test';
 }
 
 export type THistoryMap = Map<string, { tries: number; correctTries: number }>;
 
-const useSession = ({ wordPairs, handleCorrect, handleIncorrect, handleEnd, repetitions, handleRoundEnd }: Props) => {
+const useSession = ({ wordPairs, handleCorrect, handleIncorrect, handleEnd, repetitions, handleRoundEnd, type }: Props) => {
   const [currentWord, setCurrentWord] = useState(0);
   const [availableWords, setAvailableWord] = useState(wordPairs);
   const [history, setHistory] = useState<THistoryMap>(new Map(wordPairs.map((e) => [e.value, { tries: 0, correctTries: 0 }])));
@@ -61,7 +62,10 @@ const useSession = ({ wordPairs, handleCorrect, handleIncorrect, handleEnd, repe
   };
 
   const handleLastWord = (map: THistoryMap) => {
-    const someAreUnfinished = [...map.values()].some((e) => e.correctTries < repetitions);
+    const someAreUnfinished = [...map.values()].some((e) => {
+      const valToCheckAgainst = type === 'Test' ? e.tries : e.correctTries;
+      return valToCheckAgainst < repetitions;
+    });
 
     if (!someAreUnfinished) return handleEnd();
 

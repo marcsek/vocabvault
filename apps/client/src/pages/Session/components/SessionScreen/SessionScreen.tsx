@@ -6,6 +6,7 @@ import SessionBar from './SessionBar';
 import SessionControls from './SessionControls';
 import SessionCourtain from './SessionCourtain';
 import SessionForm from './SessionForm';
+import SessionScoreBoard from './SessionScoreBoard';
 
 interface Props {
   type: 'Practice' | 'Test';
@@ -18,14 +19,15 @@ interface Props {
 
 export type TAnswerValidity = { validity: 'VALID' | 'INVALID' | 'UNSET'; message: string };
 
-const SessionScreen = ({ translationLanguageName, proofLanguageName, wordPairs, onEnd, repetitions }: Props) => {
+const SessionScreen = ({ translationLanguageName, proofLanguageName, wordPairs, onEnd, repetitions, type }: Props) => {
   const [answerValue, setAnswerValue] = useState('');
   const [answerValidity, setAnswerValidity] = useState<TAnswerValidity>({ validity: 'UNSET', message: '' });
   const [courtain, setCourtain] = useState(false);
-  const session = useSession({ handleCorrect, handleIncorrect, handleEnd, handleRoundEnd, wordPairs, repetitions });
+  const session = useSession({ handleCorrect, handleIncorrect, handleEnd, handleRoundEnd, wordPairs, repetitions, type });
   const { submitButton, submitButtonRef, setSubmitDisabled } = useSubmitButton({
     validity: answerValidity.validity,
     onIncorrectClick: handleIncorrectClick,
+    type,
   });
 
   const onSubmit = () => {
@@ -45,6 +47,14 @@ const SessionScreen = ({ translationLanguageName, proofLanguageName, wordPairs, 
 
   function handleIncorrect(correct: string) {
     setAnswerValidity({ validity: 'INVALID', message: correct });
+    if (type === 'Test') {
+      setSubmitDisabled(true);
+      setTimeout(() => {
+        setAnswerValidity({ validity: 'UNSET', message: '' });
+        setSubmitDisabled(false);
+        session.incrementPage();
+      }, 1000);
+    }
   }
 
   function handleIncorrectClick() {
@@ -67,7 +77,7 @@ const SessionScreen = ({ translationLanguageName, proofLanguageName, wordPairs, 
     <div className="flex h-full flex-col items-center justify-between pt-7">
       {courtain && <SessionCourtain />}
       <div className="max-w-8xl flex w-full flex-col items-center gap-5 text-sm font-semibold text-gray-400">
-        <SessionBar history={session.history} repetitions={repetitions} />
+        <SessionBar history={session.history} repetitions={repetitions} type={type} />
         <p>
           Tranlating from {translationLanguageName} to {proofLanguageName}
         </p>
@@ -81,11 +91,18 @@ const SessionScreen = ({ translationLanguageName, proofLanguageName, wordPairs, 
           validity={answerValidity.validity}
           answerValue={answerValue}
           setAnswerValue={setAnswerValue}
+          proofLanguageName={proofLanguageName}
         />
-        <div className="h-14">{answerValidity.validity === 'INVALID' && <SessionAnswerPopup correctAnswer={answerValidity.message} />}</div>
+        <div className="h-14">
+          {type !== 'Test' && answerValidity.validity === 'INVALID' && <SessionAnswerPopup correctAnswer={answerValidity.message} />}
+        </div>
       </div>
       <div className="flex w-full flex-col items-center gap-8 self-end">
-        <div className="text-sm font-semibold leading-none text-gray-400">ROUND {session.currentRound}</div>
+        {type === 'Test' ? (
+          <SessionScoreBoard history={session.history} />
+        ) : (
+          <div className="text-sm font-semibold leading-none text-gray-400">ROUND {session.currentRound}</div>
+        )}
         <SessionControls validity={answerValidity.validity} ControlButton={submitButton} />
       </div>
     </div>

@@ -23,6 +23,12 @@ export const generateAvailableGroupNumbers = (wordPairsCount: number, numberOfPa
 };
 
 export const generateOutput = (data: TNewSessionProps) => {
+  let numOfRepetitions = data.numOfRepetition.id;
+
+  if (data.type.id === 'Test') {
+    numOfRepetitions = '1';
+  }
+
   return {
     type: data.type.id as 'Practice' | 'Test',
     documentId: data.document.id,
@@ -30,7 +36,7 @@ export const generateOutput = (data: TNewSessionProps) => {
     proofLanguage: data.allTranslationLanguages.find((e) => e.code !== data.translationLanguage.code) ?? data.translationLanguage,
     translationLanguage: data.translationLanguage,
     pairsInNumber: parseInt(data.numOfWordPairs.id),
-    repetitions: parseInt(data.numOfRepetition.id),
+    repetitions: parseInt(numOfRepetitions),
   };
 };
 

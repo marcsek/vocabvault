@@ -1,4 +1,4 @@
-import { AiOutlineLock } from 'react-icons/ai';
+import { MdLockOutline } from 'react-icons/md';
 import { users } from '../../../../assets/static/temporary';
 import { TGetAllWordSourcesOutput } from '../../WordSources.page';
 
@@ -9,7 +9,7 @@ const SourceStatus = ({ type, creator, userAvailableSources: watchers }: Props) 
     <div className="flex">
       {type === 'private' && (
         <p className="flex items-center gap-2 text-sm font-semibold leading-none text-gray-300">
-          Private <AiOutlineLock size={20}></AiOutlineLock>
+          Private <MdLockOutline size={18}></MdLockOutline>
         </p>
       )}
       {type === 'watched' && (

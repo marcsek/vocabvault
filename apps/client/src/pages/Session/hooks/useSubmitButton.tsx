@@ -5,16 +5,17 @@ import { IncorrectButton, NeutralButton } from '../components/SessionScreen/Stat
 
 interface Props extends Pick<TAnswerValidity, 'validity'> {
   onIncorrectClick: () => void;
+  type: 'Practice' | 'Test';
 }
 
-const useSubmitButton = ({ onIncorrectClick, validity: valid }: Props) => {
+const useSubmitButton = ({ onIncorrectClick, validity: valid, type }: Props) => {
   const submitButtonRef = useRef<HTMLButtonElement>(null);
   const focusRef = useRef<HTMLButtonElement>(null);
   const [submitButton, setSubmitButton] = useState<React.ReactElement<ButtonProps>>(<NeutralButton />);
   const [disabled, setDisabled] = useState(false);
 
   useEffect(() => {
-    if (valid === 'INVALID') {
+    if (valid === 'INVALID' && type === 'Practice') {
       setSubmitButton(<IncorrectButton ref={focusRef} onClick={onIncorrectClick} />);
     } else {
       setSubmitButton(<NeutralButton disabled={disabled} onClick={() => submitButtonRef.current?.click()} />);

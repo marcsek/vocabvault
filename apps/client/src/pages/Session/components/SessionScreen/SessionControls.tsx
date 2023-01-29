@@ -1,7 +1,8 @@
-import Button, { ButtonProps } from '@ui/Button';
+import { ButtonProps } from '@ui/Button';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import CancelSessionDialog from './CancelSessionDialog';
+import SessionCancel from './SessionCancel';
 import { TAnswerValidity } from './SessionScreen';
 
 interface Props extends Pick<TAnswerValidity, 'validity'> {
@@ -14,16 +15,11 @@ const SessionControls = ({ validity: valid, ControlButton }: Props) => {
 
   return (
     <div className="flex h-full w-full flex-col items-center">
-      <div className={`h-0.5 w-full ${valid === 'VALID' ? 'bg-success-200' : valid === 'INVALID' ? 'bg-error-200' : 'bg-gray-500'}`}></div>
+      <div className={`h-0.5 w-full ${valid === 'VALID' ? 'bg-success-200' : valid === 'INVALID' ? 'bg-error-200' : 'bg-gray-600'}`}></div>
       <div className="md:px-17 max-w-8xl flex w-full justify-between px-9 py-8">
-        <Button
-          size="medium"
-          intent="asWrapper"
-          className="hidden bg-gray-700/50 text-gray-400 md:flex"
-          onClick={() => setCancelDialog(true)}
-        >
-          Cancel session
-        </Button>
+        <div className="hidden md:block">
+          <SessionCancel />
+        </div>
         <div className="w-full md:w-fit">{ControlButton}</div>
       </div>
       <CancelSessionDialog

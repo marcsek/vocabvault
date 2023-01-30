@@ -43,7 +43,7 @@ const CircularGauge = ({ value, minValue = 0, maxValue = 100, inside, color, str
           transform={`rotate(270 ${center} ${center})`}
         />
       </svg>
-      <p className="absolute top-1/2 left-1/2 z-30 -translate-y-1/2 -translate-x-1/2">{inside}</p>
+      <div className="absolute top-1/2 left-1/2 z-30 -translate-y-1/2 -translate-x-1/2">{inside}</div>
     </div>
   );
 };

@@ -1,3 +1,4 @@
+import ProgressBar from '@ui/ProgressBar';
 import React, { useMemo } from 'react';
 import { THistoryMap } from '../../hooks/useSession';
 import SessionCancel from './SessionCancel';
@@ -24,14 +25,7 @@ const SessionBar = ({ history, repetitions, type }: Props) => {
 
   return (
     <div className="md:px-17 al flex w-full items-center justify-center gap-2 px-9">
-      <div className="h-4 w-full rounded-full bg-gray-700">
-        <div
-          className={`bg-primary-300 h-full rounded-full shadow-[0px_0px_4px_#3B82F6;] ${amount !== 0 ? 'px-2' : ''}`}
-          style={{ width: `${amount}%` }}
-        >
-          <div className="bg-primary-200 relative top-1 box-border h-1 w-full rounded-full"></div>
-        </div>
-      </div>
+      <ProgressBar width={amount} />
       <div className="block h-5 w-6 md:hidden">
         <SessionCancel />
       </div>

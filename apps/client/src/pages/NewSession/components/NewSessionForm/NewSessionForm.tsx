@@ -21,7 +21,7 @@ const typesOfSession = [
 
 export type TSessionTypes = typeof typesOfSession;
 
-const numbersOfRepetition = [{ id: 1 }, { id: 3 }, { id: 4 }];
+const numbersOfRepetition = [{ id: 2 }, { id: 3 }, { id: 4 }];
 
 const defaultListBoxValue = { id: '0', name: 'Select wordsource' };
 const defaultTranlastionLanguage = { code: '0', languageName: 'None' };

@@ -5,6 +5,7 @@ interface Props {
   Icon: React.ReactNode;
   title: string;
   value: string;
+  percentage: number;
   color: string;
   unit?: string;
 }

@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import useSession from '../../hooks/useSession';
+import useSession, { THistoryMap } from '../../hooks/useSession';
 import useSubmitButton from '../../hooks/useSubmitButton';
 import useTimeSnapshot from '../../hooks/useTimeSnapshot';
+import presentSessionStatistics from '../../postSessionPresenter';
 import SessionAnswerPopup from './SessionAnswerPopup';
 import SessionBar from './SessionBar';
 import SessionControls from './SessionControls';
@@ -65,11 +66,13 @@ const SessionScreen = ({ translationLanguageName, proofLanguageName, wordPairs, 
     session.incrementPage();
   }
 
-  function handleEnd() {
-    const snapshot = finishSnapshot();
-    const diff = snapshot[1].getTime() - snapshot[0].getTime();
+  function handleEnd(history: THistoryMap) {
+    const startEndTime = finishSnapshot();
 
-    navigate('/session-stats', { state: diff, replace: true });
+    navigate('/session-stats', {
+      state: presentSessionStatistics({ history, startEndTime, type, wordPairs }),
+      replace: true,
+    });
   }
 
   function handleRoundEnd() {
@@ -89,6 +92,11 @@ const SessionScreen = ({ translationLanguageName, proofLanguageName, wordPairs, 
         </p>
       </div>
       <div className="absolute top-40 flex w-full flex-col items-center justify-center gap-7 md:relative md:top-0">
+        {/* {[...session.history.values()].map((e) => (
+          <div>
+            correct {e.correctTries} total {e.tries} last {e.lastAnswer}
+          </div>
+        ))} */}
         <SessionForm
           disabled={answerValidity.validity !== 'UNSET' || courtain}
           submitButtonRef={submitButtonRef}

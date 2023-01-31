@@ -6,7 +6,7 @@ interface Props {
   perPage: number;
   currentPageTotal: number;
   total: number;
-  setPage: React.Dispatch<React.SetStateAction<number>>;
+  setPage: (page: number) => void;
 }
 
 const Pagination = ({ page, perPage, total, currentPageTotal, setPage }: Props) => {
@@ -17,7 +17,7 @@ const Pagination = ({ page, perPage, total, currentPageTotal, setPage }: Props) 
 
   const handlePageChange = (accumulator: number) => {
     if ((accumulator < 0 && page > 0) || (accumulator > 0 && total - (page + 1) * perPage > 0)) {
-      setPage((prev) => prev + accumulator);
+      setPage(page + accumulator);
     }
   };
 

@@ -13,10 +13,10 @@ const Role = () => {
   const role = useChangeUserRole();
   const user = useUser();
 
-  const [activeRole, setActiveRole] = useState(user.type.toLocaleLowerCase());
+  const [activeRole, setActiveRole] = useState(user?.type.toLocaleLowerCase());
   const [dialogOpen, setDialogOpen] = useState(false);
 
-  const handleButtonClick = () => role.mutate({ type: user.type === 'ADULT' ? 'child' : 'adult' });
+  const handleButtonClick = () => role.mutate({ type: user?.type === 'ADULT' ? 'child' : 'adult' });
 
   const handleRoleChange = (e: string) => {
     if (user?.type.toLowerCase() !== e) {
@@ -36,7 +36,7 @@ const Role = () => {
         <h2 className="text-xl font-bold text-gray-50">Role</h2>
         <p className="text-sm text-gray-400">Choose role for your account.</p>
       </div>
-      <SettingsRadioGroup activeRole={activeRole} handleRoleChange={handleRoleChange} allRoles={accoutRole} />
+      <SettingsRadioGroup activeRole={activeRole ?? ''} handleRoleChange={handleRoleChange} allRoles={accoutRole} />
       <ChangeRoleDialog
         onButtonClick={handleButtonClick}
         onClose={() => setDialogOpen(false)}

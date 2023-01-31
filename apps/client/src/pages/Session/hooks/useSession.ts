@@ -4,7 +4,7 @@ interface Props {
   wordPairs: { value: string; proof: string }[];
   handleCorrect: () => void;
   handleIncorrect: (value: string) => void;
-  handleEnd: () => void;
+  handleEnd: (history: THistoryMap) => void;
   handleRoundEnd: () => void;
   repetitions: number;
   type: 'Practice' | 'Test';
@@ -70,7 +70,7 @@ const useSession = ({ wordPairs, handleCorrect, handleIncorrect, handleEnd, repe
       return valToCheckAgainst < repetitions;
     });
 
-    if (!someAreUnfinished) return handleEnd();
+    if (!someAreUnfinished) return handleEnd(historyCopy);
 
     removeFinishedWords(map);
     setCurrentRound((prev) => prev + 1);

@@ -47,7 +47,7 @@ const RoleRadioGroup = ({ activeRole, handleRoleChange, allRoles }: Props) => {
   );
 };
 
-const CheckRounded = ({ size }: { size: string | number }) => {
+export const CheckRounded = ({ size }: { size: string | number }) => {
   return (
     <div className={`bg-primary-500/30 text-primary-200 flex h-[24px] w-[24px] items-center justify-center rounded-full`}>
       <BsCheck className="h-full w-full" />

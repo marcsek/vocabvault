@@ -1,6 +1,6 @@
 import Button from '@ui/Button';
 import Link from '@ui/Link';
-import TitleLayout from '@ui/TitleLayout';
+import TitleLayout from '@ui/TitleLayout/TitleLayout';
 import { useGetAvailableWordSources } from '../../queries/wordSource';
 import SourceBoard from './Components/SourceBoard/SourceBoard.component';
 import SourceFilters from './Components/SourceFilters/SourceFilters';
@@ -19,7 +19,7 @@ const WordSources = () => {
   return (
     <TitleLayout
       headingLeft={<SourceFilters setFilters={setFilters} filters={filters} />}
-      button={
+      buttonPlaceholder={
         <Button as={Link} to="/create-datasource" intent="primary" className="w-max" Icon={<HiOutlineDocumentAdd size={20} />}>
           New wordsource
         </Button>

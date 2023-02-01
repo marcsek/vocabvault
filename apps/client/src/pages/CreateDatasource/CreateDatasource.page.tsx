@@ -1,18 +1,18 @@
-import TitleLayout from '@ui/TitleLayout';
-import { ButtonProps } from '@ui/Button';
+import TitleLayout from '@ui/TitleLayout/TitleLayout';
 import CreateDatasourceForm from './components/CreateDatasourceForm/CreateDatasourceForm';
 import FirstEntriesTable from './components/FirstEntriesTable/FirstEntriesTable';
 import { WordPairPreviewContextProvider } from './context/filePreviewContext/wordPairsPreviewContext';
-import { useState } from 'react';
+import { FiAperture } from 'react-icons/fi';
 
 const CreateDatasource = () => {
-  const [submitButton, setSubmitButton] = useState<React.ReactElement<ButtonProps>>();
-
   return (
-    <TitleLayout button={submitButton} headingLeft={<h1 className="text-xl font-bold leading-none md:text-2xl">Create new datasource</h1>}>
+    <TitleLayout
+      buttonForSubmit={{ title: 'Create', Icon: <FiAperture /> }}
+      headingLeft={<h1 className="text-xl font-bold leading-none md:text-2xl">Create new datasource</h1>}
+    >
       <div className="flex w-full flex-col gap-10 lg:gap-14">
         <WordPairPreviewContextProvider>
-          <CreateDatasourceForm submitFormButton={setSubmitButton} />
+          <CreateDatasourceForm />
           <FirstEntriesTable />
         </WordPairPreviewContextProvider>
       </div>

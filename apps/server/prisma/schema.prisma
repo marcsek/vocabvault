@@ -109,12 +109,14 @@ model Session {
 }
 
 model SessionStatistics {
-  session   Session @relation(fields: [sessionId], references: [id])
-  sessionId String
-  correct   Int
-  incorrect Int
-  maxStreak Int
-  accuracy  Int
+  session    Session @relation(fields: [sessionId], references: [id])
+  sessionId  String
+  correct    Int
+  incorrect  Int
+  maxStreak  Int
+  accuracy   Int
+  minTries   Int
+  totalTries Int
 
   @@id([sessionId])
   @@index([sessionId])

@@ -1,4 +1,4 @@
-import { createWordSource, getAllWordSources } from '../use-cases/wordSource';
+import { createWordSource, getAllWordSources, updateWordSource } from '../use-cases/wordSource';
 
 type TPresentWordSourceInput = Awaited<ReturnType<typeof createWordSource>>;
 
@@ -53,4 +53,18 @@ export const presentAvailableWordSources = (wordSourcesToParse: TPresentAvailabl
   });
 
   return [...parsedCreatedSources, ...parsedOtherSources];
+};
+
+type TPresentUpdatedWordSource = Awaited<ReturnType<typeof updateWordSource>>;
+
+export const presentUpdatedWordSource = (wordSourceToParse: TPresentUpdatedWordSource) => {
+  const toParse = wordSourceToParse.createdSources.at(0);
+
+  if (!toParse) return null;
+
+  const { userAvailableSources, ...rest } = toParse;
+  return {
+    ...rest,
+    userAvailableSources: userAvailableSources.map((e) => ({ name: e.user.name, id: e.user.id, profileImage: e.user.profileImage })),
+  };
 };

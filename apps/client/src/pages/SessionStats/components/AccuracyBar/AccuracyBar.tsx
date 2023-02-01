@@ -6,7 +6,10 @@ interface Props {
 
 const AccuracyBar = ({ accuracy }: Props) => {
   return (
-    <div className="rounded-default relative flex flex-col gap-4 px-6 py-5 pb-10 leading-none outline outline-1 outline-gray-600">
+    <div
+      className="rounded-default relative flex flex-col gap-4   bg-gray-800/50 px-6
+    py-5 pb-10 leading-none outline outline-1 outline-gray-600 backdrop-blur-md"
+    >
       <p className="text-sm font-semibold text-gray-300">Accuracy</p>
       <ProgressBar width={Math.floor(accuracy)} numericIndicator />
     </div>

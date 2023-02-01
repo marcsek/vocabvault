@@ -1,27 +1,25 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 import TextField from '@ui/TextField';
 import { useFormik } from 'formik';
-
 import { UpdateWordSourceSchema } from 'server/src/schemas/wordSource.schema';
-import Button, { ButtonProps } from '@ui/Button';
-import { FiAperture } from 'react-icons/fi';
 import { toFormikValidationSchema } from '../../../utils/helpers/zodToFormik';
 import LanguageComboInput from '../../CreateDatasource/components/LanguageComboInput';
 import ChildSelect from '../../../components/UserSelect/ChildSelect.component';
 import { useUpdateWordSource } from '../../../queries/wordSource';
 import { inferProcedureOutput } from '@trpc/server';
 import { wordSourceRouter } from 'server/src/routers/wordSource';
+import { ButtonPropsContext } from '@ui/TitleLayout/TitleLayout';
 
 export type TGetSourceByIdOuput = inferProcedureOutput<typeof wordSourceRouter.getWordSourceByID>;
 
 interface Props {
-  submitFormButton: (value: React.ReactElement<ButtonProps>) => void;
   initialDetails: TGetSourceByIdOuput;
 }
 
-const UpdateDatasourceForm = ({ submitFormButton, initialDetails }: Props) => {
+const UpdateDatasourceForm = ({ initialDetails }: Props) => {
   const submitButtonRef = useRef<HTMLButtonElement>(null);
   const update = useUpdateWordSource();
+  const { setButtonProps } = useContext(ButtonPropsContext);
 
   const formik = useFormik({
     validationSchema: toFormikValidationSchema(UpdateWordSourceSchema.omit({ sharedWith: true, id: true })),
@@ -39,19 +37,8 @@ const UpdateDatasourceForm = ({ submitFormButton, initialDetails }: Props) => {
     },
   });
 
-  //💀 ja uz neviem
   useEffect(() => {
-    submitFormButton(
-      <Button
-        disabled={!formik.isValid}
-        loading={update.isLoading}
-        type="submit"
-        Icon={<FiAperture />}
-        onClick={() => submitButtonRef.current?.click()}
-      >
-        Update
-      </Button>
-    );
+    setButtonProps({ disabled: !formik.isValid, loading: update.isLoading, onClick: () => submitButtonRef.current?.click() });
   }, [formik.isValid, update.isLoading]);
 
   return (

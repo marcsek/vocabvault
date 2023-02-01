@@ -65,6 +65,8 @@ const presentSessionStatistics = ({ history, startEndTime, wordPairs, type }: In
     totalTries,
     type,
     maxStreak,
+    endTime: startEndTime[1],
+    startTime: startEndTime[0],
   };
 };
 

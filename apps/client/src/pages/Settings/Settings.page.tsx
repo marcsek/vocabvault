@@ -1,5 +1,5 @@
 import Divider from '@ui/Divider';
-import TitleLayout from '@ui/TitleLayout';
+import TitleLayout from '@ui/TitleLayout/TitleLayout';
 import React from 'react';
 import { Outlet } from 'react-router-dom';
 import SettingsTabs from './components/SettingsTabs.component';

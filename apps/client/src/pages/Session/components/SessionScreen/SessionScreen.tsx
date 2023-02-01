@@ -92,11 +92,6 @@ const SessionScreen = ({ translationLanguageName, proofLanguageName, wordPairs, 
         </p>
       </div>
       <div className="absolute top-40 flex w-full flex-col items-center justify-center gap-7 md:relative md:top-0">
-        {/* {[...session.history.values()].map((e) => (
-          <div>
-            correct {e.correctTries} total {e.tries} last {e.lastAnswer}
-          </div>
-        ))} */}
         <SessionForm
           disabled={answerValidity.validity !== 'UNSET' || courtain}
           submitButtonRef={submitButtonRef}

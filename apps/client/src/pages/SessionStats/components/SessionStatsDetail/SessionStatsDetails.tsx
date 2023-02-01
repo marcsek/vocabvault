@@ -8,20 +8,12 @@ interface Props {
   statsData: TPostSessionStatsProps;
 }
 
-const SessionStatsDetails = ({ statsData }: Props) => {
+const SessionStatsDetails = ({ statsData: { accuracy, answers, type, ...indicatorProps } }: Props) => {
   return (
     <div className="flex flex-col gap-9">
-      <SucessIndicators
-        correct={statsData.correct}
-        duration={statsData.totalTime}
-        incorrect={statsData.incorrect}
-        maxStreak={statsData.maxStreak}
-        totalTries={statsData.totalTries}
-        minTries={statsData.minTries}
-        type={statsData.type}
-      />
-      <AccuracyBar accuracy={statsData.accuracy} />
-      <AnswersTable data={statsData.answers} type={statsData.type} />
+      <SucessIndicators {...{ ...indicatorProps, type }} />
+      <AccuracyBar accuracy={accuracy} />
+      <AnswersTable data={answers} type={type} />
     </div>
   );
 };

@@ -20,9 +20,8 @@ const AnswersTable = ({ data, type }: Props) => {
     setTableData(data.slice(e * perPage, e * perPage + perPage));
     setPage(e);
   };
-
   return (
-    <div className="rounded-default relative flex flex-col gap-4 px-6 py-5 pb-8 leading-none outline outline-1 outline-gray-600">
+    <div className="rounded-default relative flex flex-col gap-4 bg-gray-800/50 px-6 py-5 pb-8 leading-none outline outline-1 outline-gray-600 backdrop-blur-md">
       <p className="text-sm font-semibold text-gray-300">Solution details</p>
       <Table
         pagination={{

@@ -1,7 +1,7 @@
 import Divider from '@ui/Divider';
 import ListBox from '@ui/ListBox';
 import { useFormik } from 'formik';
-import { useEffect, useRef } from 'react';
+import { useContext, useEffect, useRef } from 'react';
 import { useGetAvailableWordSources } from '../../../../queries/wordSource';
 import { TGetAllWordSourcesOutput } from '../../../WordSources/WordSources.page';
 import { useSelectedWords } from '../../context/SelectedWordsContext';
@@ -9,10 +9,9 @@ import { MdLockOutline } from 'react-icons/md';
 import SessionTypeSelector from '../SessionTypeSelector';
 import WordSourceSelector from '../WordSourceSelector/WordSourceSelector';
 import { generateAvailableGroupNumbers, generateAvailableNumberOfPairs, generateOutput } from './generators';
-import Button, { ButtonProps } from '@ui/Button';
-import { FiAperture } from 'react-icons/fi';
 import { useNavigate } from 'react-router-dom';
 import { TNewSessionProps } from '../../types';
+import { ButtonPropsContext } from '@ui/TitleLayout/TitleLayout';
 
 const typesOfSession = [
   { id: 'Practice', description: 'Practice to get better.' },
@@ -28,15 +27,12 @@ const defaultTranlastionLanguage = { code: '0', languageName: 'None' };
 const defaultNumberOfPairs = { id: 5 };
 const defaultGroupNumber = { id: 1 };
 
-interface Props {
-  submitFormButton: (value: React.ReactElement<ButtonProps>) => void;
-}
-
-const NewSessionForm = ({ submitFormButton }: Props) => {
+const NewSessionForm = () => {
   const { data: wordSources } = useGetAvailableWordSources();
   const { setSelectedWords } = useSelectedWords();
   const navigate = useNavigate();
   const submitButtonRef = useRef<HTMLButtonElement>(null);
+  const { setButtonProps } = useContext(ButtonPropsContext);
 
   const strippedWordSources = wordSources?.map((e) => ({ id: e.id, name: e.name }));
   const getFullWordSource = (id: string, wordSources?: TGetAllWordSourcesOutput) => wordSources?.find((e) => e.id === id);
@@ -98,16 +94,7 @@ const NewSessionForm = ({ submitFormButton }: Props) => {
   };
 
   useEffect(() => {
-    submitFormButton(
-      <Button
-        disabled={formik.values.document.id === '0'}
-        type="submit"
-        Icon={<FiAperture />}
-        onClick={() => submitButtonRef.current?.click()}
-      >
-        Start
-      </Button>
-    );
+    setButtonProps({ disabled: formik.values.document.id === '0', loading: false, onClick: () => submitButtonRef.current?.click() });
   }, [formik.values.document.id]);
 
   return (

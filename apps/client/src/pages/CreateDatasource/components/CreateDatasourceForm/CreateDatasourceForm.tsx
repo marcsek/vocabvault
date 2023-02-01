@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 import TextField from '@ui/TextField';
 import { useFormik } from 'formik';
 import ChildSelect, { TGetChildrenOutput } from '../../../../components/UserSelect/ChildSelect.component';
@@ -7,22 +7,20 @@ import LanguageComboInput from '../LanguageComboInput';
 import allCountries from '../../../../assets/static/allCountries';
 import { toFormikValidationSchema } from '../../../../utils/helpers/zodToFormik';
 import { CreateWordSourceSchema, TWordPair, TWordPairArray, WordPairOptimizedArraySchema } from 'server/src/schemas/wordSource.schema';
-import Button, { ButtonProps } from '@ui/Button';
-import { FiAperture } from 'react-icons/fi';
 import useHandleDropInputChange from '../../hooks/useHandleDropInputChange';
 import { useCreateWordSource } from '../../../../queries/wordSource';
-
-interface Props {
-  submitFormButton: (value: React.ReactElement<ButtonProps>) => void;
-}
+import { ButtonPropsContext } from '@ui/TitleLayout/TitleLayout';
+import { useNavigate } from 'react-router-dom';
 
 const CreateWordSourceOptimizedSchema = CreateWordSourceSchema.omit({ wordPairs: true, sharedWith: true }).merge(
   WordPairOptimizedArraySchema
 );
 
-const CreateDatasourceForm = ({ submitFormButton }: Props) => {
-  const createWordSource = useCreateWordSource();
+const CreateDatasourceForm = () => {
+  const navigate = useNavigate();
+  const createWordSource = useCreateWordSource(() => navigate('/word-sources', { replace: true }));
   const submitButtonRef = useRef<HTMLButtonElement>(null);
+  const { setButtonProps } = useContext(ButtonPropsContext);
 
   const formik = useFormik({
     validationSchema: toFormikValidationSchema(CreateWordSourceOptimizedSchema),
@@ -49,19 +47,8 @@ const CreateDatasourceForm = ({ submitFormButton }: Props) => {
 
   const handleDropInputChange = useHandleDropInputChange({ formik });
 
-  //💀 ja uz neviem
   useEffect(() => {
-    submitFormButton(
-      <Button
-        disabled={!formik.isValid}
-        loading={createWordSource.isLoading}
-        type="submit"
-        Icon={<FiAperture />}
-        onClick={() => submitButtonRef.current?.click()}
-      >
-        Create
-      </Button>
-    );
+    setButtonProps({ disabled: !formik.isValid, loading: createWordSource.isLoading, onClick: () => submitButtonRef.current?.click() });
   }, [createWordSource.isLoading, formik.isValid]);
 
   return (

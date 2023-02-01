@@ -1,5 +1,7 @@
 export interface TPostSessionStatsProps {
   totalTime: number;
+  startTime: Date;
+  endTime: Date;
   correct: number;
   incorrect: number;
   maxStreak: number;

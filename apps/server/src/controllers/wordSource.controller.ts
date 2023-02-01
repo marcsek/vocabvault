@@ -1,5 +1,5 @@
 import { TRPCError } from '@trpc/server';
-import { presentAvailableWordSources, presentWordSource } from '../presenters/wordSource';
+import { presentAvailableWordSources, presentUpdatedWordSource, presentWordSource } from '../presenters/wordSource';
 
 import {
   CreateWordSourceInput,
@@ -43,7 +43,9 @@ export const getWordSourceByIDController = async ({ ctx: { prisma }, input }: { 
 };
 
 export const updateWordSourceController = async ({ ctx: { prisma, userID }, input }: { ctx: Context; input: TUpdateWordSourceInput }) => {
-  return await updateWordSource({ prisma, input, userId: userID ?? '' });
+  const wordSourceToParse = await updateWordSource({ prisma, input, userId: userID ?? '' });
+
+  return presentUpdatedWordSource(wordSourceToParse);
 };
 
 export const deleteWordSourceController = async ({ ctx: { prisma, userID }, input }: { ctx: Context; input: TDeleteWordSourceInput }) => {

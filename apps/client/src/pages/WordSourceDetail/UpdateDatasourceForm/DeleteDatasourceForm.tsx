@@ -1,9 +1,10 @@
 import Button from '@ui/Button';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useDeleteWordSource } from '../../../queries/wordSource';
 
 const DeleteDatasourceForm = () => {
-  const deletion = useDeleteWordSource();
+  const navigate = useNavigate();
+  const deletion = useDeleteWordSource(() => navigate('/word-sources', { replace: true }));
   const { id: paramsID } = useParams();
 
   return (
@@ -17,6 +18,7 @@ const DeleteDatasourceForm = () => {
         className="text-error-200 max-w-[15rem] border border-gray-600 hover:shadow-none"
         intent="asWrapper"
         size="small"
+        loading={deletion.isLoading}
       >
         Delete
       </Button>

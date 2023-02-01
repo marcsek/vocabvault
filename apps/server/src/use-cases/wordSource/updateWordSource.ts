@@ -34,7 +34,17 @@ export const updateWordSource = async ({
           },
         },
       },
-      select: { createdSources: { where: { id: input.id }, select: { name: true, firstLanguage: true, secondLanguage: true } } },
+      select: {
+        createdSources: {
+          where: { id: input.id },
+          select: {
+            name: true,
+            firstLanguage: true,
+            secondLanguage: true,
+            userAvailableSources: { select: { user: { select: { profileImage: true, id: true, name: true } } } },
+          },
+        },
+      },
     });
   } catch (e) {
     throw new TRPCError({ message: 'Failed to update record.', code: 'INTERNAL_SERVER_ERROR' });

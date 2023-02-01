@@ -9,7 +9,7 @@ import { AiFillStar } from 'react-icons/ai';
 interface Props {
   correct: number;
   incorrect: number;
-  duration: number;
+  totalTime: number;
   maxStreak: number;
   totalTries: number;
   minTries: number;
@@ -18,12 +18,12 @@ interface Props {
 
 const calcPercentage = (e: number, p: number) => (e / p) * 100;
 
-const SucessIndicators = ({ correct, duration, incorrect, maxStreak, minTries, type, totalTries }: Props) => {
-  const totalTime = Math.round(duration / 1000);
+const SucessIndicators = ({ correct, totalTime, incorrect, maxStreak, minTries, type, totalTries }: Props) => {
+  const totalTimeInMs = Math.round(totalTime / 1000);
 
   return (
-    <div className="rounded-default flex flex-col gap-9 outline-1 outline-gray-600 xl:flex-row xl:px-6 xl:py-5 xl:outline">
-      <div className="rounded-default flex flex-col gap-9 outline-1 outline-gray-600 md:flex-row md:px-6 md:py-5 md:outline xl:w-full xl:p-0 xl:outline-none">
+    <div className="rounded-default flex flex-col gap-9 outline-1 outline-gray-600 xl:flex-row xl:bg-gray-800/50 xl:px-6 xl:py-5 xl:outline xl:backdrop-blur-md">
+      <div className="rounded-default flex flex-col gap-9 outline-1 outline-gray-600 md:flex-row md:bg-gray-800/50 md:px-6 md:py-5 md:outline md:backdrop-blur-md xl:w-full xl:bg-none xl:p-0 xl:outline-none">
         <SucessCard
           Icon={<BsCheckLg />}
           color="#36B37E"
@@ -41,14 +41,14 @@ const SucessIndicators = ({ correct, duration, incorrect, maxStreak, minTries, t
         />
       </div>
       <Divider className=" hidden w-0 outline-dashed outline-1 outline-gray-500 xl:block" />
-      <div className="rounded-default flex flex-col gap-9 outline-1 outline-gray-600 md:flex-row md:px-6 md:py-5 md:outline xl:w-full xl:p-0 xl:outline-none">
+      <div className="rounded-default flex flex-col gap-9 outline-1 outline-gray-600 md:flex-row md:bg-gray-800/50 md:px-6 md:py-5 md:outline md:backdrop-blur-md xl:w-full xl:bg-none xl:p-0 xl:outline-none">
         <SucessCard
           Icon={<RiTimerLine />}
           color="#FFAB00"
           title="Total time"
-          value={totalTime.toString()}
+          value={totalTimeInMs.toString()}
           unit="sec"
-          percentage={100 - calcPercentage(totalTime, 90)}
+          percentage={100 - calcPercentage(totalTimeInMs, 90)}
         />
         <Divider className="hidden w-0 outline-dashed outline-1 outline-gray-500 md:block" />
         <SucessCard

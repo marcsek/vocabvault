@@ -27,7 +27,7 @@ export const useGetDataSourceByID = (id: string) => {
   );
 };
 
-export const useCreateWordSource = () => {
+export const useCreateWordSource = (onSuccess: () => void) => {
   const trpcContext = trpc.useContext();
 
   return trpc.wordSources.createWordSource.useMutation({
@@ -36,7 +36,8 @@ export const useCreateWordSource = () => {
 
       if (!data || !previousData) return;
       trpcContext.wordSources.getAllUserAvailableWordSources.setData(undefined, [...previousData, data]);
-      console.log(data);
+
+      onSuccess();
     },
     onError() {
       toast.error('Failed to create datasource');
@@ -49,9 +50,14 @@ export const useUpdateWordSource = () => {
   return trpc.wordSources.updateWordSource.useMutation({
     onSuccess(data, { id }) {
       const previousData = queryClient.wordSources.getWordSourceByID.getData({ id });
-      const newData = data.createdSources.at(0);
+      let type: 'shared' | 'private' = 'private';
 
-      if (!previousData || !newData) return;
+      if (!previousData || !data) return;
+
+      if (data.userAvailableSources.length !== 0) {
+        type = 'shared';
+      }
+      const newData = { ...data, type };
 
       queryClient.wordSources.getWordSourceByID.setData({ id }, { ...previousData, ...newData });
 
@@ -61,6 +67,8 @@ export const useUpdateWordSource = () => {
       const newWordSourceData = previousWordSourceData.map((e) => (e.id !== id ? e : { ...e, ...newData }));
 
       queryClient.wordSources.getAllUserAvailableWordSources.setData(undefined, newWordSourceData);
+
+      toast.success('Source updates succesfuly');
     },
     onError() {
       toast.error('Failed to update datasource');
@@ -68,7 +76,7 @@ export const useUpdateWordSource = () => {
   });
 };
 
-export const useDeleteWordSource = () => {
+export const useDeleteWordSource = (onSuccess: () => void) => {
   const trpcContext = trpc.useContext();
   return trpc.wordSources.deleteWordSource.useMutation({
     onSuccess(_data, { id }) {
@@ -78,6 +86,8 @@ export const useDeleteWordSource = () => {
       const newData = previousData.filter((e) => e.id !== id);
 
       trpcContext.wordSources.getAllUserAvailableWordSources.setData(undefined, newData);
+
+      onSuccess();
     },
     onError() {
       toast.error('Failed to delete word source');

@@ -10,6 +10,7 @@ export interface TPostSessionStatsProps {
   answers: TAnswerType[];
   totalTries: number;
   type: 'Practice' | 'Test';
+  wordSourceId: string;
 }
 
 export type TAnswerType = {

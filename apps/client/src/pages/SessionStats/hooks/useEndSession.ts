@@ -16,9 +16,10 @@ const useEndSession = (statsData: TPostSessionStatsProps) => {
   const handleButtonClick = () => {
     if (buttonClicked.current) return;
 
-    const { accuracy, correct, endTime, startTime, incorrect, maxStreak, minTries, totalTries, type } = statsData;
+    const { accuracy, correct, endTime, startTime, incorrect, maxStreak, minTries, totalTries, type, wordSourceId } = statsData;
     console.log(startTime);
     session.mutate({
+      wordSourceId,
       accuracy: Math.floor(accuracy),
       correct,
       endedAt: endTime.toString(),

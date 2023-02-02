@@ -12,7 +12,7 @@ const SessionStats = () => {
   const { handleButtonClick, loading } = useEndSession(statsData);
 
   return (
-    <section>
+    <section className="!pt-12">
       <div className="relative z-10 flex flex-col gap-9">
         <p className="text-2xl font-bold leading-none text-gray-50">Post session statistics</p>
         <SessionStatsDetails statsData={statsData} />

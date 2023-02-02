@@ -17,11 +17,12 @@ interface Props {
   proofLanguageName: string;
   wordPairs: { value: string; proof: string }[];
   repetitions: number;
+  wordSourceId: string;
 }
 
 export type TAnswerValidity = { validity: 'VALID' | 'INVALID' | 'UNSET'; message: string };
 
-const SessionScreen = ({ translationLanguageName, proofLanguageName, wordPairs, repetitions, type }: Props) => {
+const SessionScreen = ({ translationLanguageName, proofLanguageName, wordPairs, repetitions, type, wordSourceId }: Props) => {
   const [answerValue, setAnswerValue] = useState('');
   const [answerValidity, setAnswerValidity] = useState<TAnswerValidity>({ validity: 'UNSET', message: '' });
   const [courtain, setCourtain] = useState(false);
@@ -70,7 +71,7 @@ const SessionScreen = ({ translationLanguageName, proofLanguageName, wordPairs, 
     const startEndTime = finishSnapshot();
 
     navigate('/session-stats', {
-      state: presentSessionStatistics({ history, startEndTime, type, wordPairs }),
+      state: presentSessionStatistics({ history, startEndTime, type, wordPairs, wordSourceId }),
       replace: true,
     });
   }

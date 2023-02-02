@@ -1,6 +1,8 @@
 import { z } from 'zod';
+import { UuidStandard } from './_standards';
 
 export const CreateSessionSchema = z.object({
+  wordSourceId: z.string(),
   startedAt: z.string(),
   endedAt: z.string(),
   type: z.enum(['TEST', 'PRACTICE']),
@@ -13,3 +15,9 @@ export const CreateSessionSchema = z.object({
 });
 
 export type CreateSessionInput = z.TypeOf<typeof CreateSessionSchema>;
+
+export const GetSessionByUserIdSchema = z.object({
+  userId: UuidStandard.optional(),
+  pagination: z.object({ page: z.number().nonnegative(), perPage: z.number().min(1).max(50) }).optional(),
+});
+export type TGetSessionByUserIdInput = z.TypeOf<typeof GetSessionByUserIdSchema>;

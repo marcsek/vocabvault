@@ -28,7 +28,13 @@ const ProfilePopOver = () => {
             </div>
             <Divider className="h-[1px] w-full bg-gray-700" />
             <div className="flex flex-col gap-2">
-              <Popover.Button as={Link} hoverEffect to="#" className="block py-1 px-3 text-gray-300" Icon={<RiHistoryFill size={16} />}>
+              <Popover.Button
+                as={Link}
+                hoverEffect
+                to="/session-history"
+                className="block py-1 px-3 text-gray-300"
+                Icon={<RiHistoryFill size={16} />}
+              >
                 History
               </Popover.Button>
               <Popover.Button

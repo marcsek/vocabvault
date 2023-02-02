@@ -1,9 +1,9 @@
 import { Listbox } from '@headlessui/react';
 import { HiChevronUpDown } from 'react-icons/hi2';
 
-export type TListBoxInput<K> = { [key: string]: K };
+export type TListBoxInput = { [key: string]: string | number };
 
-export interface ListBoxProps<K, T, TKey> {
+export interface ListBoxProps<T, TKey> {
   disabled?: boolean;
   items: T[];
   label: string;
@@ -12,10 +12,10 @@ export interface ListBoxProps<K, T, TKey> {
   onChange: (value: T) => void;
   fieldKey: TKey;
   fieldValue: TKey;
-  disabledKeys?: K[];
+  disabledKeys?: (string | number)[];
 }
 
-const ListBox = <K extends string | number, T extends TListBoxInput<K>, TKey extends keyof T>({
+const ListBox = <T extends TListBoxInput, TKey extends keyof T>({
   items,
   label,
   value,
@@ -23,7 +23,7 @@ const ListBox = <K extends string | number, T extends TListBoxInput<K>, TKey ext
   fieldValue,
   disabledKeys,
   ...props
-}: ListBoxProps<K, T, TKey>) => {
+}: ListBoxProps<T, TKey>) => {
   return (
     <div className="h-fit w-full">
       <Listbox value={value} {...props}>

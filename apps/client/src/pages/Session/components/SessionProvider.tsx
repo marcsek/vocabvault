@@ -21,6 +21,7 @@ const SessionProvider = ({ sessionState, skip, take }: Props) => {
     <div className="!max-w-none !p-0">
       {!isLoading && (
         <SessionScreen
+          wordSourceId={sessionState.documentId}
           repetitions={sessionState.repetitions}
           wordPairs={transferedWordPairs ?? []}
           type={sessionState.type}

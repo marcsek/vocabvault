@@ -6,9 +6,10 @@ interface Input {
   startEndTime: readonly [Date, Date];
   wordPairs: { value: string; proof: string }[];
   type: 'Practice' | 'Test';
+  wordSourceId: string;
 }
 
-const presentSessionStatistics = ({ history, startEndTime, wordPairs, type }: Input): TPostSessionStatsProps => {
+const presentSessionStatistics = ({ history, startEndTime, wordPairs, type, wordSourceId }: Input): TPostSessionStatsProps => {
   let correct = 0;
   let incorrect = 0;
   let totalTries = 0;
@@ -56,6 +57,7 @@ const presentSessionStatistics = ({ history, startEndTime, wordPairs, type }: In
   const totalTime = startEndTime[1].getTime() - startEndTime[0].getTime();
 
   return {
+    wordSourceId,
     accuracy,
     correct,
     incorrect,

@@ -9,12 +9,17 @@ const Confetti = () => {
       <ReactConfetti
         width={width}
         height={height}
-        gravity={0.017}
-        recycle={true}
+        gravity={20 / height}
+        recycle={false}
         opacity={0.1}
-        numberOfPieces={200}
-        tweenDuration={10000}
+        numberOfPieces={400}
+        tweenDuration={100}
         colors={['#e11d48', '#3b82f6', '#36B37E', '#FFAB00', '#ef4444']}
+        drawShape={(ctx) => {
+          ctx.beginPath();
+          ctx.fillRect(0, 0, 10, 10);
+          ctx.closePath();
+        }}
       />
     </div>
   );

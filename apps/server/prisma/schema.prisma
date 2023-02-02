@@ -71,6 +71,7 @@ model WordSource {
   wordPairs            WordPair[]
   firstLanguageCode    String
   secondLanguageCode   String
+  Session              Session[]
 
   @@index([creatorId])
   @@index([firstLanguageCode])
@@ -99,6 +100,8 @@ model Language {
 model Session {
   id                String             @id @default(uuid())
   user              User?              @relation(fields: [userId], references: [id])
+  wordSource        WordSource         @relation(fields: [wordSourceId], references: [id])
+  wordSourceId      String
   userId            String?
   startedAt         DateTime
   endedAt           DateTime           @default(now())
@@ -106,6 +109,7 @@ model Session {
   SessionStatistics SessionStatistics?
 
   @@index([userId])
+  @@index([wordSourceId])
 }
 
 model SessionStatistics {

@@ -18,6 +18,8 @@ export type CreateSessionInput = z.TypeOf<typeof CreateSessionSchema>;
 
 export const GetSessionByUserIdSchema = z.object({
   userId: UuidStandard.optional(),
+  orderFilters: z.object({ orderBy: z.enum(['percentage', 'time', 'type']), reverse: z.boolean() }),
+  advancedFilters: z.object({ sourceId: UuidStandard.optional(), sessionType: z.enum(['TEST', 'PRACTICE']).optional() }),
   pagination: z.object({ page: z.number().nonnegative(), perPage: z.number().min(1).max(50) }).optional(),
 });
 export type TGetSessionByUserIdInput = z.TypeOf<typeof GetSessionByUserIdSchema>;

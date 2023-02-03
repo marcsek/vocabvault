@@ -7,8 +7,10 @@ export const presentSessionHistory = (sessionToParse: TPresentSessionHistoryInpu
 
   if (!actualSession) return null;
 
+  console.log(actualSession.length);
+
   return {
     sessions: actualSession.map((e) => ({ ...e, startedAt: e.startedAt.toString() })),
-    sessionCount: sessionToParse._count.sessionHistory,
+    sessionCount: sessionToParse.count,
   };
 };

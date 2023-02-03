@@ -1,7 +1,7 @@
 import { presentSessionHistory } from '../presenters/session';
 import { CreateSessionInput, TGetSessionByUserIdInput } from '../schemas/session.schema';
 import { Context } from '../trpc/context';
-import getSessionAsHistoryByUserId from '../use-cases/session/getSessionAsHistoryByUserId';
+import getSessionAsHistoryByUserId, { TOrderByObject } from '../use-cases/session/getSessionAsHistoryByUserId';
 
 export const createSessionController = async ({ ctx: { prisma, userID }, input }: { ctx: Context; input: CreateSessionInput }) => {
   const history = await prisma.session.create({
@@ -42,7 +42,26 @@ export const getSessionAsHistoryByUserIdController = async ({
     take = input.pagination.perPage;
   }
 
-  const history = await getSessionAsHistoryByUserId({ prisma, input: { userID: idToFind, take, skip } });
+  const order = input.orderFilters.reverse ? 'asc' : 'desc';
+  let orderObject: TOrderByObject = { accuracy: order };
+
+  if (input.orderFilters.orderBy === 'time') {
+    orderObject = { startedAt: order };
+  } else if (input.orderFilters.orderBy === 'type') {
+    orderObject = { type: order };
+  }
+
+  const history = await getSessionAsHistoryByUserId({
+    prisma,
+    input: {
+      userID: idToFind,
+      take,
+      skip,
+      orderBy: orderObject,
+      sessionType: input.advancedFilters.sessionType,
+      sourceId: input.advancedFilters.sourceId,
+    },
+  });
 
   return presentSessionHistory(history);
 };

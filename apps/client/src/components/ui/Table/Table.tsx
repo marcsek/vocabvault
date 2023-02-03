@@ -6,6 +6,7 @@ interface Props<TObj, TKey> {
   columns: { keyField: TKey; data: { field: TKey; headerName: string }[] };
   rows: TObj;
   centerLayout?: boolean;
+  minWidth?: number;
 }
 
 const Table = <TObj extends { [key: string]: string | number | React.ReactNode }[], TKey extends keyof TObj[number]>({
@@ -13,11 +14,12 @@ const Table = <TObj extends { [key: string]: string | number | React.ReactNode }
   rows,
   pagination,
   centerLayout = false,
+  minWidth = 500,
 }: Props<TObj, TKey>) => {
   return (
     <div className="flex h-full w-full flex-shrink flex-col items-end justify-between gap-4" aria-label="table">
       <div className="w-full flex-1 flex-shrink overflow-auto">
-        <div className="grid min-w-[500px] grid-cols-1 grid-rows-1">
+        <div className={`grid grid-cols-1 grid-rows-1`} style={{ minWidth: minWidth }}>
           <div className="rounded-default grid-cols-tableRow sticky top-0 box-border grid border border-gray-600 bg-gray-700 px-4 py-2 text-sm leading-none text-gray-400">
             {columns.data.map((col) => (
               <div
@@ -32,7 +34,7 @@ const Table = <TObj extends { [key: string]: string | number | React.ReactNode }
           {rows.map((row) => (
             <div
               key={row[columns.keyField]?.toString()}
-              className="grid-cols-tableRow box-border grid grid-rows-1 items-center border-b border-gray-700 p-4 text-sm leading-none text-gray-50"
+              className="grid-cols-tableRow box-border grid min-w-max grid-rows-1 items-center border-b border-gray-700 p-4 text-sm leading-none text-gray-50"
             >
               {columns.data.map((col) => (
                 <div
@@ -50,8 +52,5 @@ const Table = <TObj extends { [key: string]: string | number | React.ReactNode }
     </div>
   );
 };
-// flex justify-start last:justify-center
-// flex justify-center first:justify-start
-// col-span-2 flex justify-start last:col-span-1  last:justify-center
 
 export default Table;

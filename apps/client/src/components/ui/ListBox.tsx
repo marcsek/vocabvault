@@ -49,10 +49,10 @@ const ListBox = <T extends TListBoxInput, TKey extends keyof T>({
                     items.length > 10 ? 'overflow-auto' : 'overflow-hidden'
                   }`}
                 >
-                  <div className="box-border py-2">
+                  <div>
                     {items.map((item) => (
                       <Listbox.Option
-                        className="cursor-default px-3 text-base font-medium"
+                        className="box-border cursor-default px-3 text-base font-medium first:pt-2 last:pb-2"
                         key={item[fieldKey]}
                         value={item}
                         disabled={disabledKeys?.includes(item[fieldKey])}
@@ -61,8 +61,8 @@ const ListBox = <T extends TListBoxInput, TKey extends keyof T>({
                           <p
                             className={`text-gray-200 ${selected ? '!font-bold !text-gray-50' : ''} ${
                               active ? 'bg-gray-700 !text-gray-50' : ''
-                            } ${disabled ? '!text-gray-400' : ''} 
-                            rounded-default py-2 px-2 duration-100`}
+                            } ${disabled ? '!text-gray-400' : ''}
+                          rounded-default box-border py-2 px-2 duration-100`}
                           >
                             {item[fieldValue]}
                           </p>

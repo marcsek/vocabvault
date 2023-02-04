@@ -12,6 +12,7 @@ import { generateAvailableGroupNumbers, generateAvailableNumberOfPairs, generate
 import { useNavigate } from 'react-router-dom';
 import { TNewSessionProps } from '../../types';
 import { ButtonPropsContext } from '@ui/TitleLayout/TitleLayout';
+import { motion } from 'framer-motion';
 
 const typesOfSession = [
   { id: 'Practice', description: 'Practice to get better.' },
@@ -113,11 +114,14 @@ const NewSessionForm = () => {
         </div>
         <div className="flex flex-col items-center gap-1">
           <Divider className="w-full outline-dashed outline-1 outline-gray-500" />
-          {formik.values.document.id === '0' && (
-            <p className="flex items-center gap-1 text-sm text-gray-400">
-              Select word source first. <MdLockOutline />
-            </p>
-          )}
+          {/* {formik.values.document.id === '0' && ( */}
+          <motion.p
+            animate={{ opacity: formik.values.document.id === '0' ? 1 : 0 }}
+            className="flex items-center gap-1 text-sm text-gray-400"
+          >
+            Select word source first. <MdLockOutline />
+          </motion.p>
+          {/* )} */}
         </div>
         <div className="flex flex-col gap-10">
           <div className="flex flex-col gap-10 md:flex-row">

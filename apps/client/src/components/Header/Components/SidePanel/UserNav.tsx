@@ -20,7 +20,7 @@ const UserNav = ({ onClose, withLogout = false }: Props) => {
       <NavWrapper className="flex flex-col gap-8" elementClicked={onClose}>
         {({ activeLink, elementClicked }) => (
           <>
-            <Link to="/session-history" active={activeLink === '/'} onClick={elementClicked}>
+            <Link to="/session-history" active={activeLink === '/session-history'} onClick={elementClicked}>
               History
             </Link>
             <Link to="/settings" active={activeLink === '/settings'} onClick={elementClicked}>

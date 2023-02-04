@@ -1,6 +1,7 @@
 import UserPill from './UserPill';
 import { RxInfoCircled } from 'react-icons/rx';
 import { TGetChildrenOutput } from '../UserSelect/ChildSelect.component';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface Props {
   selectedUsers: TGetChildrenOutput;
@@ -18,19 +19,35 @@ const ChildrenContainer = ({ selectedUsers, handleUserUnselect, flow }: Props) =
             selectedUsers.length === 0 ? 'items-center justify-center' : 'w-max justify-start'
           } ${flow === 'vertical' && !!selectedUsers.length ? '!h-fit max-w-full flex-wrap' : ''}`}
         >
-          <>
+          <AnimatePresence initial={false} mode="wait">
             {!selectedUsers.length ? (
-              <div className="flex items-center gap-2 rounded-full bg-gray-700 py-1.5 px-3 text-xs font-semibold text-gray-400">
+              <motion.div
+                layout
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                exit={{ scale: 0 }}
+                transition={{ type: 'spring', duration: 0.4 }}
+                className="flex items-center gap-2 rounded-full bg-gray-700 py-1.5 px-3 text-xs font-semibold text-gray-400"
+              >
                 <RxInfoCircled size={16} /> No one selected
-              </div>
+              </motion.div>
             ) : (
-              <>
+              <AnimatePresence mode="popLayout">
                 {selectedUsers.map((user) => (
-                  <UserPill key={user.id} user={user} onClick={() => handleUserUnselect(user)} />
+                  <motion.div
+                    transition={{ type: 'spring', duration: 0.5 }}
+                    layout
+                    key={user.id}
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    exit={{ scale: 0 }}
+                  >
+                    <UserPill user={user} onClick={() => handleUserUnselect(user)} />
+                  </motion.div>
                 ))}
-              </>
+              </AnimatePresence>
             )}
-          </>
+          </AnimatePresence>
         </ul>
       </div>
     </div>

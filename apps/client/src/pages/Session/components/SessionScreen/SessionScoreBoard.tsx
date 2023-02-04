@@ -31,7 +31,9 @@ const SessionScoreBoard = ({ history }: Props) => {
         {scores.map((e, index) => (
           <Fragment key={index}>
             <div
-              className={`h-4 w-4 rounded-full ${e === 'CORRECT' ? 'bg-success-200' : e === 'INCORRECT' ? 'bg-error-200' : 'bg-gray-600'}`}
+              className={`h-4 w-4 rounded-full duration-200 ${
+                e === 'CORRECT' ? 'bg-success-200' : e === 'INCORRECT' ? 'bg-error-200' : 'bg-gray-600'
+              }`}
             />
             {index !== scores.length - 1 && <Divider className="h-0.5 w-2 rounded bg-gray-600" />}
           </Fragment>

@@ -4,6 +4,7 @@ import type { VariantProps } from 'class-variance-authority';
 import { IconType } from 'react-icons';
 import SpinnerSmall from './utils/SpinnerSmall';
 import { PolymorphicProps } from './types';
+import { motion } from 'framer-motion';
 
 const buttonStyles = cva(
   'rounded-default disabled:bg-gray-600/25 disabled:text-gray-400 disabled:ring-2 disabled:ring-gray-500 disa disabled:hover:shadow-none disabled:active:scale-100 flex items-center justify-center gap-2 font-semibold duration-100 active:scale-[98%] box-border',
@@ -42,13 +43,18 @@ const Button = <Element extends React.ElementType = typeof defaultElement>(
 
   return (
     <Component ref={ref} className={`${buttonStyles({ intent, size })} ${className} ${loading ? 'disabled' : ''}`} {...rest}>
-      <div className={`${loading ? 'visible' : 'invisible'} absolute`}>
+      <motion.div
+        initial={false}
+        animate={{ scale: loading ? 1 : 0 }}
+        transition={{ delay: 0.15 }}
+        className={`${!loading ? 'hidden' : ''} absolute`}
+      >
         <SpinnerSmall />
-      </div>
-      <div className={`flex items-center justify-center gap-2 ${!loading ? 'visible' : 'invisible'}`}>
+      </motion.div>
+      <motion.div animate={{ scale: !loading ? 1 : 0 }} transition={{ duration: 0.1 }} className={`flex items-center justify-center gap-2`}>
         {!!Icon && <p className="text-lg">{Icon}</p>}
         {children ?? 'Button'}
-      </div>
+      </motion.div>
     </Component>
   );
 };

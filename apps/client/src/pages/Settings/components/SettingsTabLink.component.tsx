@@ -1,4 +1,4 @@
-import Divider from '@ui/Divider';
+import { motion } from 'framer-motion';
 import React from 'react';
 import { IconType } from 'react-icons';
 import { Link } from 'react-router-dom';
@@ -21,7 +21,11 @@ const SettingsTabLink = ({ isActive, Icon, text, to }: Props) => {
       <p className="flex min-w-max items-center gap-2">
         {Icon} {text}
       </p>
-      <Divider className={`bg-primary-300 h-0.5 w-full rounded-full ${isActive ? 'w-full' : 'w-0'}`} />
+      <motion.div
+        animate={{ width: isActive ? '100%' : '0%' }}
+        transition={{ bounce: 0, type: 'spring', duration: 0.4 }}
+        className={`bg-primary-300 h-0.5 w-full self-start rounded-full ${isActive ? 'w-full' : 'w-0'}`}
+      />
     </Link>
   );
 };

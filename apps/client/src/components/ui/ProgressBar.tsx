@@ -1,3 +1,5 @@
+import { motion } from 'framer-motion';
+
 interface Props {
   width: number;
   color?: string;
@@ -8,12 +10,14 @@ interface Props {
 function ProgressBar({ width, color = '#3B82F6', colorShade = '#60A5FA', numericIndicator = false }: Props) {
   return (
     <div className="h-4 w-full rounded-full bg-gray-700">
-      <div
+      <motion.div
+        animate={{ width: `${width}%` }}
         className={`relative h-full rounded-full shadow-[0px_0px_4px_#3B82F6;] ${width !== 0 ? 'px-2' : ''}`}
         style={{
-          width: `${width}%`,
           backgroundColor: color,
+          width: 0,
         }}
+        transition={{ type: 'spring', mass: 0.5 }}
       >
         {numericIndicator && (
           <p
@@ -29,7 +33,7 @@ function ProgressBar({ width, color = '#3B82F6', colorShade = '#60A5FA', numeric
             backgroundColor: colorShade,
           }}
         ></div>
-      </div>
+      </motion.div>
     </div>
   );
 }

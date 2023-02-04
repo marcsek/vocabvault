@@ -43,7 +43,7 @@ const SessionForm = ({
   return (
     <form onSubmit={onSubmit} className="flex w-full flex-col items-center gap-10 px-9">
       <h1
-        className={`text-center text-5xl font-bold leading-none md:text-6xl ${
+        className={`text-center text-5xl font-bold leading-none duration-200 md:text-6xl ${
           validity === 'VALID' ? 'text-success-200' : validity === 'INVALID' ? 'text-error-200' : 'text-gray-50'
         }`}
       >

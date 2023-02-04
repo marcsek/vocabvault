@@ -10,6 +10,7 @@ import SessionControls from './SessionControls';
 import SessionCourtain from './SessionCourtain';
 import SessionForm from './SessionForm';
 import SessionScoreBoard from './SessionScoreBoard';
+import { AnimatePresence } from 'framer-motion';
 
 interface Props {
   type: 'Practice' | 'Test';
@@ -104,7 +105,9 @@ const SessionScreen = ({ translationLanguageName, proofLanguageName, wordPairs, 
           proofLanguageName={proofLanguageName}
         />
         <div className="h-14">
-          {type !== 'Test' && answerValidity.validity === 'INVALID' && <SessionAnswerPopup correctAnswer={answerValidity.message} />}
+          <AnimatePresence>
+            {type !== 'Test' && answerValidity.validity === 'INVALID' && <SessionAnswerPopup correctAnswer={answerValidity.message} />}
+          </AnimatePresence>
         </div>
       </div>
       <div className="flex w-full flex-col items-center gap-8 self-end">

@@ -18,7 +18,9 @@ const TabSelector = ({ currentTab, setCurrentTab }: Props) => {
         }`}
       >
         <RxMagnifyingGlass /> Details
-        {currentTab === 'details' && <Divider className="bg-primary-300 absolute -bottom-0.5 h-0.5 w-full rounded-full"></Divider>}
+        {currentTab === 'details' && (
+          <Divider framerId="tab-underline" className="bg-primary-300 absolute -bottom-0.5 h-0.5 w-full rounded-full"></Divider>
+        )}
       </button>
       <button
         onClick={() => setCurrentTab('actions')}
@@ -27,7 +29,9 @@ const TabSelector = ({ currentTab, setCurrentTab }: Props) => {
         }`}
       >
         <BsLightningCharge /> Actions
-        {currentTab === 'actions' && <Divider className="bg-primary-300 absolute -bottom-0.5 h-0.5 w-full rounded-full"></Divider>}
+        {currentTab === 'actions' && (
+          <Divider framerId="tab-underline" className="bg-primary-300 absolute -bottom-0.5 h-0.5 w-full rounded-full"></Divider>
+        )}
       </button>
     </nav>
   );

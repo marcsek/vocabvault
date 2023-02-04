@@ -23,13 +23,16 @@ const SessionFilters = ({ filters, setFilters }: Props) => {
 
   return (
     <div className="flex flex-col items-start justify-between gap-4 md:flex-row md:items-end">
-      <div className="flex items-end justify-center gap-4">
-        <FiltersToggleGroup
-          orderFilters={{ orderBy: filters.orderBy, reverse: filters.reverse }}
-          setOrderFilters={(e) => setFilters((prev) => ({ ...prev, orderBy: e.orderBy, reverse: e.reverse }))}
-        />
-        <FiltersPopover setFilters={setFilters} filters={filters} />
-      </div>
+      <label className="flex flex-col gap-2">
+        <p className="text-sm leading-none">Filters</p>
+        <div className="flex items-end justify-center gap-4">
+          <FiltersToggleGroup
+            orderFilters={{ orderBy: filters.orderBy, reverse: filters.reverse }}
+            setOrderFilters={(e) => setFilters((prev) => ({ ...prev, orderBy: e.orderBy, reverse: e.reverse }))}
+          />
+          <FiltersPopover setFilters={setFilters} filters={filters} />
+        </div>
+      </label>
       <div className="w-full flex-1 md:max-w-xs">
         <ListBox
           label="User"

@@ -6,14 +6,19 @@ import SessionFilters from './SessionFilters/SessionFilters';
 
 const SessionHistory = () => {
   const user = useUser();
-  const { filters, history, setFilters } = useHistoryFilters({
+  const { filters, history, setFilters, isLoading } = useHistoryFilters({
     initialFilers: { currentUser: { id: user?.id ?? '', name: 'You' }, orderBy: 'time', page: 0, reverse: false },
   });
 
   return (
     <TitleLayout headingLeft={<h1 className="flex flex-col gap-1 text-xl font-bold leading-none md:text-2xl">Session history</h1>}>
       <SessionFilters filters={filters} setFilters={setFilters} />
-      <HistoryList page={filters.page} setPage={(e) => setFilters((prev) => ({ ...prev, page: e }))} history={history} />
+      <HistoryList
+        loading={isLoading}
+        page={filters.page}
+        setPage={(e) => setFilters((prev) => ({ ...prev, page: e }))}
+        history={history}
+      />
     </TitleLayout>
   );
 };

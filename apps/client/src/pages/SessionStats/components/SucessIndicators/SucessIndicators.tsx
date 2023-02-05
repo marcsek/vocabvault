@@ -30,6 +30,7 @@ const SucessIndicators = ({ correct, totalTime, incorrect, maxStreak, minTries, 
           title="Correct"
           value={correct.toString()}
           percentage={calcPercentage(correct, totalTries)}
+          delay={0.6}
         />
         <Divider className="hidden w-0 outline-dashed outline-1 outline-gray-500 md:block" />
         <SucessCard
@@ -38,6 +39,7 @@ const SucessIndicators = ({ correct, totalTime, incorrect, maxStreak, minTries, 
           title="Incorrect"
           value={incorrect.toString()}
           percentage={calcPercentage(incorrect, totalTries)}
+          delay={0.9}
         />
       </div>
       <Divider className=" hidden w-0 outline-dashed outline-1 outline-gray-500 xl:block" />
@@ -49,6 +51,7 @@ const SucessIndicators = ({ correct, totalTime, incorrect, maxStreak, minTries, 
           value={totalTimeInMs.toString()}
           unit="sec"
           percentage={100 - calcPercentage(totalTimeInMs, 90)}
+          delay={1.2}
         />
         <Divider className="hidden w-0 outline-dashed outline-1 outline-gray-500 md:block" />
         <SucessCard
@@ -57,6 +60,7 @@ const SucessIndicators = ({ correct, totalTime, incorrect, maxStreak, minTries, 
           title={type === 'Test' ? 'Max streak' : 'Min. tries'}
           value={(type === 'Test' ? maxStreak : minTries).toString()}
           percentage={100 - calcPercentage(minTries, 8)}
+          delay={1.5}
         />
       </div>
     </div>

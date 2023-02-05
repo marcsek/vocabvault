@@ -10,13 +10,14 @@ const WordPairsTable = () => {
   const { id: paramsID } = useParams();
   const { wordPairsPreview } = useWordPairPreview();
 
-  const { data: wordPairs } = useGetWordSourceWordPairs(paramsID ?? '', { pagination: { page, perPage } });
+  const { data: wordPairs, isLoading } = useGetWordSourceWordPairs(paramsID ?? '', { pagination: { page, perPage } });
 
   return (
     <div className="flex flex-col gap-6 lg:col-span-2">
       <h1 className="h-fit text-base font-semibold text-gray-50">Word pairs</h1>
       <div className="h-96">
         <Table
+          loading={isLoading}
           pagination={{ page, setPage, perPage, total: wordPairs?._count.wordPairs ?? 0 }}
           rows={wordPairs?.wordPairs ?? []}
           columns={{

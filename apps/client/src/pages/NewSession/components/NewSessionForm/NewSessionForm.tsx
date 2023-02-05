@@ -12,7 +12,7 @@ import { generateAvailableGroupNumbers, generateAvailableNumberOfPairs, generate
 import { useNavigate } from 'react-router-dom';
 import { TNewSessionProps } from '../../types';
 import { ButtonPropsContext } from '@ui/TitleLayout/TitleLayout';
-import { motion } from 'framer-motion';
+import { motion, useAnimationControls } from 'framer-motion';
 
 const typesOfSession = [
   { id: 'Practice', description: 'Practice to get better.' },
@@ -38,6 +38,8 @@ const NewSessionForm = () => {
   const strippedWordSources = wordSources?.map((e) => ({ id: e.id, name: e.name }));
   const getFullWordSource = (id: string, wordSources?: TGetAllWordSourcesOutput) => wordSources?.find((e) => e.id === id);
 
+  const pageTransitionAnimation = useAnimationControls();
+
   const formik = useFormik<TNewSessionProps>({
     initialValues: {
       type: typesOfSession[0],
@@ -51,10 +53,17 @@ const NewSessionForm = () => {
       numOfRepetition: numbersOfRepetition[0],
     },
     onSubmit: (data) => {
-      const output = generateOutput(data);
-      navigate('/session', { state: output });
+      handlePageTransition(data);
     },
   });
+
+  const handlePageTransition = async (data: TNewSessionProps) => {
+    await pageTransitionAnimation.start({ backgroundColor: 'rgb(25,25,25)', display: 'flex' });
+
+    const output = generateOutput(data);
+
+    navigate('/session', { state: output });
+  };
 
   useEffect(() => {
     setSelectedWords({
@@ -100,6 +109,7 @@ const NewSessionForm = () => {
 
   return (
     <div>
+      <motion.div animate={pageTransitionAnimation} className="pointer-events-none fixed inset-0 z-50 hidden" />
       <form onSubmit={formik.handleSubmit} className="flex flex-col gap-12">
         <div className="flex flex-col gap-10 xl:flex-row">
           <SessionTypeSelector items={typesOfSession} onChange={(e) => formik.setFieldValue('type', e)} value={formik.values.type} />

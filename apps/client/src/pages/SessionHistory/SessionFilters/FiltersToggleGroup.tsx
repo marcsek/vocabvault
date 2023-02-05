@@ -66,6 +66,7 @@ const ToggleButton = ({ active, Icon }: { active: boolean; Icon: React.ReactNode
     <>
       <div className="relative z-10">{Icon}</div>
       <motion.div
+        initial={false}
         animate={{ scale: active ? 1 : 0 }}
         transition={{ type: 'spring', mass: 0.5, velocity: 5 }}
         className="bg-primary-500/30 rounded-default ring-primary-200/30 absolute inset-0 ring-2"

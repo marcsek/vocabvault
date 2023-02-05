@@ -14,9 +14,10 @@ interface Props {
   history: TSessionHistory | undefined;
   page: number;
   setPage: (e: number) => void;
+  loading: boolean;
 }
 
-const HistoryList = ({ history, page, setPage }: Props) => {
+const HistoryList = ({ history, page, setPage, loading }: Props) => {
   console.log(history);
 
   const parsedHistory = history?.sessions.map((e) => ({
@@ -29,9 +30,10 @@ const HistoryList = ({ history, page, setPage }: Props) => {
   }));
 
   return (
-    <div>
+    <div className="min-h-[622px]">
       <Table
         rows={parsedHistory ?? []}
+        loading={loading}
         columns={{
           keyField: 'id',
           data: [

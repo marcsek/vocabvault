@@ -16,7 +16,7 @@ const ProfilePopOver = () => {
     <Popover className="relative z-50 h-[32px]">
       {({ open }) => (
         <>
-          <Popover.Button className="outline-none">
+          <Popover.Button className="z-30 outline-none">
             <div className="flex items-center justify-center gap-2">
               <img className="h-8 w-8" src={ProfilePicture}></img>
               <motion.div animate={{ rotate: open ? '180deg' : '0deg' }}>
@@ -28,7 +28,7 @@ const ProfilePopOver = () => {
             <AnimatePresence>
               {open && (
                 <motion.div
-                  initial={{ opacity: 0.5, translateY: '-20%', translateX: '-60%' }}
+                  initial={{ opacity: 0.5, translateY: '-10%', translateX: '-60%' }}
                   animate={{ opacity: 1, translateY: '5%', translateX: '-60%' }}
                   exit={{ opacity: 0, translateY: '0%', transition: { duration: 0.15 } }}
                   transition={{ type: 'spring', duration: 0.5 }}

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useSession, { THistoryMap } from '../../hooks/useSession';
 import useSubmitButton from '../../hooks/useSubmitButton';
@@ -10,7 +10,8 @@ import SessionControls from './SessionControls';
 import SessionCourtain from './SessionCourtain';
 import SessionForm from './SessionForm';
 import SessionScoreBoard from './SessionScoreBoard';
-import { AnimatePresence } from 'framer-motion';
+import { AnimatePresence, useAnimationControls } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 interface Props {
   type: 'Practice' | 'Test';
@@ -35,6 +36,11 @@ const SessionScreen = ({ translationLanguageName, proofLanguageName, wordPairs, 
     type,
   });
   const navigate = useNavigate();
+  const pageTransitionAnimation = useAnimationControls();
+
+  useEffect(() => {
+    pageTransitionAnimation.start({ backgroundColor: 'rgba(25,25,25, 0)', transition: { delay: 0.5 } });
+  }, []);
 
   const onSubmit = () => {
     session.handleWordSubmit(answerValue);
@@ -69,8 +75,12 @@ const SessionScreen = ({ translationLanguageName, proofLanguageName, wordPairs, 
   }
 
   function handleEnd(history: THistoryMap) {
-    const startEndTime = finishSnapshot();
+    transitionPage(history);
+  }
 
+  async function transitionPage(history: THistoryMap) {
+    const startEndTime = finishSnapshot();
+    await pageTransitionAnimation.start({ backgroundColor: 'rgba(25,25,25, 1)' });
     navigate('/session-stats', {
       state: presentSessionStatistics({ history, startEndTime, type, wordPairs, wordSourceId }),
       replace: true,
@@ -79,14 +89,20 @@ const SessionScreen = ({ translationLanguageName, proofLanguageName, wordPairs, 
 
   function handleRoundEnd() {
     setCourtain(true);
-    setTimeout(() => {
-      setCourtain(false);
-    }, 3500);
   }
+
+  const onCourtainEnd = () => {
+    setCourtain(false);
+  };
 
   return (
     <div className="flex h-full flex-col items-center justify-between pt-7">
-      {courtain && <SessionCourtain />}
+      <motion.div
+        initial={{ backgroundColor: 'rgb(25,25,25)' }}
+        animate={pageTransitionAnimation}
+        className="pointer-events-none fixed inset-0 z-50"
+      />
+      <SessionCourtain show={courtain} onEnd={onCourtainEnd} />
       <div className="max-w-8xl flex w-full flex-col items-center gap-5 text-sm font-semibold text-gray-400">
         <SessionBar history={session.history} repetitions={repetitions} type={type} />
         <p>

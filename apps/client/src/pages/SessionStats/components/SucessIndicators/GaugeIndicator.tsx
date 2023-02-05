@@ -5,12 +5,21 @@ interface Props {
   Icon: React.ReactNode;
   color: string;
   percentage: number;
+  delay: number;
 }
 
-const GaugeIndicator = ({ percentage, ...props }: Props) => {
+const GaugeIndicator = ({ percentage, delay, ...props }: Props) => {
   return (
     <div>
-      <CircularGauge color={props.color} size={73} strokeWidth={4} inside={<GaugeInside {...props} />} value={percentage} />
+      <CircularGauge
+        color={props.color}
+        duration={1.5}
+        delay={delay}
+        size={73}
+        strokeWidth={4}
+        inside={<GaugeInside {...props} />}
+        value={percentage}
+      />
     </div>
   );
 };

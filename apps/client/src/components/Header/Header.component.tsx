@@ -10,7 +10,7 @@ import ProfilePopOver from './Components/ProfilePopOver/ProfilePopOver.component
 import MainLinks from './Components/MainLinks.component';
 import MainButtons from './Components/MainButtons.component';
 import { useUser } from '../../providers/UserContext.provider';
-import Logo from './Components/Logo';
+import VocabVaultJsxLogo from '../../assets/VocabVaultJsxLogo';
 
 const Header = () => {
   const hasScrolled = useHasScrolled();
@@ -21,7 +21,7 @@ const Header = () => {
   return (
     <header className={`fixed z-30 flex w-full justify-center ${hasScrolled && 'bg-gray-800/50 shadow-md backdrop-blur-md'}`}>
       <div className="px-8.5 max-w-8xl md:px-17 flex h-16 w-screen items-center justify-between">
-        <Logo />
+        <VocabVaultJsxLogo />
         <div className="static flex items-center gap-10">
           {isWindowMobile ? (
             <Button intent="asWrapper" size="asWraper" className="!rounded-2xl p-1">

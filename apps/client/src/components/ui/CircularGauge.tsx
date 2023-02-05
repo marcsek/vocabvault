@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 
 interface Props {
   value: number;
@@ -8,9 +9,11 @@ interface Props {
   size?: number;
   maxValue?: number;
   minValue?: number;
+  delay?: number;
+  duration?: number;
 }
 
-const CircularGauge = ({ value, minValue = 0, maxValue = 100, inside, color, strokeWidth = 7, size = 100 }: Props) => {
+const CircularGauge = ({ value, minValue = 0, maxValue = 100, inside, color, strokeWidth = 7, size = 100, delay = 0, duration }: Props) => {
   const center = size / 2;
   const r = center - strokeWidth;
   const c = 2 * r * Math.PI;
@@ -20,7 +23,7 @@ const CircularGauge = ({ value, minValue = 0, maxValue = 100, inside, color, str
 
   return (
     <div className="relative w-fit">
-      <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} fill="none" strokeWidth={strokeWidth}>
+      <motion.svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} fill="none" strokeWidth={strokeWidth}>
         <circle
           role="presentation"
           cx={center}
@@ -31,18 +34,21 @@ const CircularGauge = ({ value, minValue = 0, maxValue = 100, inside, color, str
           strokeLinecap="round"
           transform={`rotate(135 ${center} ${center})`}
         />
-        <circle
+        <motion.circle
+          initial={{ strokeDashoffset: 205 }}
+          animate={{ strokeDashoffset: offset }}
+          transition={{ type: 'spring', delay: delay, duration }}
           role="presentation"
           cx={center}
           cy={center}
           r={r}
           stroke={color}
           strokeDasharray={c}
-          strokeDashoffset={offset}
+          // strokeDashoffset={offset}
           strokeLinecap="round"
           transform={`rotate(270 ${center} ${center})`}
         />
-      </svg>
+      </motion.svg>
       <div className="absolute top-1/2 left-1/2 z-30 -translate-y-1/2 -translate-x-1/2">{inside}</div>
     </div>
   );

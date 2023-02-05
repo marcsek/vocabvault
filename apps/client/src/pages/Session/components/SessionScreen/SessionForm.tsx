@@ -1,6 +1,7 @@
 import TextArea from '@ui/TextArea';
 import React, { useEffect, useRef } from 'react';
 import { TAnswerValidity } from './SessionScreen';
+import { motion } from 'framer-motion';
 
 interface Props extends Pick<TAnswerValidity, 'validity'> {
   handleSubmit: () => void;
@@ -41,14 +42,16 @@ const SessionForm = ({
   };
 
   return (
-    <form onSubmit={onSubmit} className="flex w-full flex-col items-center gap-10 px-9">
-      <h1
+    <motion.form onSubmit={onSubmit} className="flex w-full flex-col items-center gap-10 px-9">
+      <motion.h1
+        animate={{ translateX: validity === 'INVALID' ? [25, -25, 25, 0] : [] }}
+        transition={{ type: 'spring', duration: 0.2 }}
         className={`text-center text-5xl font-bold leading-none duration-200 md:text-6xl ${
           validity === 'VALID' ? 'text-success-200' : validity === 'INVALID' ? 'text-error-200' : 'text-gray-50'
         }`}
       >
         {currentWord}
-      </h1>
+      </motion.h1>
       <div className="flex w-full max-w-[26rem] flex-col">
         <p className="self-center text-sm leading-none text-gray-500">Type in {proofLanguageName}</p>
         <TextArea
@@ -62,7 +65,7 @@ const SessionForm = ({
         />
       </div>
       <button type="submit" className="hidden" ref={submitButtonRef}></button>
-    </form>
+    </motion.form>
   );
 };
 

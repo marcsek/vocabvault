@@ -5,6 +5,7 @@ import { TPostSessionStatsProps } from './types';
 import { MdExitToApp } from 'react-icons/md';
 import useEndSession from './hooks/useEndSession';
 import Confetti from './components/Confetti';
+import { motion } from 'framer-motion';
 
 const SessionStats = () => {
   const location = useLocation();
@@ -13,6 +14,12 @@ const SessionStats = () => {
 
   return (
     <section className="!pt-12">
+      <motion.div
+        initial={{ backgroundColor: 'rgb(25,25,25)' }}
+        animate={{ backgroundColor: 'rgb(25,25,25,0)' }}
+        transition={{ delay: 0.5 }}
+        className="pointer-events-none fixed inset-0 z-50"
+      />
       <div className="relative z-10 flex flex-col gap-9">
         <p className="text-2xl font-bold leading-none text-gray-50">Post session statistics</p>
         <SessionStatsDetails statsData={statsData} />

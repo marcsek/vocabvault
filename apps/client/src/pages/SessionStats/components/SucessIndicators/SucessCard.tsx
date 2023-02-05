@@ -8,6 +8,7 @@ interface Props {
   percentage: number;
   color: string;
   unit?: string;
+  delay: number;
 }
 
 const SucessCard = ({ title, unit, value, ...props }: Props) => {

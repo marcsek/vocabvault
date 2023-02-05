@@ -24,7 +24,7 @@ const FiltersPopover = ({ setFilters, filters }: Props) => {
   const currentType = filters.sessionType ? { id: filters.sessionType } : { id: 'All' };
 
   const resetFilters = () => {
-    setFilters((prev) => ({ ...prev, sessionType: undefined, source: undefined }));
+    setFilters((prev) => ({ ...prev, sessionType: undefined, source: undefined, page: 0 }));
   };
 
   return (
@@ -76,7 +76,7 @@ const FiltersPopover = ({ setFilters, filters }: Props) => {
                     value={currentType}
                     onChange={(e) => {
                       const valuesToSet = e.id !== 'All' ? e.id : undefined;
-                      setFilters((prev) => ({ ...prev, sessionType: valuesToSet }));
+                      setFilters((prev) => ({ ...prev, sessionType: valuesToSet, page: 0 }));
                     }}
                   />
                   <ListBox
@@ -87,7 +87,7 @@ const FiltersPopover = ({ setFilters, filters }: Props) => {
                     value={currentSource}
                     onChange={(e) => {
                       const valuesToSet = e.id !== '0' ? e : undefined;
-                      setFilters((prev) => ({ ...prev, source: valuesToSet }));
+                      setFilters((prev) => ({ ...prev, source: valuesToSet, page: 0 }));
                     }}
                   />
                 </div>

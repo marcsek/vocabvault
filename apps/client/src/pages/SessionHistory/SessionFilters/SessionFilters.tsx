@@ -40,7 +40,7 @@ const SessionFilters = ({ filters, setFilters }: Props) => {
           value={filters.currentUser}
           fieldKey="id"
           fieldValue="name"
-          onChange={(e) => setFilters((prev) => ({ ...prev, currentUser: e }))}
+          onChange={(e) => setFilters((prev) => ({ ...prev, currentUser: e, page: 0 }))}
         />
       </div>
     </div>

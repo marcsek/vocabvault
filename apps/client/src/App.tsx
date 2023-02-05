@@ -24,13 +24,13 @@ import NewSession from './pages/NewSession/NewSession.page';
 import Session from './pages/Session/Session.page';
 import SessionStats from './pages/SessionStats/SessionStats.page';
 import SessionHistory from './pages/SessionHistory/SessionHistory';
-import VocabVaultJsxLogo from './components/Spinners/TopLevelSpinner';
+import TopLevelSpinner from './components/Spinners/TopLevelSpinner';
 
 function App() {
   return (
     <Router>
       <TrpcQueryProvider>
-        <Suspense fallback={<VocabVaultJsxLogo />}>
+        <Suspense fallback={<TopLevelSpinner />}>
           <ErrorBoundary FallbackComponent={DefaultErrorBoundary}>
             <UserContextProvider>
               <Routes>

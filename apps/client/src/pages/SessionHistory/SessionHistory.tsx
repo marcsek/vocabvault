@@ -18,6 +18,7 @@ const SessionHistory = () => {
         page={filters.page}
         setPage={(e) => setFilters((prev) => ({ ...prev, page: e }))}
         history={history}
+        currentUserName={filters.currentUser.name}
       />
     </TitleLayout>
   );

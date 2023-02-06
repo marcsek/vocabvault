@@ -1,5 +1,7 @@
 import { PrismaClient } from '@prisma/client';
-import { generateSocialId } from '../src/utils/generateSocialId';
+import { generateProfilePicture } from '../dist/utils/generateProfilePicture.js';
+
+const generateSocialId = () => Math.floor(100000000 + Math.random() * 900000000);
 
 const prisma = new PrismaClient();
 
@@ -9,7 +11,7 @@ async function main() {
       socialId: generateSocialId(),
       email: 'jakubmarcek95@gmail.com',
       name: 'Jakub Marcek',
-      profileImage: '90d620dc7610cc667d9c94a6d7c498f1',
+      profileImage: await generateProfilePicture('Jakub Marcek'),
       type: 'ADULT',
       id: 'd0683cd7-02b3-4835-9d51-eb0b4292867b',
       Parent: { create: {} },
@@ -21,7 +23,7 @@ async function main() {
       socialId: generateSocialId(),
       email: 'jakubmarcek955@gmail.com',
       name: 'Jakub Marcek',
-      profileImage: '90d620dc7610cc667d9c94a6d7c498f1',
+      profileImage: await generateProfilePicture('Jakub Marcek'),
       type: 'CHILD',
       id: 'b31fd8af-ac15-4d91-af3c-27ae3537e9ed',
       Child: { create: { parentId: 'd0683cd7-02b3-4835-9d51-eb0b4292867b' } },
@@ -34,7 +36,7 @@ async function main() {
         email: 'marek@gmail.com',
         socialId: generateSocialId(),
         name: 'Marek',
-        profileImage: '90d620dc7610cc667d9c94a6d7c498f1',
+        profileImage: await generateProfilePicture('Jakub Marcek'),
         type: 'ADULT',
         id: '64c8e1fa-82f4-44f3-8eaf-61d92172f74a',
       },
@@ -42,7 +44,7 @@ async function main() {
         email: 'dado@gmail.com',
         socialId: generateSocialId(),
         name: 'Dado',
-        profileImage: '90d620dc7610cc667d9c94a6d7c498f1',
+        profileImage: await generateProfilePicture('Jakub Marcek'),
         type: 'ADULT',
         id: 'f8383cfe-a0ee-44b0-9ac1-79ba349b3e27',
       },

@@ -5,7 +5,6 @@ import { userRouter } from './user.js';
 import { wordSourceRouter } from './wordSource.js';
 import { generateProfilePicture } from '../utils/generateProfilePicture.js';
 import { router } from '../trpc/index.js';
-import { generateS3PresignedUrl } from '../s3/s3Provider.js';
 
 export const appRouter = router({
   user: userRouter,
@@ -13,8 +12,7 @@ export const appRouter = router({
   wordSources: wordSourceRouter,
   session: sessionRouter,
   test: publicProcedure.query(async () => {
-    const profileImage = await generateProfilePicture();
-    console.log(await generateS3PresignedUrl(profileImage));
+    const profileImage = await generateProfilePicture('daco');
     return profileImage;
   }),
 });

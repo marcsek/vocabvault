@@ -7,7 +7,7 @@ import SessionFilters from './SessionFilters/SessionFilters';
 const SessionHistory = () => {
   const user = useUser();
   const { filters, history, setFilters, isLoading } = useHistoryFilters({
-    initialFilers: { currentUser: { id: user?.id ?? '', name: 'You' }, orderBy: 'time', page: 0, reverse: false },
+    initialFilers: { currentUser: { id: user?.id ?? '', name: 'Your' }, orderBy: 'time', page: 0, reverse: false },
   });
 
   return (

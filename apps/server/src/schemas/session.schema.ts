@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { UuidStandard } from './_standards';
+import { UuidStandard } from './_standards.js';
 
 export const CreateSessionSchema = z.object({
   wordSourceId: z.string(),

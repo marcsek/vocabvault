@@ -5,15 +5,16 @@ import {
   updateWordSourceController,
   deleteWordSourceController,
   getWordSourceWordPairs,
-} from '../controllers/wordSource.controller';
+} from '../controllers/wordSource.controller.js';
 import {
   CreateWordSourceSchema,
   DeleteWordSourceSchema,
   GetWordSourceByIDShema,
   GetWordSourceWordPairsSchema,
   UpdateWordSourceSchema,
-} from '../schemas/wordSource.schema';
-import { router, privateProcedure } from '../trpc';
+} from '../schemas/wordSource.schema.js';
+import { router } from '../trpc/index.js';
+import { privateProcedure } from '../trpc/procedures.js';
 
 export const wordSourceRouter = router({
   createWordSource: privateProcedure

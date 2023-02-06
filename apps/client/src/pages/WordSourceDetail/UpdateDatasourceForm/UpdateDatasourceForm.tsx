@@ -38,7 +38,11 @@ const UpdateDatasourceForm = ({ initialDetails }: Props) => {
   });
 
   useEffect(() => {
-    setButtonProps({ disabled: !formik.isValid, loading: update.isLoading, onClick: () => submitButtonRef.current?.click() });
+    setButtonProps({
+      disabled: !formik.isValid,
+      loading: update.isLoading,
+      onClick: () => submitButtonRef.current?.click(),
+    });
   }, [formik.isValid, update.isLoading]);
 
   return (

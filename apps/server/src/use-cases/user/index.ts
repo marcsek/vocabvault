@@ -1,9 +1,9 @@
-import { findUser } from './findUser';
-import { createUser } from './createUser';
-import { getUserInfo } from './getUserInfo';
-import { getUserChildren } from './getUserChildren';
-import { removeUsersChild } from './removeUsersChild';
-import { addUsersChild } from './addChild';
-import { updateUserType } from './updateUserType';
+import { findUser } from './findUser.js';
+import { createUser } from './createUser.js';
+import { getUserInfo } from './getUserInfo.js';
+import { getUserChildren } from './getUserChildren.js';
+import { removeUsersChild } from './removeUsersChild.js';
+import { addUsersChild } from './addChild.js';
+import { updateUserType } from './updateUserType.js';
 
 export { findUser, createUser, getUserInfo, getUserChildren, removeUsersChild, addUsersChild, updateUserType };

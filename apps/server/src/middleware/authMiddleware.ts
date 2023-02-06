@@ -1,5 +1,5 @@
 import { TRPCError } from '@trpc/server';
-import { middleware } from '../trpc';
+import { middleware } from '../trpc/index.js';
 
 export const authMiddleware = middleware(async ({ ctx: { userID }, next }) => {
   if (!userID) {

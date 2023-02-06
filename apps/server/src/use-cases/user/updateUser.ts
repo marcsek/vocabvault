@@ -1,6 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 import { TRPCError } from '@trpc/server';
-import { TUpdateUserInput } from '../../schemas/user.schema';
+import { TUpdateUserInput } from '../../schemas/user.schema.js';
 
 export const updateUser = async ({ prisma, input, userId }: { prisma: PrismaClient; input: TUpdateUserInput; userId: string }) => {
   try {

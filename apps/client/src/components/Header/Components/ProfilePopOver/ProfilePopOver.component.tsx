@@ -1,5 +1,4 @@
 import { Popover } from '@headlessui/react';
-import ProfilePicture from '../../../../assets/ProfilePicture.png';
 import { FiChevronDown } from 'react-icons/fi';
 import { RiHistoryFill } from 'react-icons/ri';
 import { TbSettings } from 'react-icons/tb';
@@ -8,9 +7,11 @@ import Divider from '@ui/Divider';
 import Link from '@ui/Link';
 import { useLogout } from '../../../../queries/user';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useUser } from '../../../../providers/UserContext.provider';
 
 const ProfilePopOver = () => {
   const logout = useLogout();
+  const user = useUser();
 
   return (
     <Popover className="relative z-50 h-[32px]">
@@ -18,7 +19,9 @@ const ProfilePopOver = () => {
         <>
           <Popover.Button className="z-30 outline-none">
             <div className="flex items-center justify-center gap-2">
-              <img className="h-8 w-8" src={ProfilePicture}></img>
+              <div className="overflow-hidden rounded-full bg-gray-700">
+                <img className="h-8 w-8" src={user?.profileImage ?? ''}></img>
+              </div>
               <motion.div animate={{ rotate: open ? '180deg' : '0deg' }}>
                 <FiChevronDown size="20" />
               </motion.div>
@@ -36,7 +39,7 @@ const ProfilePopOver = () => {
                 >
                   <div className="flex flex-col gap-2 px-3">
                     <p className="text-sm font-medium leading-none text-gray-400">Signed in as</p>
-                    <span className="text-sm font-semibold text-gray-50">Marek Tate</span>
+                    <span className="text-sm font-semibold text-gray-50">{user?.name ?? ''}</span>
                   </div>
                   <Divider className="h-[1px] w-full bg-gray-700" />
                   <div className="flex flex-col gap-2">

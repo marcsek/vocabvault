@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import googleRouter from './auth/google';
-import githubRouter from './auth/github';
+import googleRouter from './auth/google.js';
+import githubRouter from './auth/github.js';
 
 const expressRouter = Router();
 

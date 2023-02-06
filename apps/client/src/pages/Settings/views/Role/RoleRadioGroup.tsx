@@ -36,7 +36,7 @@ const RoleRadioGroup = ({ activeRole, handleRoleChange, allRoles }: Props) => {
                   <p className="text-sm leading-none text-gray-400">{role.desc}</p>
                 </div>
                 <div className={`ml-5 flex flex-col items-center justify-center gap-1.5 ${checked ? 'visible' : 'invisible'}`}>
-                  <CheckRounded size={28} />
+                  <CheckRounded />
                 </div>
               </li>
             )}
@@ -47,7 +47,7 @@ const RoleRadioGroup = ({ activeRole, handleRoleChange, allRoles }: Props) => {
   );
 };
 
-export const CheckRounded = ({ size }: { size: string | number }) => {
+export const CheckRounded = () => {
   return (
     <div className={`bg-primary-500/30 text-primary-200 flex h-[24px] w-[24px] items-center justify-center rounded-full`}>
       <BsCheck className="h-full w-full" />

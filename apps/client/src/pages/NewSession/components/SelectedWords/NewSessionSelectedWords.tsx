@@ -14,7 +14,7 @@ const NewSessionSelectedWords = () => {
         ) : (
           <div className="flex flex-col items-center gap-2 leading-none">
             <TbDragDrop className="text-gray-500" size={40} />
-            <p className="text-sm font-medium text-gray-400">Select word source first.</p>
+            <p className="text-sm font-medium text-gray-400">Selected words will show up here.</p>
           </div>
         )}
       </div>

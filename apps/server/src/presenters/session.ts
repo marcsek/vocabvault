@@ -1,4 +1,4 @@
-import getSessionAsHistoryByUserId from '../use-cases/session/getSessionAsHistoryByUserId';
+import getSessionAsHistoryByUserId from '../use-cases/session/getSessionAsHistoryByUserId.js';
 
 type TPresentSessionHistoryInput = Awaited<ReturnType<typeof getSessionAsHistoryByUserId>>;
 

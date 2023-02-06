@@ -1,5 +1,5 @@
 import e from 'express';
-import { createAccessToken } from '../jwt';
+import { createAccessToken } from '../jwt.js';
 
 export const createTokenAttachCookie = ({ res, userId }: { res: e.Response; userId: string }) => {
   const accessToken = createAccessToken({ userId: userId }, { expiresIn: '1h', allowInsecureKeySizes: true });

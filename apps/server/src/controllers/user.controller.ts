@@ -1,17 +1,19 @@
 import { TRPCError } from '@trpc/server';
-import { presentUserChildren, presentUserParent } from '../presenters/user';
-import { TAddChildInput, TChangeUserType, TRemoveChildInput, TUpdateUserInput } from '../schemas/user.schema';
-import { Context } from '../trpc/context';
-import { addUsersChild, getUserChildren, getUserInfo, removeUsersChild, updateUserType } from '../use-cases/user';
-import { getUserParent } from '../use-cases/user/getUserParent';
-import { updateUser } from '../use-cases/user/updateUser';
+import { generateUserProfileImageUrl, presentUserChildren, presentUserParent } from '../presenters/user.js';
+import { TAddChildInput, TChangeUserType, TRemoveChildInput, TUpdateUserInput } from '../schemas/user.schema.js';
+import { Context } from '../trpc/context.js';
+import { addUsersChild, getUserChildren, getUserInfo, removeUsersChild, updateUserType } from '../use-cases/user/index.js';
+import { getUserParent } from '../use-cases/user/getUserParent.js';
+import { updateUser } from '../use-cases/user/updateUser.js';
 
 export const getUserController = async ({ ctx: { prisma, userID } }: { ctx: Context }) => {
   const user = await getUserInfo({ prisma, input: { id: userID ?? '' } });
 
   if (!user) throw new TRPCError({ message: 'User not found', code: 'NOT_FOUND' });
 
-  return user;
+  const userWithPresignedUrl = await generateUserProfileImageUrl(user);
+
+  return userWithPresignedUrl;
 };
 
 export const getUserParentController = async ({ ctx: { prisma, userID } }: { ctx: Context }) => {
@@ -19,13 +21,13 @@ export const getUserParentController = async ({ ctx: { prisma, userID } }: { ctx
 
   if (!parent) throw new TRPCError({ message: 'Parent not found', code: 'NOT_FOUND' });
 
-  return presentUserParent(parent);
+  return await presentUserParent(parent);
 };
 
 export const getAllUserChildrenController = async ({ ctx: { prisma, userID } }: { ctx: Context }) => {
   const children = await getUserChildren({ prisma, input: { id: userID ?? '' } });
 
-  return presentUserChildren(children);
+  return await presentUserChildren(children);
 };
 
 export const removeChildController = async ({ ctx: { prisma, userID }, input }: { ctx: Context; input: TRemoveChildInput }) => {
@@ -37,11 +39,13 @@ export const addChildController = async ({ ctx: { prisma, userID }, input }: { c
 
   if (!childToAdd) throw new TRPCError({ message: 'Failed to add child.', code: 'INTERNAL_SERVER_ERROR' });
 
-  return presentUserChildren(childToAdd);
+  return await presentUserChildren(childToAdd);
 };
 
 export const updateUserController = async ({ ctx: { prisma, userID }, input }: { ctx: Context; input: TUpdateUserInput }) => {
-  return await updateUser({ prisma, input, userId: userID ?? '' });
+  const updatedUser = await updateUser({ prisma, input, userId: userID ?? '' });
+
+  return await generateUserProfileImageUrl(updatedUser);
 };
 
 export const changeUserTypeController = async ({ ctx: { prisma, userID }, input }: { ctx: Context; input: TChangeUserType }) => {

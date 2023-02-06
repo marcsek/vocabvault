@@ -3,7 +3,12 @@ import { TGetAllWordSourcesOutput } from '../../WordSources.page';
 
 type Props = Pick<TGetAllWordSourcesOutput[number], 'creator' | 'name' | 'firstLanguage' | 'secondLanguage'>;
 
-const countryFlagURL = (code: string) => `https://flagcdn.com/w80/${code}.png`;
+const countryFlagURL = (code: string) => {
+  let codeToUrl = code;
+  if (code === 'en') codeToUrl = 'gb';
+
+  return `https://flagcdn.com/w80/${codeToUrl}.png`;
+};
 
 const SourceHeading = ({ name, firstLanguage, secondLanguage, creator }: Props) => {
   return (

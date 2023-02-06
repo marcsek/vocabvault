@@ -1,7 +1,7 @@
-import { presentSessionHistory } from '../presenters/session';
-import { CreateSessionInput, TGetSessionByUserIdInput } from '../schemas/session.schema';
-import { Context } from '../trpc/context';
-import getSessionAsHistoryByUserId, { TOrderByObject } from '../use-cases/session/getSessionAsHistoryByUserId';
+import { presentSessionHistory } from '../presenters/session.js';
+import { CreateSessionInput, TGetSessionByUserIdInput } from '../schemas/session.schema.js';
+import { Context } from '../trpc/context.js';
+import getSessionAsHistoryByUserId, { TOrderByObject } from '../use-cases/session/getSessionAsHistoryByUserId.js';
 
 export const createSessionController = async ({ ctx: { prisma, userID }, input }: { ctx: Context; input: CreateSessionInput }) => {
   const history = await prisma.session.create({

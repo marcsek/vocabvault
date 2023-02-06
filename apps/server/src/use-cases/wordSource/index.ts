@@ -1,8 +1,8 @@
-import { createWordSource } from './createWordSource';
-import { deleteWordSource } from './deleteWordSource';
-import { getAllWordSources } from './getAllWordSources';
-import { getWordSourceById } from './getWordSourceById';
-import { getWordPairs } from './getWordSourceWordPairs';
-import { updateWordSource } from './updateWordSource';
+import { createWordSource } from './createWordSource.js';
+import { deleteWordSource } from './deleteWordSource.js';
+import { getAllWordSources } from './getAllWordSources.js';
+import { getWordSourceById } from './getWordSourceById.js';
+import { getWordPairs } from './getWordSourceWordPairs.js';
+import { updateWordSource } from './updateWordSource.js';
 
 export { createWordSource, getAllWordSources, getWordSourceById, updateWordSource, deleteWordSource, getWordPairs };

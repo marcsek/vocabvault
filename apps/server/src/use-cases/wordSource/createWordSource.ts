@@ -1,6 +1,6 @@
 import { Prisma, PrismaClient } from '@prisma/client';
 import { TRPCError } from '@trpc/server';
-import { CreateWordSourceInput } from '../../schemas/wordSource.schema';
+import { CreateWordSourceInput } from '../../schemas/wordSource.schema.js';
 
 export const createWordSource = async ({
   prisma,

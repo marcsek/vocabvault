@@ -1,6 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 import { TRPCError } from '@trpc/server';
-import { removeAlikeWordSources } from './removeAlikeWordSources';
+import { removeAlikeWordSources } from './removeAlikeWordSources.js';
 
 export const removeUsersChild = async ({ prisma, input }: { prisma: PrismaClient; input: { childId: string; parentId: string } }) => {
   try {

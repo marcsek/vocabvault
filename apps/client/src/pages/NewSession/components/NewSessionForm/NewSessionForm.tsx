@@ -1,11 +1,9 @@
-import Divider from '@ui/Divider';
 import ListBox from '@ui/ListBox';
 import { useFormik } from 'formik';
 import { useContext, useEffect, useRef } from 'react';
 import { useGetAvailableWordSources } from '../../../../queries/wordSource';
 import { TGetAllWordSourcesOutput } from '../../../WordSources/WordSources.page';
 import { useSelectedWords } from '../../context/SelectedWordsContext';
-import { MdLockOutline } from 'react-icons/md';
 import SessionTypeSelector from '../SessionTypeSelector';
 import WordSourceSelector from '../WordSourceSelector/WordSourceSelector';
 import { generateAvailableGroupNumbers, generateAvailableNumberOfPairs, generateOutput } from './generators';
@@ -13,6 +11,7 @@ import { useNavigate } from 'react-router-dom';
 import { TNewSessionProps } from '../../types';
 import { ButtonPropsContext } from '@ui/TitleLayout/TitleLayout';
 import { motion, useAnimationControls } from 'framer-motion';
+import SessionFormDivider from './SessionFormDivider';
 
 const typesOfSession = [
   { id: 'Practice', description: 'Practice to get better.' },
@@ -98,6 +97,7 @@ const NewSessionForm = () => {
       numOfWordPairs: availableNumOfWordPairs[0],
       availableNumOfWordPairs,
       translationLanguage: allTranslationLanguages[0],
+      groupNumber: { id: 1 },
       allTranslationLanguages,
       availableGroupNumbers,
     }));
@@ -122,17 +122,7 @@ const NewSessionForm = () => {
             wordPairCount={getFullWordSource(formik.values.document.id, wordSources)?.wordPairsCount}
           />
         </div>
-        <div className="flex flex-col items-center gap-1">
-          <Divider className="w-full outline-dashed outline-1 outline-gray-500" />
-          {/* {formik.values.document.id === '0' && ( */}
-          <motion.p
-            animate={{ opacity: formik.values.document.id === '0' ? 1 : 0 }}
-            className="flex items-center gap-1 text-sm text-gray-400"
-          >
-            Select word source first. <MdLockOutline />
-          </motion.p>
-          {/* )} */}
-        </div>
+        <SessionFormDivider isUnlocked={formik.values.document.id === '0'} />
         <div className="flex flex-col gap-10">
           <div className="flex flex-col gap-10 md:flex-row">
             <ListBox

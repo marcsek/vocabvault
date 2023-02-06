@@ -1,7 +1,7 @@
 import { PrismaClient } from '@prisma/client';
 import { TRPCError } from '@trpc/server';
-import { removeAlikeWordSources } from './removeAlikeWordSources';
-import { TChangeUserType } from '../../schemas/user.schema';
+import { removeAlikeWordSources } from './removeAlikeWordSources.js';
+import { TChangeUserType } from '../../schemas/user.schema.js';
 
 export const updateUserType = async ({ prisma, input, userId }: { prisma: PrismaClient; input: TChangeUserType; userId: string }) => {
   try {

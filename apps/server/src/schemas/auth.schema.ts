@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { EmailStandard, UserNameStandard, UserPasswordStandard } from './_standards';
+import { EmailStandard, UserNameStandard, UserPasswordStandard } from './_standards.js';
 
 export const registerUserSchema = z.object({
   name: UserNameStandard,

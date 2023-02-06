@@ -1,7 +1,8 @@
 import { PrismaClient } from '@prisma/client';
 import PassportGoogle from 'passport-google-oauth20';
-import { generateSocialId } from '../../utils/generateSocialId';
-import { parseAuthProviderProfile } from '../helpers/parseProfile';
+import { generateProfilePicture } from '../../utils/generateProfilePicture.js';
+import { generateSocialId } from '../../utils/generateSocialId.js';
+import { parseAuthProviderProfile } from '../helpers/parseProfile.js';
 
 const prisma = new PrismaClient();
 
@@ -17,9 +18,11 @@ const GoogleStrategy = new PassportGoogle.Strategy(
     if (!user) return done(new Error('Received wrong profile data'));
 
     try {
+      const profileImage = await generateProfilePicture();
+
       const { id: userID } = await prisma.user.upsert({
         where: { email: user.email },
-        create: { email: user.email, name: user.name, profileImage: user.picture, Parent: { create: {} }, socialId: generateSocialId() },
+        create: { email: user.email, name: user.name, profileImage, Parent: { create: {} }, socialId: generateSocialId() },
         update: {},
         select: { id: true },
       });

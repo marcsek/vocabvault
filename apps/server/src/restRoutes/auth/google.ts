@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import passport from 'passport';
-import { createTokenAttachCookie } from '../../auth/helpers/createTokenAttachCookie';
+import { createTokenAttachCookie } from '../../auth/helpers/createTokenAttachCookie.js';
 
 const googleRouter = Router();
 

@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { UuidStandard, WordSourceNameStandard } from './_standards';
+import { UuidStandard, WordSourceNameStandard } from './_standards.js';
 
 export const LanguageDuoSchema = z.object({
   firstLanguage: z.object({ languageName: z.string(), code: z.string() }),

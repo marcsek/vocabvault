@@ -1,4 +1,4 @@
-import { router, privateProcedure } from '../trpc';
+import { router } from '../trpc/index.js';
 import {
   addChildController,
   changeUserTypeController,
@@ -7,8 +7,9 @@ import {
   getUserParentController,
   removeChildController,
   updateUserController,
-} from '../controllers/user.controller';
-import { AddChild, ChangeUserTypeSchema, RemoveChildSchema, UpdateUserSchema } from '../schemas/user.schema';
+} from '../controllers/user.controller.js';
+import { AddChild, ChangeUserTypeSchema, RemoveChildSchema, UpdateUserSchema } from '../schemas/user.schema.js';
+import { privateProcedure } from '../trpc/procedures.js';
 
 export const userRouter = router({
   getUser: privateProcedure.query((req) => getUserController({ ctx: req.ctx })),

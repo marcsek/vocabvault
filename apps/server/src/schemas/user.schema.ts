@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { EmailStandard, UserNameStandard, UuidStandard } from './_standards';
+import { EmailStandard, UserNameStandard, UuidStandard } from './_standards.js';
 
 export const UpdateUserSchema = z.object({
   name: UserNameStandard.optional(),

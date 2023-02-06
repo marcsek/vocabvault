@@ -8,11 +8,11 @@ import passport from 'passport';
 import cookieParser from 'cookie-parser';
 
 import * as trpcExpress from '@trpc/server/adapters/express';
-import { appRouter } from './routers/_app';
-import { createContext } from './trpc/context';
+import { appRouter } from './routers/_app.js';
+import { createContext } from './trpc/context.js';
 
-import './auth/passportSetup';
-import restRoutes from './restRoutes';
+import './auth/passportSetup.js';
+import restRoutes from './restRoutes/index.js';
 
 const app: Express = express();
 const port = process.env.SERVER_PORT ?? 3001;

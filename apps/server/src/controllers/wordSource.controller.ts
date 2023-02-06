@@ -1,5 +1,5 @@
 import { TRPCError } from '@trpc/server';
-import { presentAvailableWordSources, presentUpdatedWordSource, presentWordSource } from '../presenters/wordSource';
+import { presentAvailableWordSources, presentUpdatedWordSource, presentWordSource } from '../presenters/wordSource.js';
 
 import {
   CreateWordSourceInput,
@@ -7,8 +7,8 @@ import {
   TGetWordSourceByIDInput,
   TGetWordSourceWordPairsInput,
   TUpdateWordSourceInput,
-} from '../schemas/wordSource.schema';
-import { Context } from '../trpc/context';
+} from '../schemas/wordSource.schema.js';
+import { Context } from '../trpc/context.js';
 import {
   createWordSource,
   deleteWordSource,
@@ -16,12 +16,12 @@ import {
   getWordPairs,
   getWordSourceById,
   updateWordSource,
-} from '../use-cases/wordSource';
+} from '../use-cases/wordSource/index.js';
 
 export const createWordSourceController = async ({ ctx: { prisma, userID }, input }: { ctx: Context; input: CreateWordSourceInput }) => {
   const newWordSource = await createWordSource({ prisma, input, userId: userID ?? '' });
 
-  return presentWordSource(newWordSource);
+  return await presentWordSource(newWordSource);
 };
 
 export const getAllUserAvailableSourcesController = async ({ ctx: { prisma, userID } }: { ctx: Context }) => {
@@ -29,7 +29,7 @@ export const getAllUserAvailableSourcesController = async ({ ctx: { prisma, user
 
   if (!allWordSources) throw new TRPCError({ message: 'Failed to find record.', code: 'INTERNAL_SERVER_ERROR' });
 
-  return presentAvailableWordSources(allWordSources);
+  return await presentAvailableWordSources(allWordSources);
 };
 
 export const getWordSourceByIDController = async ({ ctx: { prisma }, input }: { ctx: Context; input: TGetWordSourceByIDInput }) => {
@@ -39,13 +39,13 @@ export const getWordSourceByIDController = async ({ ctx: { prisma }, input }: { 
     throw new TRPCError({ message: 'Failed to find record.', code: 'INTERNAL_SERVER_ERROR' });
   }
 
-  return presentWordSource(foundWordSource);
+  return await presentWordSource(foundWordSource);
 };
 
 export const updateWordSourceController = async ({ ctx: { prisma, userID }, input }: { ctx: Context; input: TUpdateWordSourceInput }) => {
   const wordSourceToParse = await updateWordSource({ prisma, input, userId: userID ?? '' });
 
-  return presentUpdatedWordSource(wordSourceToParse);
+  return await presentUpdatedWordSource(wordSourceToParse);
 };
 
 export const deleteWordSourceController = async ({ ctx: { prisma, userID }, input }: { ctx: Context; input: TDeleteWordSourceInput }) => {

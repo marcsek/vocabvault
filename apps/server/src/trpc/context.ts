@@ -1,8 +1,8 @@
 import { PrismaClient } from '@prisma/client';
-import { verifyAccessToken } from '../auth/jwt';
+import { verifyAccessToken } from '../auth/jwt.js';
 import type * as trpcExpress from '@trpc/server/adapters/express';
 import { inferAsyncReturnType } from '@trpc/server';
-import { prismaHashPassword } from '../middleware/prismaHashPassword';
+import { prismaHashPassword } from '../middleware/prismaHashPassword.js';
 
 const prisma = new PrismaClient();
 prisma.$use(prismaHashPassword);

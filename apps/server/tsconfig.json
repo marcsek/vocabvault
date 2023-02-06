@@ -2,7 +2,8 @@
   "extends": "tsconfig/base.json",
   "compilerOptions": {
     "outDir": "./dist",
-    "module": "commonjs",
+    "module": "Node16",
+    "moduleResolution": "node16",
     "esModuleInterop": true
   },
   "exclude": ["node_modules", "dist", ".turbo", "coverage", "prisma"]

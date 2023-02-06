@@ -19,7 +19,7 @@ const WordSourceDetail = () => {
 
   return (
     <TitleLayout
-      buttonForSubmit={{ title: 'Update', Icon: <FiAperture /> }}
+      buttonForSubmit={isOwner ? { title: 'Update', Icon: <FiAperture /> } : undefined}
       headingLeft={
         <div className="flex flex-col gap-6">
           <h1 className="flex flex-col gap-1 text-xl font-bold leading-none md:text-2xl">

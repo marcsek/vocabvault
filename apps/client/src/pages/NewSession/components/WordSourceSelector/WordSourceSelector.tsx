@@ -16,7 +16,7 @@ interface Props {
 const WordSourceSelector = ({ firstLanguageName, secondLanguageName, wordPairCount, ...props }: Props) => {
   return (
     <div className="flex w-full flex-col gap-4">
-      <ListBox fieldKey="id" fieldValue="name" label="Select wordsource" {...props} />
+      <ListBox fieldKey="id" disabled={props.items.length === 0} fieldValue="name" label="Select wordsource" {...props} />
       <WordSourceDetailBox firstLanguageName={firstLanguageName} secondLanguageName={secondLanguageName} wordPairCount={wordPairCount} />
     </div>
   );

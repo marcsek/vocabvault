@@ -20,7 +20,7 @@ export const loginUserController = async ({ ctx: { prisma, res }, loginInput }: 
 };
 
 export const registerUserController = async ({ ctx: { prisma, res }, registerInput }: { ctx: Context; registerInput: RegisterInput }) => {
-  const profileImage = await generateProfilePicture();
+  const profileImage = await generateProfilePicture(registerInput.name);
 
   const createdUser = await createUser({ prisma, input: { ...registerInput, profileImage } });
 

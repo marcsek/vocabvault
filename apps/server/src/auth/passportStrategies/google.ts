@@ -18,7 +18,7 @@ const GoogleStrategy = new PassportGoogle.Strategy(
     if (!user) return done(new Error('Received wrong profile data'));
 
     try {
-      const profileImage = await generateProfilePicture();
+      const profileImage = await generateProfilePicture(user.name);
 
       const { id: userID } = await prisma.user.upsert({
         where: { email: user.email },

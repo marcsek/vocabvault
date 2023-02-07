@@ -70,7 +70,7 @@ const CreateDatasourceForm = () => {
           />
         </div>
       </div>
-      <div className="min-h-[15rem] flex-1 lg:h-full">
+      <div className="min-h-[15rem] flex-1">
         <DragAndDrop activeFile={formik.values.activeFile} setActiveFile={(e) => handleDropInputChange(e)} />
       </div>
       <button className="hidden" ref={submitButtonRef} disabled={!formik.isValid && formik.touched.name} type="submit">

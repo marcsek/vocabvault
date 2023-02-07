@@ -16,8 +16,9 @@ import restRoutes from './restRoutes/index.js';
 
 const app: Express = express();
 const port = process.env.SERVER_PORT ?? 3001;
+const clientURL = process.env.CLIENT_URL ?? 'http://localhost:5173';
 
-app.use(cors({ origin: 'http://localhost:5173', credentials: true }));
+app.use(cors({ origin: clientURL, credentials: true }));
 app.use(passport.initialize());
 
 app.use(express.json());

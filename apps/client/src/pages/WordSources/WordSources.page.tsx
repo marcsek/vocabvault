@@ -12,7 +12,7 @@ import { wordSourceRouter } from 'server/src/routers/wordSource';
 export type TGetAllWordSourcesOutput = inferProcedureOutput<typeof wordSourceRouter.getAllUserAvailableWordSources>;
 
 const WordSources = () => {
-  const { data } = useGetAvailableWordSources();
+  const { data, isLoading } = useGetAvailableWordSources();
 
   const { filtered, setFilters, filters } = useFilters(data ?? []);
 
@@ -25,8 +25,8 @@ const WordSources = () => {
         </Button>
       }
     >
-      <div className="flex w-full flex-col gap-10 md:gap-8">
-        <SourceBoard filteredSources={filtered} />
+      <div className="relative flex min-h-[10rem] w-full flex-col gap-10 md:gap-8">
+        <SourceBoard filteredSources={filtered} isLoading={isLoading} unfilteredDataExists={data?.length !== 0} />
       </div>
     </TitleLayout>
   );

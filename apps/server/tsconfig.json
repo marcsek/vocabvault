@@ -1,10 +1,21 @@
 {
-  "extends": "tsconfig/base.json",
   "compilerOptions": {
     "outDir": "./dist",
-    "module": "Node16",
-    "moduleResolution": "node16",
-    "esModuleInterop": true
+    "module": "NodeNext",
+    "moduleResolution": "nodenext",
+    "esModuleInterop": true,
+
+    "composite": false,
+    "declaration": true,
+    "declarationMap": true,
+    "forceConsistentCasingInFileNames": true,
+    "inlineSources": false,
+    "isolatedModules": true,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "preserveWatchOutput": true,
+    "skipLibCheck": true,
+    "strict": true
   },
   "exclude": ["node_modules", "dist", ".turbo", "coverage", "prisma"]
 }

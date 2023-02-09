@@ -5,7 +5,7 @@
       "dependsOn": ["^build"],
       "outputs": ["dist/**", ".next/**"],
       "env": [
-        "SERVER_PORT",
+        "PORT",
         "ACCESS_PUBLIC_KEY",
         "ACCESS_PRIVATE_KEY",
         "GOOGLE_CLIENT_ID",

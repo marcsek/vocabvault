@@ -7,13 +7,15 @@ export const createTokenAttachCookie = ({ res, userId }: { res: e.Response; user
   res.cookie('jit', accessToken, {
     maxAge: 3_600_000,
     httpOnly: true,
-    secure: false,
+    secure: true,
+    sameSite: 'none',
   });
 
   res.cookie('is_loggedin', 'yes', {
     maxAge: 3_600_000,
     httpOnly: false,
-    secure: false,
+    secure: true,
+    sameSite: 'none',
   });
 
   return accessToken;

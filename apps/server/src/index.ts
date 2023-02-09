@@ -1,3 +1,5 @@
+console.log('Start');
+
 import type { Express } from 'express';
 import express from 'express';
 import './config.js';

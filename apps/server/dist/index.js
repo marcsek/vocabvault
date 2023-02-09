@@ -1,6 +1,5 @@
 import express from 'express';
-import dotenv from 'dotenv';
-dotenv.config();
+import './config.js';
 import cors from 'cors';
 import passport from 'passport';
 import cookieParser from 'cookie-parser';
@@ -10,7 +9,7 @@ import { createContext } from './trpc/context.js';
 import './auth/passportSetup.js';
 import restRoutes from './restRoutes/index.js';
 const app = express();
-const port = process.env.SERVER_PORT ?? 3001;
+const port = process.env.PORT ?? 3001;
 const clientURL = process.env.CLIENT_URL ?? 'http://localhost:5173';
 app.use(cors({ origin: clientURL, credentials: true }));
 app.use(passport.initialize());

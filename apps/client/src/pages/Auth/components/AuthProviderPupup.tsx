@@ -13,7 +13,7 @@ const width = 500;
 const height = 700;
 const left = window.screenX + (window.outerWidth - width) / 2;
 const top = window.screenY + (window.outerHeight - height) / 2.5;
-const url = 'http://localhost:3002/api/auth/';
+const url = 'https://shocking-carriage-production.up.railway.app/api/auth/';
 
 interface Props {
   providerName: 'Github' | 'Google';

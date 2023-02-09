@@ -9,7 +9,7 @@ export const createTokenAttachCookie = ({ res, userId }: { res: e.Response; user
     httpOnly: true,
     secure: true,
     sameSite: 'none',
-    domain: 'vocab-client.onrender.com',
+    domain: 'vocab-backend.onrender.com',
   });
 
   res.cookie('is_loggedin', 'yes', {
@@ -17,7 +17,7 @@ export const createTokenAttachCookie = ({ res, userId }: { res: e.Response; user
     httpOnly: false,
     secure: true,
     sameSite: 'none',
-    domain: 'vocab-client.onrender.com',
+    domain: 'vocab-backend.onrender.com',
   });
 
   return accessToken;

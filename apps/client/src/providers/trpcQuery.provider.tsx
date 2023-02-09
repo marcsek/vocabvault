@@ -14,7 +14,7 @@ const TrpcQueryProvider: React.FC<Props> = ({ children }) => {
     trpc.createClient({
       links: [
         httpBatchLink({
-          url: 'https://vocab-backend.up.railway.app/trpc',
+          url: 'https://vocab-backend.onrender.com/trpc',
           fetch(url, options) {
             return fetch(url, {
               ...options,
@@ -25,6 +25,8 @@ const TrpcQueryProvider: React.FC<Props> = ({ children }) => {
       ],
     })
   );
+
+  console.log(import.meta.env.VITE_DACO);
 
   //http://localhost:3001/trpc
   //https://vocab-backend.up.railway.app/trpc

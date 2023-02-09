@@ -33,9 +33,10 @@ COPY turbo.json turbo.json
 
 # ARG TURBO_TOKEN
 # ENV TURBO_TOKEN=$TURBO_TOKEN
-RUN npx turbo db:generate
+WORKDIR /app/apps/server
+RUN npx prisma generate
 
-RUN npx turbo run build --filter=server...
+RUN npx tsc
 
 FROM node:alpine AS runner
 WORKDIR /app

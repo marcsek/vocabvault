@@ -14,7 +14,7 @@ const TrpcQueryProvider: React.FC<Props> = ({ children }) => {
     trpc.createClient({
       links: [
         httpBatchLink({
-          url: 'http://localhost:3001/trpc',
+          url: 'https://vocab-backend.up.railway.app/trpc',
           fetch(url, options) {
             return fetch(url, {
               ...options,
@@ -27,7 +27,7 @@ const TrpcQueryProvider: React.FC<Props> = ({ children }) => {
   );
 
   //http://localhost:3001/trpc
-  //https://shocking-carriage-production.up.railway.app/trpc
+  //https://vocab-backend.up.railway.app/trpc
 
   return (
     <trpc.Provider client={trpcClient} queryClient={queryClient}>

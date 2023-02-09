@@ -12,7 +12,7 @@ githubRouter.get('/callback', passport.authenticate('github', { session: false }
   if (userID) {
     console.log(userID);
     const accessToken = createTokenAttachCookie({ res, userId: userID });
-    res.redirect('http://localhost:5173/auth/success');
+    res.redirect(`${process.env.CLIENT_URL} + /auth/success`);
   }
 });
 

@@ -25,6 +25,7 @@ RUN npm i
 
 # Build the project and its dependencies
 COPY --from=builder /app/out/full/ .
+COPY turbo.json turbo.json
 
 # Uncomment and use build args to enable remote caching
 # ARG TURBO_TEAM
@@ -32,10 +33,9 @@ COPY --from=builder /app/out/full/ .
 
 # ARG TURBO_TOKEN
 # ENV TURBO_TOKEN=$TURBO_TOKEN
-WORKDIR /app/apps/server
-RUN npx prisma generate
+RUN npx turbo db:generate
 
-RUN npx tsc
+RUN npx turbo run build --filter=server...
 
 FROM node:alpine AS runner
 WORKDIR /app

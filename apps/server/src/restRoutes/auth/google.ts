@@ -18,7 +18,7 @@ googleRouter.get('/callback', passport.authenticate('google', { session: false }
   if (userID) {
     const accessToken = createTokenAttachCookie({ res, userId: userID });
 
-    res.redirect('http://localhost:5173/auth/success');
+    res.redirect(`${process.env.CLIENT_URL} + /auth/success`);
   }
 });
 

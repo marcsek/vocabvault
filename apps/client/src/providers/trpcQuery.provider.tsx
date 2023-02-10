@@ -14,7 +14,7 @@ const TrpcQueryProvider: React.FC<Props> = ({ children }) => {
     trpc.createClient({
       links: [
         httpBatchLink({
-          url: 'https://vocab-backend.onrender.com/trpc',
+          url: `${import.meta.env.VITE_BACKEND_URL}/trpc`,
           fetch(url, options) {
             return fetch(url, {
               ...options,

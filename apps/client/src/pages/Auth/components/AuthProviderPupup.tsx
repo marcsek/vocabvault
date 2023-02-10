@@ -13,7 +13,7 @@ const width = 500;
 const height = 700;
 const left = window.screenX + (window.outerWidth - width) / 2;
 const top = window.screenY + (window.outerHeight - height) / 2.5;
-const url = 'https://vocab-backend.onrender.com/api/auth/';
+const url = `${import.meta.env.VITE_BACKEND_URL}/api/auth/`;
 
 interface Props {
   providerName: 'Github' | 'Google';

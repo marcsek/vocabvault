@@ -118,6 +118,7 @@ export const useLogout = () => {
     onSuccess() {
       const userKey = trpc.user.getUser.getQueryKey(undefined, 'query');
       queryClient.setQueryData(userKey, null);
+      queryClient.clear();
     },
     onError() {
       toast.error('Failed to logout.');

@@ -13,7 +13,7 @@ const handleSucessRedirect = async ({ navigate, queryClient, trpcContext }: Prop
   queryClient.setQueryData(getUserKey, null);
   queryClient.resetQueries(getUserKey);
   await trpcContext.user.getUser.fetch();
-  navigate('/protected', { replace: true });
+  navigate('/word-sources', { replace: true });
 };
 
 export default handleSucessRedirect;

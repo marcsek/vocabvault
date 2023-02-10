@@ -7,7 +7,7 @@ const secret = process.env.S3_BUCKET_SECRET;
 const bucketName = process.env.S3_BUCKET_NAME;
 const region = process.env.S3_BUCKET_REGION;
 
-console.log(accessKey, secret, bucketName, region);
+console.log(bucketName, region);
 
 if (!accessKey || !secret || !bucketName || !region) {
   throw new Error('Bucket credential were not specified.');

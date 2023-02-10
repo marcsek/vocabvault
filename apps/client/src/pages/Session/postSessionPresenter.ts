@@ -17,7 +17,6 @@ const presentSessionStatistics = ({ history, startEndTime, wordPairs, type, word
   let accuracy = 0;
   let maxStreak = 0;
   const answers: TAnswerType[] = [];
-  console.log(history);
 
   [...history.values()].forEach((answer, index) => {
     const corespondingWordPair = wordPairs[index];

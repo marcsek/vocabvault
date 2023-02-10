@@ -2,11 +2,7 @@ import { toast } from 'react-toastify';
 import { trpc } from '../utils/trpc';
 
 export const useGetAvailableWordSources = () => {
-  return trpc.wordSources.getAllUserAvailableWordSources.useQuery(undefined, {
-    onSettled(data) {
-      console.log(data);
-    },
-  });
+  return trpc.wordSources.getAllUserAvailableWordSources.useQuery(undefined, {});
 };
 
 export const useGetDataSourceByID = (id: string) => {
@@ -15,9 +11,6 @@ export const useGetDataSourceByID = (id: string) => {
   return trpc.wordSources.getWordSourceByID.useQuery(
     { id },
     {
-      onSettled(data) {
-        console.log(data);
-      },
       initialData: () => {
         const data = queryClient.wordSources.getAllUserAvailableWordSources.getData()?.find((e) => e.id === id);
         if (data) return data;
@@ -103,9 +96,6 @@ export const useGetWordSourceWordPairs = (
     { sourceID: id ?? '', ...format },
     {
       keepPreviousData: true,
-      onSettled(data) {
-        console.log(data);
-      },
       staleTime: Infinity,
       cacheTime: 1000 * 60 * 1,
     }

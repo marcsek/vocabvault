@@ -26,8 +26,6 @@ const TrpcQueryProvider: React.FC<Props> = ({ children }) => {
     })
   );
 
-  console.log(import.meta.env.VITE_DACO);
-
   //http://localhost:3001/trpc
   //https://vocab-backend.up.railway.app/trpc
 

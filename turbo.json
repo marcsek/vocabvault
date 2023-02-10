@@ -6,6 +6,7 @@
       "outputs": ["dist/**", ".next/**"],
       "env": [
         "PORT",
+        "NODE_ENV",
         "ACCESS_PUBLIC_KEY",
         "ACCESS_PRIVATE_KEY",
         "GOOGLE_CLIENT_ID",

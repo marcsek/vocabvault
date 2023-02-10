@@ -13,7 +13,7 @@ interface Props {
 
 const MainButtons = ({ onClose = () => null }: Props) => {
   const user = useUser();
-  const isWindowMobile = useMediaQuery('(max-width: 1024px)');
+  const isWindowMobile = useMediaQuery('(max-width: 1023px)');
 
   return (
     <NavWrapper className="flex w-full flex-col gap-8 lg:w-fit lg:flex-row" elementClicked={onClose}>

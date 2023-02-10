@@ -46,7 +46,7 @@ const SessionForm = ({
       <motion.h1
         animate={{ translateX: validity === 'INVALID' ? [25, -25, 25, 0] : [] }}
         transition={{ type: 'spring', duration: 0.2 }}
-        className={`text-center text-5xl font-bold leading-none duration-200 md:text-6xl ${
+        className={`text-center text-5xl font-bold leading-none duration-200 md:text-5xl ${
           validity === 'VALID' ? 'text-success-200' : validity === 'INVALID' ? 'text-error-200' : 'text-gray-50'
         }`}
       >

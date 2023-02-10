@@ -7,17 +7,17 @@ export const createTokenAttachCookie = ({ res, userId }: { res: e.Response; user
   res.cookie('jit', accessToken, {
     maxAge: 10000000,
     httpOnly: true,
-    secure: true,
-    sameSite: 'none',
-    domain: 'vocab-vault.com',
+    secure: process.env.NODE_ENV !== 'development',
+    sameSite: process.env.NODE_ENV === 'development' ? undefined : 'none',
+    domain: process.env.NODE_ENV === 'development' ? undefined : 'vocab-vault.com',
   });
 
   res.cookie('is_loggedin', 'yes', {
     maxAge: 10000000,
     httpOnly: false,
-    secure: true,
-    sameSite: 'none',
-    domain: 'vocab-vault.com',
+    secure: process.env.NODE_ENV !== 'development',
+    sameSite: process.env.NODE_ENV === 'development' ? undefined : 'none',
+    domain: process.env.NODE_ENV === 'development' ? undefined : 'vocab-vault.com',
   });
 
   return accessToken;

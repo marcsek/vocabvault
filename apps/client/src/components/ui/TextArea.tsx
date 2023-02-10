@@ -10,6 +10,8 @@ const TextArea = ({ labelText, className, ...props }: Props, ref: React.Forwarde
       <label className="w-full">
         <p className="mb-2 text-sm font-medium">{labelText}</p>
         <textarea
+          autoCapitalize="off"
+          autoCorrect="off"
           ref={ref}
           rows={3}
           className={`${className} focus:outline-primary-300 w-full resize-none rounded-[4px] bg-gray-800 px-3 py-2.5 text-base font-medium leading-5 placeholder-gray-400 outline outline-1 outline-gray-500 duration-75 focus:outline-2 disabled:text-gray-400 disabled:outline-gray-600`}

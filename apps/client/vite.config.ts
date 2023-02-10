@@ -12,7 +12,7 @@ export default defineConfig({
     },
     host: true,
     strictPort: true,
-    port: 3002,
+    port: 3001,
   },
   plugins: [react()],
 });

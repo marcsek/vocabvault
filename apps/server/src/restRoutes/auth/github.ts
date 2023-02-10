@@ -10,7 +10,6 @@ githubRouter.get('/callback', passport.authenticate('github', { session: false }
   const userID = req.user as string;
 
   if (userID) {
-    console.log(userID);
     const accessToken = createTokenAttachCookie({ res, userId: userID });
     res.redirect(`${process.env.CLIENT_URL}/auth/success`);
   }

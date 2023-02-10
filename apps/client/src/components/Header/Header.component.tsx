@@ -14,7 +14,7 @@ import Logo from './Components/Logo';
 
 const Header = () => {
   const hasScrolled = useHasScrolled();
-  const isWindowMobile = useMediaQuery('(max-width: 1024px)');
+  const isWindowMobile = useMediaQuery('(max-width: 1023px)');
   const [sidePanelOpen, setSidePanelOpen] = useState(false);
   const user = useUser();
 

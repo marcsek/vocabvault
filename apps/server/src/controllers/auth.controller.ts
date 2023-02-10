@@ -35,8 +35,16 @@ export const logoutUserController = async ({ ctx: { req, res } }: { ctx: Context
     throw new TRPCError({ message: "Can't logout without token", code: 'BAD_REQUEST' });
   }
 
-  res.clearCookie('jit');
-  res.clearCookie('is_loggedin');
+  res.clearCookie('jit', {
+    secure: process.env.NODE_ENV !== 'development',
+    sameSite: process.env.NODE_ENV === 'development' ? undefined : 'none',
+    domain: process.env.NODE_ENV === 'development' ? undefined : 'vocab-vault.com',
+  });
+  res.clearCookie('is_loggedin', {
+    secure: process.env.NODE_ENV !== 'development',
+    sameSite: process.env.NODE_ENV === 'development' ? undefined : 'none',
+    domain: process.env.NODE_ENV === 'development' ? undefined : 'vocab-vault.com',
+  });
 
   return 'sucess';
 };

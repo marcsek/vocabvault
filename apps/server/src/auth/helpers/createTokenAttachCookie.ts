@@ -9,6 +9,7 @@ export const createTokenAttachCookie = ({ res, userId }: { res: e.Response; user
     httpOnly: true,
     secure: true,
     sameSite: 'none',
+    domain: 'vocab-vault.com',
   });
 
   res.cookie('is_loggedin', 'yes', {
@@ -16,6 +17,7 @@ export const createTokenAttachCookie = ({ res, userId }: { res: e.Response; user
     httpOnly: false,
     secure: true,
     sameSite: 'none',
+    domain: 'vocab-vault.com',
   });
 
   return accessToken;

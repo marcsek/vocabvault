@@ -2,10 +2,10 @@ import e from 'express';
 import { createAccessToken } from '../jwt.js';
 
 export const createTokenAttachCookie = ({ res, userId }: { res: e.Response; userId: string }) => {
-  const accessToken = createAccessToken({ userId: userId }, { expiresIn: '1h', allowInsecureKeySizes: true });
+  const accessToken = createAccessToken({ userId: userId }, { expiresIn: '7d', allowInsecureKeySizes: true });
 
   res.cookie('jit', accessToken, {
-    maxAge: 10000000,
+    maxAge: 1000 * 60 * 60 * 24 * 7,
     httpOnly: true,
     secure: process.env.NODE_ENV !== 'development',
     sameSite: process.env.NODE_ENV === 'development' ? undefined : 'none',
@@ -13,7 +13,7 @@ export const createTokenAttachCookie = ({ res, userId }: { res: e.Response; user
   });
 
   res.cookie('is_loggedin', 'yes', {
-    maxAge: 10000000,
+    maxAge: 1000 * 60 * 60 * 24 * 7,
     httpOnly: false,
     secure: process.env.NODE_ENV !== 'development',
     sameSite: process.env.NODE_ENV === 'development' ? undefined : 'none',

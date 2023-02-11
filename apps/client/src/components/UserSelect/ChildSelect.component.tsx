@@ -30,7 +30,7 @@ const ChildSelect = ({ onChange, flow = 'horizontal', disabled, initialChildren 
       {user?.type === 'CHILD' && <AdultLock />}
       <ListBox
         {...props}
-        disabled={user?.type === 'CHILD' ? true : disabled}
+        disabled={user?.type === 'CHILD' || !allChildren?.length ? true : disabled}
         items={allChildren ?? []}
         value={defaultListBoxValue}
         onChange={handleSelect}

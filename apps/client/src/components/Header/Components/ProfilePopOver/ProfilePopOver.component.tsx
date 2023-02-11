@@ -17,10 +17,10 @@ const ProfilePopOver = () => {
     <Popover className="relative z-50 h-[32px]">
       {({ open }) => (
         <>
-          <Popover.Button className="z-30 outline-none">
+          <Popover.Button aria-label="profile-view" className="z-30 outline-none">
             <div className="flex items-center justify-center gap-2">
               <div className="overflow-hidden rounded-full bg-gray-700">
-                <img className="h-8 w-8" src={user?.profileImage ?? ''}></img>
+                <img className="h-8 w-8" src={user?.profileImage ?? ''} alt="profile image"></img>
               </div>
               <motion.div animate={{ rotate: open ? '180deg' : '0deg' }}>
                 <FiChevronDown size="20" />

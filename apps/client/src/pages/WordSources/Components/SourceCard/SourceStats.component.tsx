@@ -10,7 +10,7 @@ const SourceStats = ({ wordPairsCount, documentType, createdAt }: Props) => {
   return (
     <div className="flex flex-col gap-4">
       <div className="flex items-end gap-1 text-sm">
-        <img src={WordsIcon} className="h-5 w-5 object-fill"></img>
+        <img src={WordsIcon} className="h-5 w-5 object-fill" alt=""></img>
         <p className="leading-none">{wordPairsCount}</p>
         <p className="leading-none text-gray-400">word pairs</p>
       </div>

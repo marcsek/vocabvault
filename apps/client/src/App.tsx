@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { lazy, Suspense } from 'react';
 import TrpcQueryProvider from './providers/trpcQuery.provider';
 import Layout from './components/Layout/Layout.component';
 import AuthPage from './pages/Auth/Auth.page';
@@ -8,23 +9,22 @@ import RequireUser from './components/RequireUser/RequireUser.component';
 import { UserContextProvider } from './providers/UserContext.provider';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import LandingPage from './pages/Landing/Landing.page';
-import { Suspense } from 'react';
 import AuthSuccess from './pages/Auth/components/utils/AuthSucessPopupPage';
 import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary';
 import DefaultErrorBoundary from './components/ErrorBoundary/DefaultErrorBoundary';
-import CreateDatasource from './pages/CreateDatasource/CreateDatasource.page';
-import WordSources from './pages/WordSources/WordSources.page';
-import WordSourceDetail from './pages/WordSourceDetail/WordSourceDetail.page';
+const CreateDatasource = lazy(() => import('./pages/CreateDatasource/CreateDatasource.page'));
+const WordSourceDetail = lazy(() => import('./pages/WordSourceDetail/WordSourceDetail.page'));
 import Settings from './pages/Settings/Settings.page';
 import General from './pages/Settings/views/General';
 import Security from './pages/Settings/views/Security';
 import Role from './pages/Settings/views/Role/Role';
 import Social from './pages/Settings/views/Social/Social';
-import NewSession from './pages/NewSession/NewSession.page';
 import Session from './pages/Session/Session.page';
 import SessionStats from './pages/SessionStats/SessionStats.page';
-import SessionHistory from './pages/SessionHistory/SessionHistory';
 import TopLevelSpinner from './components/Spinners/TopLevelSpinner';
+import NewSession from './pages/NewSession/NewSession.page';
+const SessionHistory = lazy(() => import('./pages/SessionHistory/SessionHistory'));
+const WordSources = lazy(() => import('./pages/WordSources/WordSources.page'));
 
 function App() {
   return (

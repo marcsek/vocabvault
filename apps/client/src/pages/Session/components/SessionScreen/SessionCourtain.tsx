@@ -36,12 +36,12 @@ const SessionCourtain = ({ show, onEnd }: Props) => {
       display: 'flex',
       transition: { duration: 0.3 },
     });
-    titleAnim.start({ scale: 1, opacity: 1, transition: { delay: 0.1 } });
+    titleAnim.start({ scale: 1, opacity: 1, transition: { delay: 0.1, type: 'spring', duration: 0.7 } });
     startClockAnimation();
   };
 
   const startClockAnimation = async () => {
-    await clockAnim.start({ scale: 1, opacity: 1, transition: { delay: 0.6, duration: 0.3, type: 'spring' } });
+    await clockAnim.start({ scale: 1, opacity: 1, transition: { delay: 0.6, duration: 0.3, type: 'spring', mass: 0.8, damping: 9 } });
     startCountdown();
   };
 

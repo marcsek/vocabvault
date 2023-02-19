@@ -99,8 +99,8 @@ model Language {
 
 model Session {
   id                String             @id @default(uuid())
-  user              User?              @relation(fields: [userId], references: [id])
-  wordSource        WordSource         @relation(fields: [wordSourceId], references: [id])
+  user              User?              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  wordSource        WordSource         @relation(fields: [wordSourceId], references: [id], onDelete: Cascade)
   wordSourceId      String
   userId            String?
   startedAt         DateTime
@@ -113,7 +113,7 @@ model Session {
 }
 
 model SessionStatistics {
-  session    Session @relation(fields: [sessionId], references: [id])
+  session    Session @relation(fields: [sessionId], references: [id], onDelete: Cascade)
   sessionId  String
   correct    Int
   incorrect  Int
@@ -134,5 +134,4 @@ enum SessionType {
 enum AccountType {
   ADULT
   CHILD
-  TEST
 }

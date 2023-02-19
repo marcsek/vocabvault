@@ -142,7 +142,7 @@ async function main() {
     data: {
       documentType: 'excel',
       firstLanguage: {
-        connectOrCreate: { where: { code: 'sk' }, create: { code: 'sk', languageName: 'Slovak' } },
+        connectOrCreate: { where: { code: 'sk' }, create: { code: 'sk', languageNAame: 'Slovak' } },
       },
       secondLanguage: {
         connectOrCreate: { where: { code: 'es' }, create: { code: 'es', languageName: 'Spanish' } },

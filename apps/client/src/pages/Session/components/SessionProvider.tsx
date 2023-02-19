@@ -1,4 +1,5 @@
 import { useGetWordSourceWordPairs } from '../../../queries/wordSource';
+import { shuffleArray } from '../../../utils/helpers/shuffleArray';
 import { TNewSessionOutput } from '../../NewSession/components/NewSessionForm/generators';
 import SessionScreen from './SessionScreen/SessionScreen';
 
@@ -16,6 +17,8 @@ const SessionProvider = ({ sessionState, skip, take }: Props) => {
     value: isFirstLangPrimary ? e.firstValue : e.secondValue,
     proof: isFirstLangPrimary ? e.secondValue : e.firstValue,
   }));
+
+  shuffleArray(transferedWordPairs ?? []);
 
   return (
     <div className="!max-w-none !p-0">

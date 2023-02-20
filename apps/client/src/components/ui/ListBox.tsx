@@ -46,7 +46,7 @@ const ListBox = <T extends TListBoxInput, TKey extends keyof T>({
                   transition={{ type: 'spring', duration: 0.5 }}
                   static
                   className={`absolute top-full z-10 mt-2 box-border w-full rounded-[4px] bg-gray-800 outline outline-1 outline-gray-500/50 ${
-                    items.length > 10 ? 'overflow-auto' : 'overflow-hidden'
+                    items.length > 6 ? 'overflow-auto' : 'overflow-hidden'
                   }`}
                 >
                   <div>

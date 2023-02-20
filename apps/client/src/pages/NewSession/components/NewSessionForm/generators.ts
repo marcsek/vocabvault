@@ -2,12 +2,21 @@ import { TNewSessionProps } from '../../types';
 
 export const generateAvailableNumberOfPairs = (wordPairsCount: number) => {
   const availableNumOfWordPairs: { id: number }[] = [];
-  for (let i = 5; i <= 25; i += 5) {
+  const max = 25;
+  const step = 5;
+
+  for (let i = step; i <= max; i += step) {
     if (wordPairsCount <= i) {
       availableNumOfWordPairs.push({ id: wordPairsCount });
       break;
     }
     availableNumOfWordPairs.push({ id: i });
+  }
+  if (wordPairsCount >= 50) {
+    availableNumOfWordPairs.push({ id: 50 });
+  }
+  if (wordPairsCount >= 100) {
+    availableNumOfWordPairs.push({ id: 100 });
   }
   return availableNumOfWordPairs;
 };

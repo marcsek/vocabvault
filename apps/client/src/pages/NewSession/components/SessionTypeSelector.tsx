@@ -15,7 +15,7 @@ const SessionTypeSelector = (props: Props) => {
   return (
     <div className="flex w-full flex-col gap-4">
       <ListBox {...props} fieldKey="id" fieldValue="id" label="Type of session" />
-      <p className="flex items-center gap-2 text-sm leading-none text-gray-200">
+      <div className="flex items-center gap-2 text-sm leading-none text-gray-200">
         <SessionDetailInformation
           detail={props.value}
           Image={
@@ -26,7 +26,7 @@ const SessionTypeSelector = (props: Props) => {
             )
           }
         />
-      </p>
+      </div>
     </div>
   );
 };

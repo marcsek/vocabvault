@@ -14,8 +14,8 @@ import { motion, useAnimationControls } from 'framer-motion';
 import SessionFormDivider from './SessionFormDivider';
 
 const typesOfSession = [
-  { id: 'Practice', description: 'Practice to get better.' },
   { id: 'Test', description: 'Test your knowledge.' },
+  { id: 'Practice', description: 'Practice to get better.' },
 ];
 
 export type TSessionTypes = typeof typesOfSession;

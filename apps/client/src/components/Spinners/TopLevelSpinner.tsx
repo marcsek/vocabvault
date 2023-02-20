@@ -10,9 +10,13 @@ const icon = {
   },
 };
 
-const TopLevelSpinner = () => {
+interface Props {
+  showHeader?: boolean;
+}
+
+const TopLevelSpinner = ({ showHeader }: Props) => {
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800">
+    <div className={`absolute inset-0 z-50 flex !max-w-none items-center justify-center bg-gray-800 ${showHeader ? 'top-[5.5rem]' : ''}`}>
       <svg
         className="scale-[2]"
         style={{ filter: 'drop-shadow(0px 0px 1px #60A5FA)' }}

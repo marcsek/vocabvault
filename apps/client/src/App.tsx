@@ -48,9 +48,30 @@ function App() {
                   <Route path="/" element={<LandingPage />} />
                   <Route element={<RequireUser />}>
                     <Route path="/protected" element={<div className="font-medium text-gray-50">Procted</div>}></Route>
-                    <Route path="/create-datasource" element={<CreateDatasource />} />
-                    <Route path="/word-sources" element={<WordSources />} />
-                    <Route path="/word-sources/:id" element={<WordSourceDetail />} />
+                    <Route
+                      path="/create-datasource"
+                      element={
+                        <LazyRouteWrapper>
+                          <CreateDatasource />
+                        </LazyRouteWrapper>
+                      }
+                    />
+                    <Route
+                      path="/word-sources"
+                      element={
+                        <LazyRouteWrapper>
+                          <WordSources />
+                        </LazyRouteWrapper>
+                      }
+                    />
+                    <Route
+                      path="/word-sources/:id"
+                      element={
+                        <LazyRouteWrapper>
+                          <WordSourceDetail />
+                        </LazyRouteWrapper>
+                      }
+                    />
                     <Route path="/settings" element={<Settings />}>
                       <Route path="" element={<General />} />
                       <Route path="social" element={<Social />} />
@@ -58,7 +79,14 @@ function App() {
                       <Route path="security" element={<Security />} />
                     </Route>
                     <Route path="/new-session" element={<NewSession />} />
-                    <Route path="/session-history" element={<SessionHistory />} />
+                    <Route
+                      path="/session-history"
+                      element={
+                        <LazyRouteWrapper>
+                          <SessionHistory />
+                        </LazyRouteWrapper>
+                      }
+                    />
                   </Route>
                 </Route>
                 <Route path="/auth/success" element={<AuthSuccess />} />
@@ -71,5 +99,9 @@ function App() {
     </Router>
   );
 }
+
+const LazyRouteWrapper = ({ children }: { children: React.ReactNode }) => (
+  <Suspense fallback={<TopLevelSpinner showHeader />}>{children}</Suspense>
+);
 
 export default App;

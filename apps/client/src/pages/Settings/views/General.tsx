@@ -22,7 +22,7 @@ const General = () => {
     <form className="flex w-full flex-col gap-12" onSubmit={formik.handleSubmit}>
       <div className="flex flex-col gap-2 leading-none">
         <h2 className="text-xl font-bold text-gray-50">General</h2>
-        <p className="text-sm text-gray-400">Settings for your general account usage.</p>
+        <p className="text-sm text-gray-400">Here you can change your general account information.</p>
       </div>
       <div className="flex flex-col gap-8 lg:max-w-[32rem]">
         <TextField labelText="Name" name="name" value={formik.values.name} onChange={formik.handleChange} onBlur={formik.handleBlur} />

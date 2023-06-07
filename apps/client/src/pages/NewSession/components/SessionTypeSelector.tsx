@@ -38,11 +38,11 @@ interface InformationProps {
 
 const SessionDetailInformation = ({ detail, Image }: InformationProps) => {
   return (
-    <div className="flex items-center justify-center gap-2 leading-none">
+    <div className="flex max-h-12 items-center justify-center gap-2 leading-none">
       <div className="bg-primary-500/30 rounded-default flex h-12 w-12 items-center justify-center">{Image}</div>
       <div className="flex flex-col gap-1 leading-none">
         <h3 className="text-sm font-semibold">{detail.id}</h3>
-        <p className="text-xs text-gray-400">{detail.description}</p>
+        <p className="max-w-[20rem] text-xs text-gray-400">{detail.description}</p>
       </div>
     </div>
   );

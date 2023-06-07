@@ -13,7 +13,7 @@ const useProtectAuth = () => {
       navigate('/auth/login', { replace: true });
     }
     if (user) {
-      navigate('/word-sources', { replace: true });
+      navigate('/', { replace: true });
     }
   }, [pathname]);
 };

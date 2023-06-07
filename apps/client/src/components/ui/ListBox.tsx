@@ -1,6 +1,7 @@
 import { Listbox } from '@headlessui/react';
 import { HiChevronUpDown } from 'react-icons/hi2';
 import { motion, AnimatePresence } from 'framer-motion';
+import Tooltip from './Tooltip';
 
 export type TListBoxInput = { [key: string]: string | number };
 
@@ -14,6 +15,7 @@ export interface ListBoxProps<T, TKey> {
   fieldKey: TKey;
   fieldValue: TKey;
   disabledKeys?: (string | number)[];
+  tooltipText?: string;
 }
 
 const ListBox = <T extends TListBoxInput, TKey extends keyof T>({
@@ -23,6 +25,7 @@ const ListBox = <T extends TListBoxInput, TKey extends keyof T>({
   fieldKey,
   fieldValue,
   disabledKeys,
+  tooltipText,
   ...props
 }: ListBoxProps<T, TKey>) => {
   return (
@@ -30,7 +33,10 @@ const ListBox = <T extends TListBoxInput, TKey extends keyof T>({
       <Listbox value={value} {...props}>
         {({ open }) => (
           <div className="relative flex flex-col gap-2">
-            <Listbox.Label className="text-sm text-gray-50">{label}</Listbox.Label>
+            <Listbox.Label className="flex gap-2 text-sm text-gray-50 active:pointer-events-none">
+              {label}
+              {tooltipText !== undefined ? <Tooltip text={tooltipText ?? ''} /> : <></>}
+            </Listbox.Label>
             <Listbox.Button className="focus:outline-primary-300 box-border flex cursor-default justify-between rounded-[4px] bg-gray-800 px-3 py-2.5 text-base font-medium leading-5 outline outline-1 outline-gray-500 duration-75 focus:outline-2 disabled:bg-gray-800 disabled:text-gray-400 disabled:outline-gray-600">
               {value[fieldValue]}
               <HiChevronUpDown size={20} />

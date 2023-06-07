@@ -1,7 +1,7 @@
 import Divider from '@ui/Divider';
 import { TGetAllWordSourcesOutput } from '../../WordSources.page';
 
-type Props = Pick<TGetAllWordSourcesOutput[number], 'creator' | 'name' | 'firstLanguage' | 'secondLanguage'>;
+export type SourceHeadingProps = Pick<TGetAllWordSourcesOutput[number], 'creator' | 'name' | 'firstLanguage' | 'secondLanguage'>;
 
 const countryFlagURL = (code: string) => {
   let codeToUrl = code;
@@ -10,7 +10,7 @@ const countryFlagURL = (code: string) => {
   return `https://flagcdn.com/w80/${codeToUrl}.png`;
 };
 
-const SourceHeading = ({ name, firstLanguage, secondLanguage, creator }: Props) => {
+const SourceHeading = ({ name, firstLanguage, secondLanguage, creator }: SourceHeadingProps) => {
   return (
     <div className="flex flex-col gap-4 leading-none">
       <h3 className="font-semibold">{name}</h3>

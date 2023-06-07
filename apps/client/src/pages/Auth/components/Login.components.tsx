@@ -8,6 +8,7 @@ import ErrorModal from './ErrorModal.component';
 import Heading from './Heading.component';
 import { loginUserSchema } from 'server/src/schemas/auth.schema';
 import { useLogin } from '../../../queries/user';
+import InfoModal from './InfoModal.component';
 
 const Login = () => {
   const login = useLogin();
@@ -28,7 +29,12 @@ const Login = () => {
       >
         {({ errors, touched, isValid }) => (
           <Form className="flex flex-col gap-6">
-            {login.isError && <ErrorModal errorMessage={login.error?.message} />}
+            {/* {login.isError && <ErrorModal errorMessage={login.error?.message} />} */}
+            {login.isError ? (
+              <ErrorModal errorMessage={login.error?.message} />
+            ) : (
+              <InfoModal infoMessage="Use email: test@test.com / password: test1234" />
+            )}
 
             <Field
               as={TextField}

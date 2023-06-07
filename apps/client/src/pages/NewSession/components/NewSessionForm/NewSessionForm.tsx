@@ -14,13 +14,13 @@ import { motion, useAnimationControls } from 'framer-motion';
 import SessionFormDivider from './SessionFormDivider';
 
 const typesOfSession = [
-  { id: 'Test', description: 'Test your knowledge.' },
   { id: 'Practice', description: 'Practice to get better.' },
+  { id: 'Test', description: 'Test your knowledge.' },
 ];
 
 export type TSessionTypes = typeof typesOfSession;
 
-const numbersOfRepetition = [{ id: 2 }, { id: 3 }, { id: 4 }];
+const numbersOfRepetition = [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }];
 
 const defaultListBoxValue = { id: '0', name: 'Select wordsource' };
 const defaultTranlastionLanguage = { code: '0', languageName: 'None' };
@@ -131,6 +131,7 @@ const NewSessionForm = () => {
               fieldValue="id"
               items={formik.values.availableNumOfWordPairs}
               label="Number of pairs in a group"
+              tooltipText="How many word pairs are there going to be in each group"
               onChange={handleNumOfPairsInGroupChange}
               value={formik.values.numOfWordPairs}
             />
@@ -140,6 +141,7 @@ const NewSessionForm = () => {
               fieldValue="id"
               items={formik.values.availableGroupNumbers}
               label="Group number"
+              tooltipText="You can select a group by its index, the selected group will show up in 'Selected words' window"
               onChange={(e) => formik.setFieldValue('groupNumber', e)}
               value={formik.values.groupNumber}
             />
@@ -152,6 +154,7 @@ const NewSessionForm = () => {
               items={formik.values.allTranslationLanguages}
               label="Translation language"
               onChange={(e) => formik.setFieldValue('translationLanguage', e)}
+              tooltipText="Language you are going to be tranlasting from "
               value={formik.values.translationLanguage}
             />
             <ListBox
@@ -160,6 +163,7 @@ const NewSessionForm = () => {
               disabled={formik.values.type.id === 'Test' || formik.values.document.id === '0'}
               items={numbersOfRepetition}
               label="Number of repetitions"
+              tooltipText="# of times you will have get a word correct in order for it not to appear again (Practice mode)"
               onChange={(e) => formik.setFieldValue('numOfRepetition', e)}
               value={formik.values.numOfRepetition}
             />

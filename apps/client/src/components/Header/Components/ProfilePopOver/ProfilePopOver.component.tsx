@@ -19,7 +19,7 @@ const ProfilePopOver = () => {
         <>
           <Popover.Button aria-label="profile-view" className="z-30 outline-none">
             <div className="flex items-center justify-center gap-2">
-              <div className="overflow-hidden rounded-full bg-gray-700">
+              <div className="overflow-hidden rounded-full bg-gray-700 outline outline-gray-600">
                 <img className="h-8 w-8" src={user?.profileImage ?? ''} alt="profile image"></img>
               </div>
               <motion.div animate={{ rotate: open ? '180deg' : '0deg' }}>

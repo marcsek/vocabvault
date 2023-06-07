@@ -1,14 +1,10 @@
-import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useUser } from '../../providers/UserContext.provider';
+import Dashboard from './Dashboard/Dashboard.page';
 
 const Landing = () => {
-  const navigate = useNavigate();
+  const user = useUser();
 
-  useEffect(() => {
-    navigate('/auth');
-  }, []);
-
-  return <div className="max-h-96"></div>;
+  return !user ? <div className="max-h-96">Huh</div> : <Dashboard />;
 };
 
 export default Landing;

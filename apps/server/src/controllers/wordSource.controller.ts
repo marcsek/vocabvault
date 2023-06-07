@@ -1,5 +1,10 @@
 import { TRPCError } from '@trpc/server';
-import { presentAvailableWordSources, presentUpdatedWordSource, presentWordSource } from '../presenters/wordSource.js';
+import {
+  presentAvailableWordSources,
+  presentLatestWordSource,
+  presentUpdatedWordSource,
+  presentWordSource,
+} from '../presenters/wordSource.js';
 
 import {
   CreateWordSourceInput,
@@ -16,6 +21,7 @@ import {
   getWordPairs,
   getWordSourceById,
   updateWordSource,
+  getLatestWordSource,
 } from '../use-cases/wordSource/index.js';
 
 export const createWordSourceController = async ({ ctx: { prisma, userID }, input }: { ctx: Context; input: CreateWordSourceInput }) => {
@@ -40,6 +46,12 @@ export const getWordSourceByIDController = async ({ ctx: { prisma }, input }: { 
   }
 
   return await presentWordSource(foundWordSource);
+};
+
+export const getLatestWordSourceController = async ({ ctx: { prisma, userID } }: { ctx: Context }) => {
+  const latestWordSource = await getLatestWordSource({ prisma, userId: userID ?? '' });
+
+  return presentLatestWordSource(latestWordSource);
 };
 
 export const updateWordSourceController = async ({ ctx: { prisma, userID }, input }: { ctx: Context; input: TUpdateWordSourceInput }) => {

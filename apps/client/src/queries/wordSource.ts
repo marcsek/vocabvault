@@ -101,3 +101,7 @@ export const useGetWordSourceWordPairs = (
     }
   );
 };
+
+export const useGetLatestWordSource = () => {
+  return trpc.wordSources.getLatestWordSource.useQuery().data ?? null;
+};

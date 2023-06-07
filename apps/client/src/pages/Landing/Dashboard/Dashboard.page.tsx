@@ -20,18 +20,20 @@ const Dashboard = () => {
     <TitleLayout headingLeft={<h1 className="flex flex-col gap-1 text-xl font-bold leading-none md:text-2xl">Dashboard</h1>}>
       {!isLoading ? (
         <div className="flex flex-col gap-6">
-          <div className="flex justify-between">
-            <div className="rounded-default flex max-h-56 w-fit flex-col items-center gap-5 p-6 ring-1 ring-gray-600">
-              <h3 className="text-xl font-semibold">Words learned</h3>
-              <CircularGauge color="#3B82F6" inside={<p className="text-3xl font-semibold">834</p>} value={83} delay={0} />
-            </div>
-            <div className="rounded-default flex max-h-56 w-fit flex-col items-center gap-5 p-6 ring-1 ring-gray-600">
-              <h3 className="text-xl font-semibold">Average time</h3>
-              <CircularGauge color="#E11D48" inside={<p className="text-3xl font-semibold">1.2 min</p>} value={20} delay={0.25} />
-            </div>
-            <div className="rounded-default flex max-h-56 w-fit flex-col items-center gap-5 p-6 ring-1 ring-gray-600">
-              <h3 className="text-xl font-semibold">Average accuracy</h3>
-              <CircularGauge color="#9E8CFC" inside={<p className="text-3xl font-semibold">95%</p>} value={95} delay={0.5} />
+          <div className="flex flex-col gap-6 lg:justify-between 2xl:flex-row">
+            <div className="flex flex-grow flex-col gap-6 lg:flex-row lg:justify-between">
+              <div className="rounded-default span flex max-h-56 w-full flex-col items-center gap-5 p-6 ring-1 ring-gray-600">
+                <h3 className="text-xl font-semibold">Words learned</h3>
+                <CircularGauge color="#3B82F6" inside={<p className="text-3xl font-semibold">834</p>} value={83} delay={0} />
+              </div>
+              <div className="rounded-default flex max-h-56 w-full flex-col items-center gap-5 p-6 ring-1 ring-gray-600">
+                <h3 className="text-xl font-semibold">Average time</h3>
+                <CircularGauge color="#E11D48" inside={<p className="text-3xl font-semibold">1.2 min</p>} value={20} delay={0.25} />
+              </div>
+              <div className="rounded-default flex max-h-56 w-full flex-col items-center gap-5 p-6 ring-1 ring-gray-600">
+                <h3 className="text-xl font-semibold">Average accuracy</h3>
+                <CircularGauge color="#9E8CFC" inside={<p className="text-3xl font-semibold">95%</p>} value={95} delay={0.5} />
+              </div>
             </div>
             {latestSession && (
               <LastSessionCont
@@ -71,11 +73,11 @@ const LastSessionCont = ({ heading, percentage, type, endedAt }: TLastSessionCon
   const formattedDate = dateSinceFormatter(new Date(endedAt));
 
   return (
-    <div className="rounded-default flex w-fit flex-col gap-4 border border-gray-600 p-6">
+    <div className="rounded-default flex w-full min-w-max flex-col items-center gap-6 border border-gray-600 p-6 sm:gap-4 2xl:w-fit 2xl:items-start">
       <h3 className="text-xl font-semibold text-gray-50">Last session</h3>
-      <div className="flex items-center gap-8">
+      <div className="flex flex-col items-center gap-8 sm:flex-row">
         <SourceHeading {...heading}></SourceHeading>
-        <Divider className="h-full rounded-full outline-dashed outline-1 outline-gray-600" />
+        <Divider className="w-full rounded-full outline-dashed outline-1 outline-gray-600 sm:h-full sm:w-0" />
         <div className="flex flex-col gap-3.5">
           <span className="text-ca flex items-center gap-2">
             <div className="bg-success-400 rounded-default w-fit p-1">

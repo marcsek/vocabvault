@@ -10,7 +10,7 @@ const DeleteDatasourceForm = () => {
   return (
     <div className="outline-error-200 rounded-default flex flex-col gap-4 p-6 outline-dashed outline-2">
       <div className="flex flex-col gap-2">
-        <h1 className="text-error-200 font-semibold leading-none">Delete datasource</h1>
+        <h1 className="text-error-200 font-semibold leading-none">Delete wordsource</h1>
         <p className="text-sm">This action cannot be undone.</p>
       </div>
       <Button

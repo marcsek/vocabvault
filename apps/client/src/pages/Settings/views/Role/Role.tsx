@@ -34,7 +34,7 @@ const Role = () => {
     <div className="flex w-full max-w-xl flex-col gap-12">
       <div className="flex flex-col gap-2 leading-none">
         <h2 className="text-xl font-bold text-gray-50">Role</h2>
-        <p className="text-sm text-gray-400">Choose role for your account.</p>
+        <p className="text-sm text-gray-400">Choose role of your account.</p>
       </div>
       <SettingsRadioGroup activeRole={activeRole ?? ''} handleRoleChange={handleRoleChange} allRoles={accoutRole} />
       <ChangeRoleDialog

@@ -23,7 +23,7 @@ const WordSourceDetail = () => {
       headingLeft={
         <div className="flex flex-col gap-6">
           <h1 className="flex flex-col gap-1 text-xl font-bold leading-none md:text-2xl">
-            {isOwner ? 'Datasource controlpanel' : 'Datasource detail'}
+            {isOwner ? 'Wordsource controlpanel' : 'Wordsource detail'}
           </h1>
           {isOwner && <TabSelector currentTab={currentTab} setCurrentTab={setCurrentTab} />}
         </div>

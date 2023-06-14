@@ -65,30 +65,33 @@ const options = {
 };
 
 const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
-const dataa = [60, 70, 50, 80, 90, 66, 95];
 
-const data = {
-  labels,
-  datasets: [
-    {
-      label: 'Average',
-      data: dataa,
-      borderColor: '#3B82F6',
-      backgroundColor: (context: ScriptableContext<'line'>) => {
-        const ctx = context.chart.ctx;
-        const gradient = ctx.createLinearGradient(0, 0, 0, 200);
-        gradient.addColorStop(0, '#3B82F666');
-        gradient.addColorStop(1, '#1D4ED800');
-        return gradient;
+interface Props {
+  data: number[];
+}
+
+const LineChart = ({ data: dataset }: Props) => {
+  const data = {
+    labels,
+    datasets: [
+      {
+        label: 'Average',
+        data: dataset,
+        borderColor: '#3B82F6',
+        backgroundColor: (context: ScriptableContext<'line'>) => {
+          const ctx = context.chart.ctx;
+          const gradient = ctx.createLinearGradient(0, 0, 0, 200);
+          gradient.addColorStop(0, '#3B82F666');
+          gradient.addColorStop(1, '#1D4ED800');
+          return gradient;
+        },
+        tension: 0.4,
+        yAxisID: 'y',
+        fill: true,
       },
-      tension: 0.4,
-      yAxisID: 'y',
-      fill: true,
-    },
-  ],
-};
+    ],
+  };
 
-const LineChart = () => {
   return <Line options={options} data={data} />;
 };
 

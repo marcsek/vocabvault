@@ -1,7 +1,7 @@
 import { PrismaClient } from '@prisma/client';
 import { TRPCError } from '@trpc/server';
 
-export const getLatestWordSource = async ({ prisma, userId }: { prisma: PrismaClient; userId: string }) => {
+export const getLastSession = async ({ prisma, userId }: { prisma: PrismaClient; userId: string }) => {
   try {
     return await prisma.user.findUnique({
       where: { id: userId },

@@ -1,7 +1,7 @@
 import { PrismaClient } from '@prisma/client';
 
 export type TOrderByObject = { startedAt?: 'desc' | 'asc'; type?: 'desc' | 'asc'; accuracy?: 'desc' | 'asc' };
-const getSessionAsHistoryByUserId = async ({
+export const getSessionAsHistoryByUserId = async ({
   prisma,
   input,
 }: {
@@ -42,5 +42,3 @@ const getSessionAsHistoryByUserId = async ({
 
   return { ...results, count };
 };
-
-export default getSessionAsHistoryByUserId;

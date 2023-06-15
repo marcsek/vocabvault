@@ -5,7 +5,6 @@ import {
   updateWordSourceController,
   deleteWordSourceController,
   getWordSourceWordPairs,
-  getLatestWordSourceController,
 } from '../controllers/wordSource.controller.js';
 import {
   CreateWordSourceSchema,
@@ -38,6 +37,4 @@ export const wordSourceRouter = router({
   getWordSourceWordPairs: privateProcedure
     .input(GetWordSourceWordPairsSchema)
     .query((req) => getWordSourceWordPairs({ ctx: req.ctx, input: req.input })),
-
-  getLatestWordSource: privateProcedure.query((req) => getLatestWordSourceController({ ctx: req.ctx })),
 });

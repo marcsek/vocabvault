@@ -9,22 +9,21 @@ import {
   Legend,
   Filler,
   ScriptableContext,
+  TimeScale,
+  ChartOptions,
+  TooltipItem,
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
+import 'chartjs-adapter-moment';
+ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, Filler, TimeScale);
 
-ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, Filler);
-
-const options = {
+const options: ChartOptions<'line'> = {
   maintainAspectRatio: false,
   responsive: true,
-  legend: {
-    display: false,
-  },
   interaction: {
     mode: 'index' as const,
     intersect: false,
   },
-  stacked: false,
   plugins: {
     title: {
       display: false,
@@ -39,8 +38,8 @@ const options = {
       backgroundColor: '#262626DE',
       titleColor: '#D4D4D4',
       callbacks: {
-        label: function (context: any) {
-          const label = context.raw;
+        label: function (context: TooltipItem<'line'>) {
+          const label = (context.raw as { x: string; y: number }).y;
 
           return 'Average: ' + label + '%';
         },
@@ -57,6 +56,7 @@ const options = {
       },
     },
     x: {
+      type: 'time',
       grid: {
         color: '#26262688',
       },
@@ -64,19 +64,16 @@ const options = {
   },
 };
 
-const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
-
 interface Props {
-  data: number[];
+  data: { value: number; time: string }[];
 }
 
 const LineChart = ({ data: dataset }: Props) => {
   const data = {
-    labels,
     datasets: [
       {
         label: 'Average',
-        data: dataset,
+        data: dataset.map((v) => ({ y: v.value, x: new Date(v.time) })),
         borderColor: '#3B82F6',
         backgroundColor: (context: ScriptableContext<'line'>) => {
           const ctx = context.chart.ctx;

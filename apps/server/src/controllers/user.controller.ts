@@ -1,10 +1,11 @@
 import { TRPCError } from '@trpc/server';
-import { generateUserProfileImageUrl, presentUserChildren, presentUserParent } from '../presenters/user.js';
+import { generateUserProfileImageUrl, presentUserChildren, presentUserParent, presentUserStats } from '../presenters/user.js';
 import { TAddChildInput, TChangeUserType, TRemoveChildInput, TUpdateUserInput } from '../schemas/user.schema.js';
 import { Context } from '../trpc/context.js';
 import { addUsersChild, getUserChildren, getUserInfo, removeUsersChild, updateUserType } from '../use-cases/user/index.js';
 import { getUserParent } from '../use-cases/user/getUserParent.js';
 import { updateUser } from '../use-cases/user/updateUser.js';
+import { getUserStats } from '../use-cases/user/getUserStats.js';
 
 export const getUserController = async ({ ctx: { prisma, userID } }: { ctx: Context }) => {
   const user = await getUserInfo({ prisma, input: { id: userID ?? '' } });
@@ -50,4 +51,10 @@ export const updateUserController = async ({ ctx: { prisma, userID }, input }: {
 
 export const changeUserTypeController = async ({ ctx: { prisma, userID }, input }: { ctx: Context; input: TChangeUserType }) => {
   return await updateUserType({ prisma, userId: userID ?? '', input: { type: input.type } });
+};
+
+export const getUserStatsController = async ({ ctx: { prisma, userID } }: { ctx: Context }) => {
+  const stats = await getUserStats({ prisma, userId: userID ?? '' });
+
+  return await presentUserStats(stats);
 };

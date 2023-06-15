@@ -4,5 +4,4 @@ import { getAllWordSources } from './getAllWordSources.js';
 import { getWordSourceById } from './getWordSourceById.js';
 import { getWordPairs } from './getWordSourceWordPairs.js';
 import { updateWordSource } from './updateWordSource.js';
-import { getLatestWordSource } from './getLatestWordSource.js';
-export { createWordSource, getAllWordSources, getWordSourceById, updateWordSource, deleteWordSource, getWordPairs, getLatestWordSource };
+export { createWordSource, getAllWordSources, getWordSourceById, updateWordSource, deleteWordSource, getWordPairs };

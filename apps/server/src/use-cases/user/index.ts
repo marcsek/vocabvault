@@ -5,5 +5,6 @@ import { getUserChildren } from './getUserChildren.js';
 import { removeUsersChild } from './removeUsersChild.js';
 import { addUsersChild } from './addChild.js';
 import { updateUserType } from './updateUserType.js';
+import { getUserStats } from './getUserStats.js';
 
-export { findUser, createUser, getUserInfo, getUserChildren, removeUsersChild, addUsersChild, updateUserType };
+export { findUser, createUser, getUserInfo, getUserChildren, removeUsersChild, addUsersChild, updateUserType, getUserStats };

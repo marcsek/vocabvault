@@ -1,5 +1,5 @@
 import { generateS3PresignedUrl } from '../s3/s3Provider.js';
-import { createWordSource, getAllWordSources, getLatestWordSource, updateWordSource } from '../use-cases/wordSource/index.js';
+import { createWordSource, getAllWordSources, updateWordSource } from '../use-cases/wordSource/index.js';
 
 type TPresentWordSourceInput = Awaited<ReturnType<typeof createWordSource>>;
 
@@ -83,17 +83,5 @@ export const presentUpdatedWordSource = async (wordSourceToParse: TPresentUpdate
         profileImage: await generateS3PresignedUrl(e.user.profileImage),
       }))
     ),
-  };
-};
-
-type TPresentLatestWordSource = Awaited<ReturnType<typeof getLatestWordSource>>;
-
-export const presentLatestWordSource = (latestWordSource: TPresentLatestWordSource) => {
-  if (!latestWordSource) return undefined;
-
-  const source = latestWordSource.sessionHistory[0];
-
-  return {
-    latestSession: { ...source.wordSource, accuracy: source.SessionStatistics?.accuracy, endedAt: source.endedAt, type: source.type },
   };
 };

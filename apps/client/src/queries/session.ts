@@ -19,3 +19,11 @@ export const useGetSessionAsHistoryByUserId = (input: TGetSessionByUserIdInput) 
     refetchOnWindowFocus: false,
   });
 };
+
+export const useGetLastSession = () => {
+  return trpc.session.getLastSession.useQuery(undefined, { useErrorBoundary: true, suspense: true });
+};
+
+export const useGetUserStats = () => {
+  return trpc.user.getUserStats.useQuery(undefined, { useErrorBoundary: true, suspense: true });
+};

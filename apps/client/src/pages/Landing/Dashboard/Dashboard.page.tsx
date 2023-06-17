@@ -8,13 +8,22 @@ import { FiType } from 'react-icons/fi';
 import { AiOutlinePercentage } from 'react-icons/ai';
 import { dateRangeFormatter, dateSinceFormatter } from '../../../utils/dateSinceFormatter';
 import { motion } from 'framer-motion';
-import LineChart from './LineChart';
+import { BarChart, MatrixChart } from './Charts';
 import SubSpinners from '../../../components/Spinners/SubSpinners';
 import Link from '@ui/Link';
 import { BarChartIcon, ExclamationTriangleIcon } from '@radix-ui/react-icons';
 import ErrorBoundary from '../../../components/ErrorBoundary/ErrorBoundary';
 import Button from '@ui/Button';
 import { IoReload } from 'react-icons/io5';
+
+const simulateMatrixData = () => {
+  const end = new Date(new Date().setUTCHours(0, 0, 0, 0));
+  const startDate = new Date(new Date().setDate(end.getDate() - 182));
+  return Array.from(Array(182), () => ({
+    time: new Date(startDate.setDate(startDate.getDate() + 1)).toISOString(),
+    value: Math.random() * 50,
+  }));
+};
 
 const lastSessionPlaceholderData: ReturnType<typeof useGetLastSession>['data'] = {
   latestSession: {
@@ -27,15 +36,24 @@ const lastSessionPlaceholderData: ReturnType<typeof useGetLastSession>['data'] =
     accuracy: 90,
   },
 };
-const gaugesPlaceHolders = { avgTime: 134, avgAccuracy: 95 };
+const gaugesPlaceHolders = { avgTime: 134, avgAccuracy: 95, totalSessions: 143 };
 const lineChartPlaceholderData = [
-  { value: 60, time: 'January' },
-  { value: 70, time: 'February' },
-  { value: 50, time: 'March' },
-  { value: 80, time: 'April' },
-  { value: 90, time: 'May' },
-  { value: 66, time: 'June' },
-  { value: 95, time: 'July' },
+  { time: '1/Mar', value: 2 },
+  { time: '2/Mar', value: 2 },
+  { time: '3/Mar', value: 1 },
+  { time: '4/Mar', value: 0 },
+  { time: '5/Mar', value: 3 },
+  { time: '2/Apr', value: 2 },
+  { time: '3/Apr', value: 0 },
+  { time: '4/Apr', value: 1 },
+  { time: '5/Apr', value: 0 },
+  { time: '2/May', value: 1 },
+  { time: '3/May', value: 0 },
+  { time: '4/May', value: 0 },
+  { time: '5/May', value: 0 },
+  { time: '2/Jun', value: 3 },
+  { time: '3/Jun', value: 2 },
+  { time: '4/Jun', value: 1 },
 ];
 
 const Dashboard = () => {
@@ -56,7 +74,10 @@ const Statistics = () => {
 
   const dataExists = sessionData?.latestSession !== undefined || statsData === undefined;
   const latestSession = sessionData?.latestSession ? sessionData.latestSession : lastSessionPlaceholderData.latestSession;
-  const stats = statsData ? statsData : { ...gaugesPlaceHolders, avgMovement: lineChartPlaceholderData };
+  const stats =
+    statsData && dataExists
+      ? statsData
+      : { ...gaugesPlaceHolders, avgMovement: lineChartPlaceholderData, avgMovementDay: simulateMatrixData() };
 
   return (
     <div className="relative flex flex-col gap-6">
@@ -64,14 +85,19 @@ const Statistics = () => {
       <div className="flex flex-col gap-6 lg:justify-between 2xl:flex-row">
         <div className="flex flex-grow flex-col gap-6 lg:flex-row lg:justify-between">
           <div className="rounded-default span flex max-h-56 w-full flex-col items-center gap-5 p-6 ring-1 ring-gray-600">
-            <h3 className="text-xl font-semibold">Words learned</h3>
-            <StatGauge color="#3B82F6" inside={<p className="text-3xl font-semibold">{863}</p>} value={83} delay={0} />
+            <h3 className="text-xl font-semibold">Total sessions</h3>
+            <StatGauge color="#3B82F6" inside={<p className="text-3xl font-semibold">{stats.totalSessions}</p>} value={83} delay={0} />
           </div>
           <div className="rounded-default flex max-h-56 w-full flex-col items-center gap-5 p-6 ring-1 ring-gray-600">
             <h3 className="text-xl font-semibold">Average time</h3>
             <StatGauge
               color="#E11D48"
-              inside={<p className="text-3xl font-semibold">{dateRangeFormatter(new Date(stats.avgTime))}</p>}
+              inside={
+                <p className="text-3xl font-semibold">
+                  {dateRangeFormatter(new Date(stats.avgTime)).split(' ')[0]}
+                  <span className="ml-2 text-2xl text-gray-400">{dateRangeFormatter(new Date(stats.avgTime)).split(' ')[1]}</span>
+                </p>
+              }
               value={20}
               delay={0.25}
             />
@@ -99,9 +125,13 @@ const Statistics = () => {
         />
       </div>
       <div className="rounded-default flex flex-col gap-4 p-6 ring-1 ring-gray-600">
-        <h3 className="text-xl font-semibold text-gray-50">Success rate</h3>
+        <h3 className="text-xl font-semibold text-gray-50">Activity</h3>
+        <div className="h-72">{stats.avgMovement.length !== 0 ? <BarChart data={stats.avgMovement} /> : <p>Could not load data</p>}</div>
+      </div>
+      <div className="rounded-default flex flex-col gap-4 p-6 ring-1 ring-gray-600">
+        <h3 className="text-xl font-semibold text-gray-50">Session matrix</h3>
         <div className="h-72">
-          <LineChart data={stats.avgMovement} />
+          {stats.avgMovement.length !== 0 ? <MatrixChart data={stats.avgMovementDay} /> : <p>Could not load data</p>}
         </div>
       </div>
     </div>
@@ -224,7 +254,6 @@ const StatGauge = ({ value, minValue = 0, maxValue = 100, inside, color, delay =
           r={r}
           stroke={color}
           strokeDasharray={c}
-          // strokeDashoffset={offset}
           strokeLinecap="round"
           transform={`rotate(180 ${center} ${center})`}
         />
@@ -236,7 +265,7 @@ const StatGauge = ({ value, minValue = 0, maxValue = 100, inside, color, delay =
 
 export default Dashboard;
 
-const DashboardErrorBoundary: React.FC<{ resetErrorBoundary: () => void; error: Error }> = ({ resetErrorBoundary, error }) => {
+const DashboardErrorBoundary: React.FC<{ resetErrorBoundary: () => void; error: Error }> = ({ resetErrorBoundary }) => {
   return (
     <div className="flex flex-col items-center justify-center gap-6 px-6">
       <div className="bg-error-400/30 flex h-32 w-32 items-center justify-center rounded-full p-6">

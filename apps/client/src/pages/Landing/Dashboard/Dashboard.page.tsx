@@ -8,21 +8,23 @@ import { FiType } from 'react-icons/fi';
 import { AiOutlinePercentage } from 'react-icons/ai';
 import { dateRangeFormatter, dateSinceFormatter } from '../../../utils/dateSinceFormatter';
 import { motion } from 'framer-motion';
-import { BarChart, MatrixChart } from './Charts';
+import { BarChart, MatrixChart, RadarChart } from './Charts';
 import SubSpinners from '../../../components/Spinners/SubSpinners';
 import Link from '@ui/Link';
 import { BarChartIcon, ExclamationTriangleIcon } from '@radix-ui/react-icons';
 import ErrorBoundary from '../../../components/ErrorBoundary/ErrorBoundary';
-import Button from '@ui/Button';
-import { IoReload } from 'react-icons/io5';
+import DefaultErrorBoundary from '../../../components/ErrorBoundary/DefaultErrorBoundary';
+import { useUser } from '../../../providers/UserContext.provider';
 
 const simulateMatrixData = () => {
   const end = new Date(new Date().setUTCHours(0, 0, 0, 0));
   const startDate = new Date(new Date().setDate(end.getDate() - 182));
-  return Array.from(Array(182), () => ({
-    time: new Date(startDate.setDate(startDate.getDate() + 1)).toISOString(),
-    value: Math.random() * 50,
-  }));
+  const res: { [k: string]: number } = {};
+  for (let i = 0; i < 182; i++) {
+    res[new Date(startDate.setDate(startDate.getDate() + 1)).toDateString()] =
+      Math.floor(Math.random() * 3) === 1 ? Math.floor(Math.random() * 15) : 0;
+  }
+  return res;
 };
 
 const lastSessionPlaceholderData: ReturnType<typeof useGetLastSession>['data'] = {
@@ -55,11 +57,12 @@ const lineChartPlaceholderData = [
   { time: '3/Jun', value: 2 },
   { time: '4/Jun', value: 1 },
 ];
+const radarChartPlaceholder = { wordSources: ['Basics', 'Rimavská sobota', 'School - Vocab'], values: [10, 18, 23] };
 
 const Dashboard = () => {
   return (
     <TitleLayout headingLeft={<h1 className="flex flex-col gap-1 text-xl font-bold leading-none md:text-2xl">Dashboard</h1>}>
-      <ErrorBoundary FallbackComponent={DashboardErrorBoundary}>
+      <ErrorBoundary FallbackComponent={DefaultErrorBoundary}>
         <Suspense fallback={<SubSpinners />}>
           <Statistics />
         </Suspense>
@@ -71,26 +74,33 @@ const Dashboard = () => {
 const Statistics = () => {
   const { data: sessionData } = useGetLastSession();
   const { data: statsData } = useGetUserStats();
+  const user = useUser();
 
   const dataExists = sessionData?.latestSession !== undefined || statsData === undefined;
   const latestSession = sessionData?.latestSession ? sessionData.latestSession : lastSessionPlaceholderData.latestSession;
-  const stats =
-    statsData && dataExists
+  const stats: typeof statsData =
+    //test account id
+    statsData && dataExists && user?.id !== '28e8e18a-3ff0-41e8-b682-f562445efef7'
       ? statsData
-      : { ...gaugesPlaceHolders, avgMovement: lineChartPlaceholderData, avgMovementDay: simulateMatrixData() };
+      : {
+          ...gaugesPlaceHolders,
+          actWeekGroup: lineChartPlaceholderData,
+          actDay: simulateMatrixData(),
+          actWordSource: radarChartPlaceholder,
+        };
 
   return (
     <div className="relative flex flex-col gap-6">
-      {!dataExists && <NoSessionInfo />}
+      {!dataExists && <NoDashboardDataInfo />}
       <div className="flex flex-col gap-6 lg:justify-between 2xl:flex-row">
         <div className="flex flex-grow flex-col gap-6 lg:flex-row lg:justify-between">
           <div className="rounded-default span flex max-h-56 w-full flex-col items-center gap-5 p-6 ring-1 ring-gray-600">
             <h3 className="text-xl font-semibold">Total sessions</h3>
-            <StatGauge color="#3B82F6" inside={<p className="text-3xl font-semibold">{stats.totalSessions}</p>} value={83} delay={0} />
+            <StatsHalfGauge color="#3B82F6" inside={<p className="text-3xl font-semibold">{stats.totalSessions}</p>} value={83} delay={0} />
           </div>
           <div className="rounded-default flex max-h-56 w-full flex-col items-center gap-5 p-6 ring-1 ring-gray-600">
             <h3 className="text-xl font-semibold">Average time</h3>
-            <StatGauge
+            <StatsHalfGauge
               color="#E11D48"
               inside={
                 <p className="text-3xl font-semibold">
@@ -104,7 +114,7 @@ const Statistics = () => {
           </div>
           <div className="rounded-default flex max-h-56 w-full flex-col items-center gap-5 p-6 ring-1 ring-gray-600">
             <h3 className="text-xl font-semibold">Average accuracy</h3>
-            <StatGauge
+            <StatsHalfGauge
               color="#9E8CFC"
               inside={<p className="text-3xl font-semibold">{stats.avgAccuracy}%</p>}
               value={stats.avgAccuracy}
@@ -125,20 +135,40 @@ const Statistics = () => {
         />
       </div>
       <div className="rounded-default flex flex-col gap-4 p-6 ring-1 ring-gray-600">
-        <h3 className="text-xl font-semibold text-gray-50">Activity</h3>
-        <div className="h-72">{stats.avgMovement.length !== 0 ? <BarChart data={stats.avgMovement} /> : <p>Could not load data</p>}</div>
+        <h3 className="text-xl font-semibold text-gray-50">Recent activity</h3>
+        <div className="h-52 md:h-72">
+          {stats.actWeekGroup.length !== 0 ? <BarChart data={stats.actWeekGroup} /> : <p>Could not load data</p>}
+        </div>
       </div>
-      <div className="rounded-default flex flex-col gap-4 p-6 ring-1 ring-gray-600">
-        <h3 className="text-xl font-semibold text-gray-50">Session matrix</h3>
-        <div className="h-72">
-          {stats.avgMovement.length !== 0 ? <MatrixChart data={stats.avgMovementDay} /> : <p>Could not load data</p>}
+      <div className="flex max-w-full flex-col gap-6 xl:flex-row">
+        <div className="rounded-default flex w-full basis-2/3 flex-col gap-4 p-6 ring-1 ring-gray-600">
+          <h3 className="text-xl font-semibold text-gray-50">Activity matrix</h3>
+          <div className="flex h-72 w-full flex-grow flex-row-reverse overflow-y-auto xl:block">
+            <div className="h-full w-full min-w-[765px]">
+              {stats.actWeekGroup.length !== 0 ? <MatrixChart data={stats.actDay} /> : <p>Could not load data</p>}
+            </div>
+          </div>
+        </div>
+        <div className="rounded-default flex w-full basis-1/3 flex-col gap-4 p-6 ring-1 ring-gray-600">
+          <h3 className="text-xl font-semibold text-gray-50">Wordsource spread</h3>
+          <div className="flex h-72 max-w-full items-center justify-center">
+            {stats.actWordSource.wordSources.length > 2 ? (
+              <RadarChart data={stats.actWordSource} />
+            ) : (
+              <div className="flex flex-col items-center justify-center gap-1">
+                <ExclamationTriangleIcon className="text-warning-200 h-6 w-6" />
+                <h3 className="text-gray-100">Not enough word sources</h3>
+                <p className="text-center text-sm text-gray-400">You need at least 3 word sources to show useful information.</p>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>
   );
 };
 
-const NoSessionInfo = () => {
+const NoDashboardDataInfo = () => {
   return (
     <div className="absolute -inset-8 z-10 flex flex-col items-center justify-start gap-2 bg-gray-800/50 px-10 pt-24 backdrop-blur-lg lg:justify-center lg:pt-0">
       <motion.div
@@ -216,19 +246,17 @@ interface StatGaugeProps {
   value: number;
   inside: React.ReactNode;
   color: string;
-  maxValue?: number;
-  minValue?: number;
   delay?: number;
 }
 
-const StatGauge = ({ value, minValue = 0, maxValue = 100, inside, color, delay = 0 }: StatGaugeProps) => {
+const StatsHalfGauge = ({ value, inside, color, delay = 0 }: StatGaugeProps) => {
   const strokeWidth = 14;
   const size = 200;
   const center = size / 2;
   const r = center - strokeWidth;
   const c = 2 * r * Math.PI;
   const a = c * (180 / 360);
-  const percentage = (value - minValue) / (maxValue - minValue);
+  const percentage = value / 100;
   const offset = c - percentage * a;
 
   return (
@@ -264,24 +292,3 @@ const StatGauge = ({ value, minValue = 0, maxValue = 100, inside, color, delay =
 };
 
 export default Dashboard;
-
-const DashboardErrorBoundary: React.FC<{ resetErrorBoundary: () => void; error: Error }> = ({ resetErrorBoundary }) => {
-  return (
-    <div className="flex flex-col items-center justify-center gap-6 px-6">
-      <div className="bg-error-400/30 flex h-32 w-32 items-center justify-center rounded-full p-6">
-        <ExclamationTriangleIcon className="text-error-200 h-full w-full" />
-      </div>
-      <div className="flex flex-col items-center gap-8">
-        <div className="flex flex-col items-center gap-2 text-center">
-          <h1 className="text-xl font-semibold">We were not able to load your desboard.</h1>
-          <p className="text-base font-semibold text-gray-400">
-            It seems like you have ran into an error. Please retry now or come back again later.
-          </p>
-        </div>
-        <Button onClick={resetErrorBoundary} intent="outlined" size="medium" Icon={<IoReload />}>
-          Try again
-        </Button>
-      </div>
-    </div>
-  );
-};

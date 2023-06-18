@@ -1,4 +1,4 @@
-import { Chart as ChartJS, Tooltip, ChartOptions, TooltipItem, ChartData } from 'chart.js';
+import { Chart as ChartJS, Tooltip, ChartOptions, TooltipItem, ChartData, ScriptableContext } from 'chart.js';
 import { color } from 'chart.js/helpers';
 import { MatrixController, MatrixElement } from 'chartjs-chart-matrix';
 import 'chart.js/auto';
@@ -76,32 +76,12 @@ export const BarChart = ({ data: dataset }: BarChartProps) => {
 
 type MyMatrixDatapoint = { x: Date; y: number; v: number };
 
-interface MatrixChartProps {
-  data: { value: number; time: string }[];
-}
 const matrixChartOption: ChartOptions<'matrix'> = {
   maintainAspectRatio: false,
   responsive: true,
   animation: {
     duration: 0,
   },
-  //{
-  //    easing: 'linear',
-  //    duration: 500,
-  //    delay: (ctx) => {
-  //      let delay = 0;
-  //      if (ctx.type === 'data') {
-  //        delay = ctx.dataIndex * 1;
-  //      }
-  //      return delay;
-  //    },
-  //    x: {
-  //      from: 500,
-  //    },
-  //    y: {
-  //      from: 500,
-  //    },
-  //},
   plugins: {
     legend: {
       display: false,
@@ -134,7 +114,7 @@ const matrixChartOption: ChartOptions<'matrix'> = {
       },
       ticks: {
         callback: (value: string | number) => {
-          const weekday = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+          const weekday = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'];
           return weekday[(value as number) - 1];
         },
         maxRotation: 0,
@@ -179,37 +159,119 @@ const matrixChartOption: ChartOptions<'matrix'> = {
   },
 };
 
+interface MatrixChartProps {
+  data: { [k: string]: number };
+}
+
 export const MatrixChart = ({ data }: MatrixChartProps) => {
-  const maxDataValue = Math.max(...data.map((e) => e.value));
+  const maxDataValue = Math.max(...Object.values(data));
 
   const config: ChartData<'matrix', MyMatrixDatapoint[]> = {
     datasets: [
       {
         label: 'Session matrix',
-        data: data.map((v) => ({ x: new Date(v.time), y: ((new Date(v.time).getDay() + 6) % 7) + 1, v: v.value })),
+        data: fillMissingData(182, data),
         width: (c) => {
           const a = c.chart.chartArea || {};
-          return (a.right - a.left) / 27 - 15;
+          return (a.right - a.left) / 27 - 8;
         },
         height: (c) => {
           const a = c.chart.chartArea || {};
-          return (a.bottom - a.top) / 7 - 10;
+          return (a.bottom - a.top) / 7 - 17;
         },
         borderRadius: 4,
         borderWidth: 1.5,
-        backgroundColor: (c) => {
-          const value = (c.dataset.data as unknown as MyMatrixDatapoint[])[c.dataIndex].v;
-          const alpha = normalize(value, maxDataValue, 0);
-          return value === 0 ? color('#26262688').rgbString() : color('#1B806A').alpha(alpha).rgbString();
-        },
-        borderColor: (c) => {
-          const value = (c.dataset.data as unknown as MyMatrixDatapoint[])[c.dataIndex].v;
-          const alpha = normalize(value, maxDataValue, 0);
-          return value === 0 ? color('#26262688').lighten(0.3).rgbString() : color('#1B806A').alpha(alpha).lighten(0.3).rgbString();
-        },
+        backgroundColor: (c) => generateMatrixColor(c, maxDataValue).rgbString(),
+        borderColor: (c) => generateMatrixColor(c, maxDataValue).lighten(0.3).rgbString(),
       },
     ],
   };
 
-  return <Chart type="matrix" data={config} options={matrixChartOption} />;
+  return <Chart className="!w-full" type="matrix" data={config} options={matrixChartOption} />;
+};
+
+const generateMatrixColor = (c: ScriptableContext<'matrix'>, maxVal: number) => {
+  const value = (c.dataset.data as unknown as MyMatrixDatapoint[])[c.dataIndex].v;
+  const alpha = normalize(value, maxVal, 0);
+  return value === 0 ? color('#26262688') : color('#1B806A').alpha(alpha);
+};
+
+const fillMissingData = (dateRange: number, unfilledData: MatrixChartProps['data']) => {
+  return Array.from(Array(dateRange), (_, idx) => {
+    const date = new Date(new Date().setDate(new Date().getDate() - dateRange + idx + 1));
+    const foundItem = unfilledData[date.toDateString()];
+    return {
+      x: date,
+      y: ((date.getDay() + 6) % 7) + 1,
+      v: foundItem ?? 0,
+    };
+  });
+};
+
+interface RadarChartProps {
+  data: { wordSources: string[]; values: number[] };
+}
+
+const radarChartOption: ChartOptions<'radar'> = {
+  maintainAspectRatio: false,
+  responsive: true,
+
+  plugins: {
+    tooltip: {
+      caretPadding: 12,
+      usePointStyle: true,
+      backgroundColor: '#262626DE',
+      titleColor: '#D4D4D4',
+      callbacks: {},
+    },
+    legend: {
+      display: false,
+    },
+  },
+  scales: {
+    r: {
+      angleLines: {
+        color: '#262626',
+      },
+      grid: {
+        color: '#262626',
+      },
+      ticks: {
+        backdropColor: 'transparent',
+      },
+      pointLabels: {
+        font: {
+          size: 12,
+        },
+      },
+    },
+  },
+};
+
+export const RadarChart = ({ data }: RadarChartProps) => {
+  const config: ChartData<'radar'> = {
+    labels: data.wordSources,
+    datasets: [
+      {
+        label: ' # of sessions',
+        data: data.values,
+        fill: true,
+        backgroundColor: '#E11D4844',
+        borderColor: '#E11D48',
+        pointBackgroundColor: '#FB7185',
+        pointBorderColor: '#FECDD3',
+        pointHoverBackgroundColor: '#fff',
+        pointHoverBorderColor: 'rgb(255, 99, 132)',
+      },
+      {
+        data: [0, 0, 0, 0],
+        fill: false,
+        showLine: false,
+        hoverRadius: 0,
+        pointRadius: 0,
+      },
+    ],
+  };
+
+  return <Chart className="!w-full" type="radar" data={config} options={radarChartOption} />;
 };

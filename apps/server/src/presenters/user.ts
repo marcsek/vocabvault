@@ -50,40 +50,41 @@ export const presentUserStats = async (dataToParse: TPresentUserStats) => {
   let timeSum = 0;
   let accSum = 0;
 
-  const avgMovement: { time: string; value: number }[] = [];
-  const avgMovementDay: { time: string; value: number }[] = [];
+  const actWeekGroup: { time: string; value: number }[] = [];
 
   const maxChartHistoryInMonth = 4;
+  const maxChartHistoryInDay = 182;
   const startingWeek = dayjs().subtract(4 * maxChartHistoryInMonth - 1, 'week');
-  const startingDate = dayjs().subtract(181, 'days');
+  const startingDate = dayjs().subtract(maxChartHistoryInDay - 1, 'days');
 
-  const array: [number, number][] = Array.from(Array(maxChartHistoryInMonth * 4), (_, idx) => [
+  const weekMapInitData: [number, number][] = Array.from(Array(maxChartHistoryInMonth * 4), (_, idx) => [
     dayjs(startingWeek.add(idx, 'week')).week(),
     0,
   ]);
-  const sArray: [number, number][] = Array.from(Array(182), (_, idx) => [dayjs(startingDate.add(idx, 'day')).dayOfYear(), 0]);
 
-  const weekMap = new Map<number, number>(array);
-  const dayMap = new Map<number, number>(sArray);
+  const weekMap = new Map<number, number>(weekMapInitData);
+  const dayMap = new Map<string, number>();
+  const wordSourceMap = new Map<string, number>();
 
   for (const stat of dataList) {
     timeSum += (stat.endedAt.getTime() - stat.startedAt.getTime()) / 1000;
     accSum += stat.SessionStatistics ? stat.SessionStatistics.accuracy : 0;
 
+    wordSourceMap.set(stat.wordSource.name, (wordSourceMap.get(stat.wordSource.name) ?? 0) + 1);
+
     const curWeek = dayjs(new Date(stat.endedAt)).week();
     const foundRecord = weekMap.get(curWeek);
-
     if (foundRecord !== undefined) {
       weekMap.set(curWeek, foundRecord + 1);
     }
 
-    const curDay = dayjs(new Date(stat.endedAt)).dayOfYear();
-    const foundRecordDay = dayMap.get(curDay);
-
-    if (foundRecordDay !== undefined) {
-      dayMap.set(curDay, foundRecordDay + 1);
+    const curDay = dayjs(new Date(stat.endedAt));
+    if (curDay.isAfter(startingDate, 'day')) {
+      dayMap.set(curDay.toDate().toDateString(), (dayMap.get(curDay.toDate().toDateString()) ?? 0) + 1);
     }
   }
+
+  const actWordSource = { wordSources: [...wordSourceMap.keys()], values: [...wordSourceMap.values()] };
 
   for (const [week, value] of weekMap) {
     const weekDate = dayjs().week(week);
@@ -92,24 +93,15 @@ export const presentUserStats = async (dataToParse: TPresentUserStats) => {
     const monthName = new Intl.DateTimeFormat('en-US', { month: 'short' }).format(weekDate.toDate());
     const formattedDate = numOfWeekInMonth + '/' + monthName;
 
-    avgMovement.push({ time: formattedDate, value: value });
-  }
-
-  for (const [day, value] of dayMap) {
-    let correctDate = dayjs().dayOfYear(day);
-
-    if (day > dayjs().dayOfYear()) {
-      correctDate = dayjs().dayOfYear(day).subtract(1, 'year');
-    }
-
-    avgMovementDay.push({ time: correctDate.toDate().toISOString(), value });
+    actWeekGroup.push({ time: formattedDate, value: value });
   }
 
   return {
     avgTime: Math.floor(timeSum / totalEntries),
     avgAccuracy: Math.floor(accSum / totalEntries),
-    avgMovement,
-    avgMovementDay,
+    actWeekGroup,
+    actDay: Object.fromEntries(dayMap),
+    actWordSource,
     totalSessions: dataList.length,
   };
 };

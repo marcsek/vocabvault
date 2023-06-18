@@ -12,6 +12,11 @@ export const getUserStats = async ({ prisma, userId }: { prisma: PrismaClient; u
           where: { endedAt: { gt: new Date(todayYearAgo) } },
           orderBy: { endedAt: 'asc' },
           select: {
+            wordSource: {
+              select: {
+                name: true,
+              },
+            },
             endedAt: true,
             startedAt: true,
             SessionStatistics: {

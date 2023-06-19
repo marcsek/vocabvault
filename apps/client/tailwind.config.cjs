@@ -72,6 +72,9 @@ module.exports = {
       gridTemplateColumns: {
         tableRow: 'repeat(auto-fit, minmax(10px, 1fr))',
       },
+      animation: {
+        'spin-slow': 'spin 5s linear infinite reverse',
+      },
     },
   },
 

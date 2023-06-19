@@ -38,7 +38,7 @@ const lastSessionPlaceholderData: ReturnType<typeof useGetLastSession>['data'] =
     accuracy: 90,
   },
 };
-const gaugesPlaceHolders = { avgTime: 134, avgAccuracy: 95, totalSessions: 143 };
+const gaugesPlaceHolders = { avgTime: 134, avgAccuracy: 83, totalSessions: 143 };
 const lineChartPlaceholderData = [
   { time: '1/Mar', value: 2 },
   { time: '2/Mar', value: 2 },
@@ -96,7 +96,12 @@ const Statistics = () => {
         <div className="flex flex-grow flex-col gap-6 lg:flex-row lg:justify-between">
           <div className="rounded-default span flex max-h-56 w-full flex-col items-center gap-5 p-6 ring-1 ring-gray-600">
             <h3 className="text-xl font-semibold">Total sessions</h3>
-            <StatsHalfGauge color="#3B82F6" inside={<p className="text-3xl font-semibold">{stats.totalSessions}</p>} value={83} delay={0} />
+            <StatsHalfGauge
+              color="#3B82F6"
+              inside={<p className="text-3xl font-semibold">{stats.totalSessions}</p>}
+              value={stats.totalSessions / 5}
+              delay={0}
+            />
           </div>
           <div className="rounded-default flex max-h-56 w-full flex-col items-center gap-5 p-6 ring-1 ring-gray-600">
             <h3 className="text-xl font-semibold">Average time</h3>
@@ -108,7 +113,7 @@ const Statistics = () => {
                   <span className="ml-2 text-2xl text-gray-400">{dateRangeFormatter(new Date(stats.avgTime)).split(' ')[1]}</span>
                 </p>
               }
-              value={20}
+              value={Math.min(Math.max(100 - Math.abs(200 - stats.avgTime) / 2, 0), 100)}
               delay={0.25}
             />
           </div>

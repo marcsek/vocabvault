@@ -20,9 +20,9 @@ const SessionTypeSelector = (props: Props) => {
           detail={props.value}
           Image={
             props.value.id === 'Test' ? (
-              <img className="scale-150" src={ThinkingIcon}></img>
+              <img className="scale-[1.6]" src={ThinkingIcon}></img>
             ) : (
-              <img className="scale-110" src={LevelUpIcon}></img>
+              <img className="scale-[1.2]" src={LevelUpIcon}></img>
             )
           }
         />
@@ -35,11 +35,16 @@ interface InformationProps {
   Image: React.ReactNode;
   detail: TSessionType;
 }
-
+//bg-[conic-gradient(var(--tw-gradient-stops))] from-sky-700 via-emerald-500 to-pink-800
+//bg-[conic-gradient(from 315deg, #FFD607, #FFFFFF)]
 const SessionDetailInformation = ({ detail, Image }: InformationProps) => {
   return (
     <div className="flex max-h-12 items-center justify-center gap-2 leading-none">
-      <div className="bg-primary-500/30 rounded-default flex h-12 w-12 items-center justify-center">{Image}</div>
+      <div className="rounded-default relative flex h-14 w-14 items-center justify-center overflow-hidden">
+        <div className="from-primary-300 animate-spin-slow absolute -inset-3 bg-[conic-gradient(var(--tw-gradient-stops))] via-gray-800"></div>
+        <div className="rounded-default absolute inset-0.5 bg-[#1A2446]"></div>
+        <div className="absolute">{Image}</div>
+      </div>
       <div className="flex flex-col gap-1 leading-none">
         <h3 className="text-sm font-semibold">{detail.id}</h3>
         <p className="max-w-[20rem] text-xs text-gray-400">{detail.description}</p>

@@ -58,7 +58,7 @@ export const useAddChild = () => {
 
       if (!previousChildren) return;
 
-      trpcContext.user.getUserChildren.setData(undefined, [...previousChildren, ...data]);
+      trpcContext.user.getUserChildren.setData(undefined, [...previousChildren, ...(data || [])]);
     },
 
     onError() {

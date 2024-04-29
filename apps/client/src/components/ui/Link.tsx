@@ -21,9 +21,8 @@ const Link = React.forwardRef<HTMLAnchorElement, TUiLinkProps>(
         aria-label={ariaLabel}
         ref={ref}
         {...props}
-        className={`${className} rounded-default relative box-border flex items-center gap-2 text-base font-bold leading-none text-gray-100 duration-200 lg:text-sm ${
-          hoverEffect ? 'hover:bg-gray-700 hover:text-gray-50' : 'hover:text-gray-400'
-        }`}
+        className={`${className} rounded-default relative box-border flex items-center gap-2 text-base font-bold leading-none text-gray-100 duration-200 lg:text-sm ${hoverEffect ? 'hover:bg-gray-700 hover:text-gray-50' : 'hover:text-gray-400'
+          }`}
       >
         {Icon}
         {children}

@@ -13,16 +13,16 @@
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
   "devDependencies": {
-    "eslint-config-custom": "*",
-    "prettier": "latest",
-    "prettier-plugin-tailwindcss": "^0.2.1",
-    "turbo": "latest"
+    "eslint-config-custom": "^0.0.0",
+    "prettier": "^3.2.5",
+    "prettier-plugin-tailwindcss": "^0.5.14",
+    "turbo": "^1.13.3"
   },
   "engines": {
     "node": ">=14.0.0"
   },
   "packageManager": "npm@8.19.2",
   "dependencies": {
-    "tailwindcss-radix": "^2.7.0"
+    "tailwindcss-radix": "^3.0.3"
   }
 }

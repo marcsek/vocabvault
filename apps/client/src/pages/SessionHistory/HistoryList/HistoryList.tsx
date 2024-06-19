@@ -79,8 +79,8 @@ const PercentageIndicator = ({ value }: { value: number }) => {
     value >= 85
       ? 'bg-success-400/30 text-success-200'
       : value >= 55
-      ? 'bg-warning-400/30 text-warning-200'
-      : 'bg-error-400/30 text-error-200';
+        ? 'bg-warning-400/30 text-warning-200'
+        : 'bg-error-400/30 text-error-200';
 
   return <div className={colors + ' rounded-default px-1.5 py-1 text-sm font-semibold leading-none'}>{value}%</div>;
 };

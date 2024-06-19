@@ -10,7 +10,7 @@ interface Props {
 }
 
 const handleSucessRedirect = async ({ navigate, queryClient, trpcContext }: Props) => {
-  const getUserKey = getQueryKey(trpc.user.getUser, undefined, 'query')
+  const getUserKey = getQueryKey(trpc.user.getUser, undefined, 'query');
 
   queryClient.setQueryData(getUserKey, null);
   queryClient.resetQueries({ queryKey: [getQueryKey] });

@@ -39,7 +39,7 @@ const FiltersPopover = ({ setFilters, filters }: Props) => {
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
                   exit={{ scale: 0 }}
-                  className="bg-primary-200 absolute top-2 right-2 h-2 w-2 rounded-full"
+                  className="bg-primary-200 absolute right-2 top-2 h-2 w-2 rounded-full"
                 />
               )}
             </AnimatePresence>

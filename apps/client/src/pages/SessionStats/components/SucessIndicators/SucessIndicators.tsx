@@ -42,7 +42,7 @@ const SucessIndicators = ({ correct, totalTime, incorrect, maxStreak, minTries, 
           delay={0.9}
         />
       </div>
-      <Divider className=" hidden w-0 outline-dashed outline-1 outline-gray-500 xl:block" />
+      <Divider className="hidden w-0 outline-dashed outline-1 outline-gray-500 xl:block" />
       <div className="rounded-default flex flex-col gap-9 outline-1 outline-gray-600 md:flex-row md:bg-gray-800/50 md:px-6 md:py-5 md:outline md:backdrop-blur-md xl:w-full xl:bg-none xl:p-0 xl:outline-none">
         <SucessCard
           Icon={<RiTimerLine />}

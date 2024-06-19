@@ -27,7 +27,7 @@ const Table = <TObj extends { [key: string]: string | number | React.ReactNode }
           <div className="rounded-default grid-cols-tableRow sticky top-0 box-border grid border border-gray-600 bg-gray-700 px-4 py-2 text-sm leading-none text-gray-400">
             {columns.data.map((col) => (
               <div
-                className={centerLayout ? 'col-span-3 flex justify-start last:col-span-1  last:justify-center' : ''}
+                className={centerLayout ? 'col-span-3 flex justify-start last:col-span-1 last:justify-center' : ''}
                 key={col.field.toString()}
               >
                 {col.headerName}
@@ -49,7 +49,7 @@ const Table = <TObj extends { [key: string]: string | number | React.ReactNode }
                   >
                     {columns.data.map((col) => (
                       <div
-                        className={centerLayout ? 'col-span-3 flex justify-start last:col-span-1  last:justify-center' : ''}
+                        className={centerLayout ? 'col-span-3 flex justify-start last:col-span-1 last:justify-center' : ''}
                         key={col.field.toString()}
                       >
                         {row[col.field]}

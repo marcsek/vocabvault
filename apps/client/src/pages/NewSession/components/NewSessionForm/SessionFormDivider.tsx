@@ -9,8 +9,8 @@ interface Props {
 }
 
 const SessionFormDivider = ({ isUnlocked }: Props) => {
-  const ref = useRef<HTMLDivElement>(null)
-  const { width } = useResizeObserver({ ref, box: "border-box" });
+  const ref = useRef<HTMLDivElement>(null);
+  const { width } = useResizeObserver({ ref, box: 'border-box' });
 
   return (
     <div className="relative flex flex-col items-center gap-1">

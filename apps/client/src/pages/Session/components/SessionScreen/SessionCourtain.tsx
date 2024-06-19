@@ -70,7 +70,7 @@ const SessionCourtain = ({ show, onEnd }: Props) => {
           transition={{ delay: 0.5, type: 'spring', bounce: 20, duration: 0.5 }}
           className="flex flex-col items-center gap-2 leading-none"
         >
-          <p className="text-xl font-bold ">This round is over</p>
+          <p className="text-xl font-bold">This round is over</p>
           <p className="text-base text-gray-300">Get ready for the next one</p>
         </motion.div>
         <motion.div initial={{ scale: 0 }} animate={clockAnim} transition={{ type: 'spring', duration: 0.5, bounce: 10 }}>

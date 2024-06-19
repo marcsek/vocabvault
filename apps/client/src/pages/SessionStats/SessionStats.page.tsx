@@ -23,7 +23,7 @@ const SessionStats = () => {
       <div className="relative z-10 flex flex-col gap-9">
         <p className="text-2xl font-bold leading-none text-gray-50">Post session statistics</p>
         <SessionStatsDetails statsData={statsData} />
-        <div className="md:box fixed left-0 bottom-0 z-20 flex w-full items-center justify-center self-end bg-gray-800/70 py-4 px-9 shadow-[0px_-2px_6px_1px_#00000033] backdrop-blur-sm md:relative md:w-fit md:p-0 md:shadow-none [&>*]:w-full">
+        <div className="md:box fixed bottom-0 left-0 z-20 flex w-full items-center justify-center self-end bg-gray-800/70 px-9 py-4 shadow-[0px_-2px_6px_1px_#00000033] backdrop-blur-sm md:relative md:w-fit md:p-0 md:shadow-none [&>*]:w-full">
           <Button loading={loading} Icon={<MdExitToApp size={20} />} onClick={() => handleButtonClick()} size="medium">
             End session
           </Button>

@@ -27,7 +27,7 @@ const AuthPage = () => {
         </div>
         <BackgroundImage />
       </div>
-      <Logo className="!absolute top-5 left-1/2 w-fit -translate-x-1/2 justify-center !p-0" />
+      <Logo className="!absolute left-1/2 top-5 w-fit -translate-x-1/2 justify-center !p-0" />
     </>
   );
 };

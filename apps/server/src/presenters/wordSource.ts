@@ -3,13 +3,12 @@ import { createWordSource, getAllWordSources, updateWordSource } from '../use-ca
 
 type TPresentWordSourceInput = Awaited<ReturnType<typeof createWordSource>>;
 
-type TWordSourceOutput =
-  | Omit<TPresentWordSourceInput, '_count' | 'createdAt' | 'userAvailableSources'> & {
-      type: 'shared' | 'private' | 'watched';
-      createdAt: string;
-      wordPairsCount: number;
-      userAvailableSources: { name: string; id: string; profileImage: string }[];
-    };
+type TWordSourceOutput = Omit<TPresentWordSourceInput, '_count' | 'createdAt' | 'userAvailableSources'> & {
+  type: 'shared' | 'private' | 'watched';
+  createdAt: string;
+  wordPairsCount: number;
+  userAvailableSources: { name: string; id: string; profileImage: string }[];
+};
 
 export const presentWordSource = async (wordSourceToParse: TPresentWordSourceInput): Promise<TWordSourceOutput> => {
   const { _count, ...rest } = wordSourceToParse;

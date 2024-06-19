@@ -35,7 +35,7 @@ const SidePanel = ({ isOpen, onClose }: Props) => {
                 animate={{ right: '0%' }}
                 exit={{ right: '-100%', transition: { delay: 0.3 } }}
                 transition={{ type: 'spring', bounce: 0, duration: 0.5 }}
-                className="rounded-l-default fixed top-0 bottom-0 right-0 flex w-full items-center justify-center bg-gray-800 shadow-[-1px_4px_32px_1px_#00000088] backdrop-blur-md sm:w-[320px] sm:bg-gray-800/50"
+                className="rounded-l-default fixed bottom-0 right-0 top-0 flex w-full items-center justify-center bg-gray-800 shadow-[-1px_4px_32px_1px_#00000088] backdrop-blur-md sm:w-[320px] sm:bg-gray-800/50"
               >
                 <Dialog.Panel className="flex h-full flex-1 flex-col gap-6 p-9">
                   <Dialog.Title className="flex justify-between">

@@ -23,14 +23,14 @@ export const useGetUser = () => {
   useEffect(() => {
     if (result?.error?.data?.code === 'UNAUTHORIZED') {
       //hack lebo z nejake dovodu nemozem setovat data na null aj ked default tanstack query je null
-      const userQueryKey = getQueryKey(trpc.user.getUser)
+      const userQueryKey = getQueryKey(trpc.user.getUser);
       const q = [...userQueryKey, { type: 'query' }];
 
       queryClient.setQueryData(q, null);
     }
-  }, [result.isError])
+  }, [result.isError]);
 
-  return result
+  return result;
 };
 
 export const useGetParent = () => {
@@ -121,7 +121,7 @@ export const useLogout = () => {
 
   return trpc.auth.logout.useMutation({
     onSuccess() {
-      const userKey = getQueryKey(trpc.user.getUser, undefined, 'query')
+      const userKey = getQueryKey(trpc.user.getUser, undefined, 'query');
       queryClient.setQueryData(userKey, null);
       queryClient.clear();
     },

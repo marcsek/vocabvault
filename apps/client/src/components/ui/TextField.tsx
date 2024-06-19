@@ -41,7 +41,7 @@ const TextField = (
         ></input>
       </label>
       <>
-        <div className="absolute top-[39px] left-3 text-lg">{IconLeft}</div>
+        <div className="absolute left-3 top-[39px] text-lg">{IconLeft}</div>
         {Icon && (
           <button
             id="show-password"
@@ -49,7 +49,7 @@ const TextField = (
             role="switch"
             aria-pressed="false"
             onClick={handleIconClick}
-            className="absolute top-[34px] right-3 rounded-full p-1 text-lg text-gray-300 ring-gray-700 focus:ring"
+            className="absolute right-3 top-[34px] rounded-full p-1 text-lg text-gray-300 ring-gray-700 focus:ring"
           >
             {Icon}
           </button>

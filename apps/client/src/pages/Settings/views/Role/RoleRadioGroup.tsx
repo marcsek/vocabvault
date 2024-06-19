@@ -20,7 +20,7 @@ const RoleRadioGroup = ({ activeRole, handleRoleChange, allRoles }: Props) => {
           <RadioGroup.Option key={role.name} value={role.name}>
             {({ active, checked }) => (
               <li
-                className={` rounded-default flex cursor-pointer list-none justify-between px-6 py-4 shadow-lg outline outline-1 outline-gray-500 duration-75 ${
+                className={`rounded-default flex cursor-pointer list-none justify-between px-6 py-4 shadow-lg outline outline-1 outline-gray-500 duration-75 ${
                   active ? 'ring-primary-300 ring' : ''
                 }`}
               >

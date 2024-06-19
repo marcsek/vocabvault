@@ -8,7 +8,7 @@ const NewSessionSelectedWords = () => {
   return (
     <div className="flex flex-col gap-6">
       <p className="font-semibold leading-none text-gray-50">Selected words</p>
-      <div className="rounded-default flex h-32 w-full items-center justify-center overflow-y-auto outline outline-1 outline-gray-600 ">
+      <div className="rounded-default flex h-32 w-full items-center justify-center overflow-y-auto outline outline-1 outline-gray-600">
         {selectedWords && selectedWords.id !== '0' ? (
           <SelectedWordsDetail {...selectedWords} />
         ) : (

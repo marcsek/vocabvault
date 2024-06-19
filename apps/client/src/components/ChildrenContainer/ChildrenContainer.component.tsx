@@ -12,7 +12,7 @@ interface Props {
 const ChildrenContainer = ({ selectedUsers, handleUserUnselect, flow }: Props) => {
   return (
     <div className="box-border flex h-full w-full flex-1 flex-grow basis-12 flex-col gap-2">
-      <label className="text-sm text-gray-50 ">{`${selectedUsers.length} children`}</label>
+      <label className="text-sm text-gray-50">{`${selectedUsers.length} children`}</label>
       <div className="box-border h-full overflow-x-auto rounded-[4px] bg-gray-800 px-3 py-1.5 text-base font-medium leading-none outline outline-1 outline-gray-500 duration-75">
         <ul
           className={`flex h-full flex-shrink gap-x-4 gap-y-3 ${
@@ -27,7 +27,7 @@ const ChildrenContainer = ({ selectedUsers, handleUserUnselect, flow }: Props) =
                 animate={{ scale: 1 }}
                 exit={{ scale: 0 }}
                 transition={{ type: 'spring', duration: 0.4 }}
-                className="flex items-center gap-2 rounded-full bg-gray-700 py-1.5 px-3 text-xs font-semibold text-gray-400"
+                className="flex items-center gap-2 rounded-full bg-gray-700 px-3 py-1.5 text-xs font-semibold text-gray-400"
               >
                 <RxInfoCircled size={16} /> No one selected
               </motion.div>

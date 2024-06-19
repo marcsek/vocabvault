@@ -94,7 +94,7 @@ function App() {
             </UserContextProvider>
           </ErrorBoundary>
         </Suspense>
-        <ReactQueryDevtools initialIsOpen={false} buttonPosition='bottom-left' />
+        <ReactQueryDevtools initialIsOpen={false} buttonPosition="bottom-left" />
       </TrpcQueryProvider>
     </Router>
   );

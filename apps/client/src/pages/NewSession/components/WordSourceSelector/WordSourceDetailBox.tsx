@@ -22,7 +22,7 @@ const WordSourceDetailBox = ({ firstLanguageName, secondLanguageName, wordPairCo
             <p className="truncate">{wordPairCount}</p>
           </div>
           <div className="flex gap-1">
-            <span className="text-gray-400  ">First language:</span>
+            <span className="text-gray-400">First language:</span>
             <p className="max-w-[5rem] truncate">{firstLanguageName}</p>
           </div>
           <div className="flex gap-1">

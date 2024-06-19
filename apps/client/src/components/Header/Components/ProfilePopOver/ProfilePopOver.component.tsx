@@ -47,7 +47,7 @@ const ProfilePopOver = () => {
                       as={Link}
                       hoverEffect
                       to="/session-history"
-                      className="block py-1 px-3 text-gray-300"
+                      className="block px-3 py-1 text-gray-300"
                       Icon={<RiHistoryFill size={16} />}
                     >
                       History
@@ -56,7 +56,7 @@ const ProfilePopOver = () => {
                       as={Link}
                       hoverEffect
                       to="/settings"
-                      className="block py-1 px-3 text-gray-300"
+                      className="block px-3 py-1 text-gray-300"
                       Icon={<TbSettings size={16} />}
                     >
                       Settings
@@ -68,7 +68,7 @@ const ProfilePopOver = () => {
                     hoverEffect
                     onClick={() => logout.mutate()}
                     to="#"
-                    className="block py-1 px-3 leading-none text-gray-300"
+                    className="block px-3 py-1 leading-none text-gray-300"
                     Icon={<VscSignOut size={16} />}
                   >
                     Sign Out

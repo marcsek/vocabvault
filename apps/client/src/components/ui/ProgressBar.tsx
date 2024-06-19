@@ -26,7 +26,7 @@ function ProgressBar({ width, color, colorShade = '#60A5FA', numericIndicator = 
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1, transition: { delay: 2.3 } }}
-            className="text-primary-200 rounded-default absolute left-full translate-y-6 -translate-x-1/2 px-1 py-0.5 text-sm"
+            className="text-primary-200 rounded-default absolute left-full -translate-x-1/2 translate-y-6 px-1 py-0.5 text-sm"
             style={{ color: colorShade, backgroundColor: transparentColor }}
           >
             {width}%

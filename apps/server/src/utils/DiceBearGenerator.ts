@@ -1,6 +1,6 @@
 import { createAvatar } from '@dicebear/core';
 import { identicon } from '@dicebear/collection';
-import { toPng } from "@dicebear/converter"
+import { toPng } from '@dicebear/converter';
 import crypto from 'crypto';
 
 export const createDiceBearAvatar = async (seed: string) => {
@@ -13,7 +13,7 @@ export const createDiceBearAvatar = async (seed: string) => {
     seed: seed + randomBytes,
   });
 
-  const avatarPng = toPng(avatar)
+  const avatarPng = toPng(avatar);
 
   return await avatarPng.toArrayBuffer();
 };

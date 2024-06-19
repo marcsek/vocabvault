@@ -11,7 +11,7 @@ const settingsPaths = ['general', 'social', 'security', 'role'];
 
 const SettingsTabs = () => {
   const { pathname } = useLocation();
-  const [currentTab, setCurrentTab] = useState<typeof settingsPaths[number]>('general');
+  const [currentTab, setCurrentTab] = useState<(typeof settingsPaths)[number]>('general');
   const user = useUser();
 
   useEffect(() => {

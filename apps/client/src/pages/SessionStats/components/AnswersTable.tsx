@@ -56,8 +56,8 @@ const CheckRounded = ({ type }: { type: 'CORRECT' | 'INCORRECT' | 'SEMICORRECT' 
         type === 'CORRECT'
           ? 'bg-success-400/30 text-success-200'
           : type === 'SEMICORRECT'
-          ? 'bg-warning-400/30 text-warning-200'
-          : 'text-error-200 bg-error-400/30'
+            ? 'bg-warning-400/30 text-warning-200'
+            : 'text-error-200 bg-error-400/30'
       } flex h-[24px] w-[24px] items-center justify-center rounded-full`}
     >
       {type === 'CORRECT' ? (

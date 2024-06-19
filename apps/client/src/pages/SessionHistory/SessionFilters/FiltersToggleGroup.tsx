@@ -27,23 +27,23 @@ const FiltersToggleGroup = ({ orderFilters, setOrderFilters }: Props) => {
           onValueChange={(value) => {
             if (value) setOrderFilters({ ...orderFilters, orderBy: value as 'time' });
           }}
-          className=" flex gap-2"
+          className="flex gap-2"
         >
           <ToggleGroup.Item
             value="time"
-            className=" radix-state-on:text-primary-200 rounded-default relative p-1 text-gray-200 duration-200"
+            className="radix-state-on:text-primary-200 rounded-default relative p-1 text-gray-200 duration-200"
           >
             <ToggleButton Icon={<RiHistoryLine size={22} />} active={orderFilters.orderBy === 'time'} />
           </ToggleGroup.Item>
           <ToggleGroup.Item
             value="percentage"
-            className=" radix-state-on:text-primary-200 rounded-default duration:200 relative p-1 text-gray-200"
+            className="radix-state-on:text-primary-200 rounded-default duration:200 relative p-1 text-gray-200"
           >
             <ToggleButton Icon={<AiOutlinePercentage size={22} />} active={orderFilters.orderBy === 'percentage'} />
           </ToggleGroup.Item>
           <ToggleGroup.Item
             value="type"
-            className=" radix-state-on:text-primary-200 rounded-default duration:200 relative p-1 text-gray-200"
+            className="radix-state-on:text-primary-200 rounded-default duration:200 relative p-1 text-gray-200"
           >
             <ToggleButton Icon={<FiType size={22} />} active={orderFilters.orderBy === 'type'} />
           </ToggleGroup.Item>
@@ -52,7 +52,7 @@ const FiltersToggleGroup = ({ orderFilters, setOrderFilters }: Props) => {
         <Toggle.Root
           pressed={orderFilters.reverse}
           onPressedChange={() => setOrderFilters({ ...orderFilters, reverse: !orderFilters.reverse })}
-          className=" radix-state-on:text-primary-200 rounded-default relative p-1 text-gray-200 duration-200"
+          className="radix-state-on:text-primary-200 rounded-default relative p-1 text-gray-200 duration-200"
         >
           <ToggleButton Icon={<CgArrowsExchangeAltV size={22} />} active={orderFilters.reverse} />
         </Toggle.Root>

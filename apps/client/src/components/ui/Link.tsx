@@ -21,8 +21,9 @@ const Link = React.forwardRef<HTMLAnchorElement, TUiLinkProps>(
         aria-label={ariaLabel}
         ref={ref}
         {...props}
-        className={`${className} rounded-default relative box-border flex items-center gap-2 text-base font-bold leading-none text-gray-100 duration-200 lg:text-sm ${hoverEffect ? 'hover:bg-gray-700 hover:text-gray-50' : 'hover:text-gray-400'
-          }`}
+        className={`${className} rounded-default relative box-border flex items-center gap-2 text-base font-bold leading-none text-gray-100 duration-200 lg:text-sm ${
+          hoverEffect ? 'hover:bg-gray-700 hover:text-gray-50' : 'hover:text-gray-400'
+        }`}
       >
         {Icon}
         {children}
@@ -31,7 +32,7 @@ const Link = React.forwardRef<HTMLAnchorElement, TUiLinkProps>(
             <motion.div
               transition={{ duration: 0.5, type: 'spring' }}
               layoutId="underline"
-              className=" absolute right-0 top-1/2 h-3 w-3 -translate-y-1/2 rounded-full lg:left-1/2  lg:top-full lg:h-1 lg:translate-y-0"
+              className="absolute right-0 top-1/2 h-3 w-3 -translate-y-1/2 rounded-full lg:left-1/2 lg:top-full lg:h-1 lg:translate-y-0"
             >
               <motion.div
                 initial={{ scale: 0, translateX: '-50%' }}

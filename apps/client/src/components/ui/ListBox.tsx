@@ -50,8 +50,7 @@ const ListBox = <T extends TListBoxInput, TKey extends keyof T>({
                   exit={{ height: 0, marginTop: '0.5rem', transition: { duration: 0.2 } }}
                   transition={{ type: 'spring', duration: 0.5 }}
                   static
-                  className={`absolute max-h-64 top-full z-10 mt-2 box-border w-full rounded-[4px] bg-gray-800 outline outline-1 outline-gray-500/50 
-                    ${items.length > 6 ? 'overflow-auto' : 'overflow-hidden'}`}
+                  className={`absolute top-full z-10 mt-2 box-border max-h-64 w-full rounded-[4px] bg-gray-800 outline outline-1 outline-gray-500/50 ${items.length > 6 ? 'overflow-auto' : 'overflow-hidden'}`}
                 >
                   <div>
                     {items.map((item) => (
@@ -64,9 +63,9 @@ const ListBox = <T extends TListBoxInput, TKey extends keyof T>({
                       >
                         {({ selected, active, disabled }) => (
                           <p
-                            className={`text-gray-200 ${selected ? '!font-bold !text-gray-50' : ''} ${active ? 'bg-gray-700 !text-gray-50' : ''
-                              } ${disabled ? '!text-gray-400' : ''}
-                          rounded-default box-border py-2 px-2 duration-100`}
+                            className={`text-gray-200 ${selected ? '!font-bold !text-gray-50' : ''} ${
+                              active ? 'bg-gray-700 !text-gray-50' : ''
+                            } ${disabled ? '!text-gray-400' : ''} rounded-default box-border px-2 py-2 duration-100`}
                           >
                             {item[fieldValue]}
                           </p>

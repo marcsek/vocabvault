@@ -1,5 +1,4 @@
 import Divider from '@ui/Divider';
-import React from 'react';
 import { BiHash } from 'react-icons/bi';
 import { RxCopy } from 'react-icons/rx';
 import { toast } from 'react-toastify';
@@ -9,7 +8,7 @@ const IdSocialCopy = () => {
   const user = useUser();
 
   const handleClick = () => {
-    navigator.clipboard.writeText('' + user?.socialId ?? '');
+    navigator.clipboard.writeText('' + user?.socialId);
     toast.info('Social id copied.');
   };
 

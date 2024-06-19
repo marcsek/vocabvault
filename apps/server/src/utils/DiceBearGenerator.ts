@@ -1,5 +1,6 @@
 import { createAvatar } from '@dicebear/core';
 import { identicon } from '@dicebear/collection';
+import { toPng } from "@dicebear/converter"
 import crypto from 'crypto';
 
 export const createDiceBearAvatar = async (seed: string) => {
@@ -11,9 +12,8 @@ export const createDiceBearAvatar = async (seed: string) => {
     rowColor: ['00acc1', '1e88e5', '5e35b1'],
     seed: seed + randomBytes,
   });
-  //bfghgdfdsfdsfdssadsafdsadsaddsadsadsh
 
-  const avatarPng = avatar.png();
+  const avatarPng = toPng(avatar)
 
   return await avatarPng.toArrayBuffer();
 };

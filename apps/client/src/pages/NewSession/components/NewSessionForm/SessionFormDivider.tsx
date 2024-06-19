@@ -1,15 +1,16 @@
-import React from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import Divider from '@ui/Divider';
-import { useElementSize } from 'usehooks-ts';
+import { useResizeObserver } from 'usehooks-ts';
 import { IoChevronUpOutline } from 'react-icons/io5';
+import { useRef } from 'react';
 
 interface Props {
   isUnlocked: boolean;
 }
 
 const SessionFormDivider = ({ isUnlocked }: Props) => {
-  const [ref, { width }] = useElementSize();
+  const ref = useRef<HTMLDivElement>(null)
+  const { width } = useResizeObserver({ ref, box: "border-box" });
 
   return (
     <div className="relative flex flex-col items-center gap-1">

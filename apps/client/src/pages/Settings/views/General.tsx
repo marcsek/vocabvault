@@ -28,7 +28,7 @@ const General = () => {
         <TextField labelText="Name" name="name" value={formik.values.name} onChange={formik.handleChange} onBlur={formik.handleBlur} />
         <TextField labelText="Email" name="email" value={formik.values.email} onChange={formik.handleChange} onBlur={formik.handleBlur} />
       </div>
-      <Button className="md:w-fit" loading={update.isLoading} type="submit">
+      <Button className="md:w-fit" loading={update.isPending} type="submit">
         Save settings
       </Button>
     </form>

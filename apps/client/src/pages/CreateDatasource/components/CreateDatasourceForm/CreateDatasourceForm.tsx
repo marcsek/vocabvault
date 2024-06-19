@@ -48,8 +48,8 @@ const CreateDatasourceForm = () => {
   const handleDropInputChange = useHandleDropInputChange({ formik });
 
   useEffect(() => {
-    setButtonProps({ disabled: !formik.isValid, loading: createWordSource.isLoading, onClick: () => submitButtonRef.current?.click() });
-  }, [createWordSource.isLoading, formik.isValid]);
+    setButtonProps({ disabled: !formik.isValid, loading: createWordSource.isPending, onClick: () => submitButtonRef.current?.click() });
+  }, [createWordSource.isPending, formik.isValid]);
 
   return (
     <form onSubmit={formik.handleSubmit} className="flex w-full flex-col gap-10 md:gap-8 lg:flex-row">

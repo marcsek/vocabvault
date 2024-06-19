@@ -1,12 +1,13 @@
 import { toast } from 'react-toastify';
 import { trpc } from '../utils/trpc';
+import { keepPreviousData } from '@tanstack/react-query';
 
 export const useGetAvailableWordSources = () => {
   return trpc.wordSources.getAllUserAvailableWordSources.useQuery(undefined, {});
 };
 
 export const useGetDataSourceByID = (id: string) => {
-  const queryClient = trpc.useContext();
+  const queryClient = trpc.useUtils();
 
   return trpc.wordSources.getWordSourceByID.useQuery(
     { id },
@@ -21,7 +22,7 @@ export const useGetDataSourceByID = (id: string) => {
 };
 
 export const useCreateWordSource = (onSuccess: () => void) => {
-  const trpcContext = trpc.useContext();
+  const trpcContext = trpc.useUtils();
 
   return trpc.wordSources.createWordSource.useMutation({
     onSuccess(data) {
@@ -39,7 +40,7 @@ export const useCreateWordSource = (onSuccess: () => void) => {
 };
 
 export const useUpdateWordSource = () => {
-  const queryClient = trpc.useContext();
+  const queryClient = trpc.useUtils();
   return trpc.wordSources.updateWordSource.useMutation({
     onSuccess(data, { id }) {
       const previousData = queryClient.wordSources.getWordSourceByID.getData({ id });
@@ -70,7 +71,7 @@ export const useUpdateWordSource = () => {
 };
 
 export const useDeleteWordSource = (onSuccess: () => void) => {
-  const trpcContext = trpc.useContext();
+  const trpcContext = trpc.useUtils();
   return trpc.wordSources.deleteWordSource.useMutation({
     onSuccess(_data, { id }) {
       const previousData = trpcContext.wordSources.getAllUserAvailableWordSources.getData();
@@ -95,9 +96,9 @@ export const useGetWordSourceWordPairs = (
   return trpc.wordSources.getWordSourceWordPairs.useQuery(
     { sourceID: id ?? '', ...format },
     {
-      keepPreviousData: true,
+      placeholderData: keepPreviousData,
       staleTime: Infinity,
-      cacheTime: 1000 * 60 * 1,
+      gcTime: 1000 * 60 * 1,
     }
   );
 };

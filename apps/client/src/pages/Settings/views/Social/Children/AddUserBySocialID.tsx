@@ -21,7 +21,7 @@ const AddUserBySocialID = () => {
         IconLeft={<BiHash className="text-gray-400" />}
       />
       <Button
-        loading={addChild.isLoading}
+        loading={addChild.isPending}
         onClick={() => addChild.mutate({ socialId: parseInt(socialId) })}
         className="h-10 min-w-fit"
         size="small"

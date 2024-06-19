@@ -37,7 +37,7 @@ const Register = () => {
               labelText="Name"
               id="name"
               name="name"
-              disabled={register.isLoading}
+              disabled={register.isPending}
             />
             <Field
               as={TextField}
@@ -46,7 +46,7 @@ const Register = () => {
               helperText={touched.email && errors.email}
               id="email"
               name="email"
-              disabled={register.isLoading}
+              disabled={register.isPending}
             />
             <Field
               as={TextField}
@@ -55,14 +55,14 @@ const Register = () => {
               labelText="Password"
               id="password"
               name="password"
-              disabled={register.isLoading}
+              disabled={register.isPending}
               type={showPassword ? 'text' : 'password'}
               Icon={!showPassword ? <FiEye /> : <FiEyeOff />}
               handleIconClick={() => setShowPassword(!showPassword)}
             />
             <Button
-              loading={register.isLoading}
-              disabled={!isValid || (!touched.email && !touched.password && !touched.name) || register.isLoading}
+              loading={register.isPending}
+              disabled={!isValid || (!touched.email && !touched.password && !touched.name) || register.isPending}
               type="submit"
               className="mt-4 w-full"
             >

@@ -18,7 +18,7 @@ const DeleteDatasourceForm = () => {
         className="text-error-200 max-w-[15rem] border border-gray-600 hover:shadow-none"
         intent="asWrapper"
         size="small"
-        loading={deletion.isLoading}
+        loading={deletion.isPending}
       >
         Delete
       </Button>

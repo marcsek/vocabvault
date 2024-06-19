@@ -13,9 +13,8 @@ const TabSelector = ({ currentTab, setCurrentTab }: Props) => {
     <nav className="flex w-full gap-6">
       <button
         onClick={() => setCurrentTab('details')}
-        className={`relative flex items-center gap-2 duration-200 hover:!text-gray-50 ${
-          currentTab === 'details' ? 'text-gray-50' : 'text-gray-400'
-        }`}
+        className={`relative flex items-center gap-2 duration-200 hover:!text-gray-50 ${currentTab === 'details' ? 'text-gray-50' : 'text-gray-400'
+          }`}
       >
         <RxMagnifyingGlass /> Details
         {currentTab === 'details' && (
@@ -24,9 +23,8 @@ const TabSelector = ({ currentTab, setCurrentTab }: Props) => {
       </button>
       <button
         onClick={() => setCurrentTab('actions')}
-        className={`underlin relative flex items-center gap-2 duration-200 hover:!text-gray-50 ${
-          currentTab === 'actions' ? 'text-gray-50' : 'text-gray-400'
-        }`}
+        className={`underlin relative flex items-center gap-2 duration-200 hover:!text-gray-50 ${currentTab === 'actions' ? 'text-gray-50' : 'text-gray-400'
+          }`}
       >
         <BsLightningCharge /> Actions
         {currentTab === 'actions' && (

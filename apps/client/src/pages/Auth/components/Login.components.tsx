@@ -43,7 +43,7 @@ const Login = () => {
               helperText={touched.email && errors.email}
               id="email"
               name="email"
-              disabled={login.isLoading}
+              disabled={login.isPending}
             />
             <Field
               as={TextField}
@@ -52,15 +52,15 @@ const Login = () => {
               labelText="Password"
               id="password"
               name="password"
-              disabled={login.isLoading}
+              disabled={login.isPending}
               placeholder=""
               type={showPassword ? 'text' : 'password'}
               Icon={!showPassword ? <FiEye /> : <FiEyeOff />}
               handleIconClick={() => setShowPassword(!showPassword)}
             />
             <Button
-              loading={login.isLoading}
-              disabled={!isValid || (!touched.email && !touched.password) || login.isLoading}
+              loading={login.isPending}
+              disabled={!isValid || (!touched.email && !touched.password) || login.isPending}
               type="submit"
               className="mt-4 w-full"
             >

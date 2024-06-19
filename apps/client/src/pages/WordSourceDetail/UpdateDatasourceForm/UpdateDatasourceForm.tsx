@@ -40,10 +40,10 @@ const UpdateDatasourceForm = ({ initialDetails }: Props) => {
   useEffect(() => {
     setButtonProps({
       disabled: !formik.isValid,
-      loading: update.isLoading,
+      loading: update.isPending,
       onClick: () => submitButtonRef.current?.click(),
     });
-  }, [formik.isValid, update.isLoading]);
+  }, [formik.isValid, update.isPending]);
 
   return (
     <form onSubmit={formik.handleSubmit} className="flex w-full flex-col gap-10 md:gap-8 lg:flex-row">

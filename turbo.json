@@ -18,7 +18,8 @@
         "S3_BUCKET_REGION",
         "S3_BUCKET_ACCESS_KEY",
         "S3_BUCKET_SECRET",
-        "CLIENT_URL"
+        "CLIENT_URL",
+        "VITE_BACKEND_URL"
       ]
     },
     "lint": {

@@ -15,15 +15,15 @@ export const useCreateSession = (onSuccess: () => void) => {
 
 export const useGetSessionAsHistoryByUserId = (input: TGetSessionByUserIdInput) => {
   return trpc.session.getSessionAsHistoryByUserId.useQuery(input, {
-    cacheTime: 1000 * 60 * 2,
+    gcTime: 1000 * 60 * 2,
     refetchOnWindowFocus: false,
   });
 };
 
 export const useGetLastSession = () => {
-  return trpc.session.getLastSession.useQuery(undefined, { useErrorBoundary: true, suspense: true });
+  return trpc.session.getLastSession.useQuery(undefined, { throwOnError: true, suspense: true });
 };
 
 export const useGetUserStats = () => {
-  return trpc.user.getUserStats.useQuery(undefined, { useErrorBoundary: true, suspense: true });
+  return trpc.user.getUserStats.useQuery(undefined, { throwOnError: true, suspense: true });
 };

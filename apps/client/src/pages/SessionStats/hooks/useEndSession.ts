@@ -31,7 +31,7 @@ const useEndSession = (statsData: TPostSessionStatsProps) => {
     });
   };
 
-  return { handleButtonClick, loading: session.isLoading };
+  return { handleButtonClick, loading: session.isPending };
 };
 
 export default useEndSession;

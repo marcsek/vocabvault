@@ -4,28 +4,33 @@ import handleSucessRedirect from '../pages/Auth/components/utils/handleSucessRed
 import { trpc } from '../utils/trpc';
 import Cookies from 'js-cookie';
 import { toast } from 'react-toastify';
+import { getQueryKey } from '@trpc/react-query';
+import { useEffect } from 'react';
 
 export const useGetUser = () => {
   const hasCookie = Boolean(Cookies.get('is_loggedin'));
   const windowIsPopup = window.opener && window.opener !== window;
   const queryClient = useQueryClient();
 
-  return trpc.user.getUser.useQuery(undefined, {
-    onError(error) {
-      if (error.data?.code === 'UNAUTHORIZED') {
-        //hack lebo z nejake dovodu nemozem setovat data na null aj ked default tanstack query je null
-        const q = [...trpc.user.getUser.getQueryKey(), { type: 'query' }];
-
-        queryClient.setQueryData(q, null);
-      }
-    },
-
+  const result = trpc.user.getUser.useQuery(undefined, {
     retry: false,
-    useErrorBoundary: false,
+    throwOnError: false,
     suspense: true,
     refetchInterval: 600000,
     enabled: hasCookie && !windowIsPopup,
   });
+
+  useEffect(() => {
+    if (result?.error?.data?.code === 'UNAUTHORIZED') {
+      //hack lebo z nejake dovodu nemozem setovat data na null aj ked default tanstack query je null
+      const userQueryKey = getQueryKey(trpc.user.getUser)
+      const q = [...userQueryKey, { type: 'query' }];
+
+      queryClient.setQueryData(q, null);
+    }
+  }, [result.isError])
+
+  return result
 };
 
 export const useGetParent = () => {
@@ -37,7 +42,7 @@ export const useGetChildren = () => {
 };
 
 export const useChangeUserRole = () => {
-  const trpcContext = trpc.useContext();
+  const trpcContext = trpc.useUtils();
   return trpc.user.changeType.useMutation({
     onSuccess(data) {
       trpcContext.user.getUser.setData(undefined, data);
@@ -50,7 +55,7 @@ export const useChangeUserRole = () => {
 };
 
 export const useAddChild = () => {
-  const trpcContext = trpc.useContext();
+  const trpcContext = trpc.useUtils();
 
   return trpc.user.addChild.useMutation({
     onSuccess(data) {
@@ -68,7 +73,7 @@ export const useAddChild = () => {
 };
 
 export const useRemoveChild = () => {
-  const trpcContext = trpc.useContext();
+  const trpcContext = trpc.useUtils();
 
   return trpc.user.removeChild.useMutation({
     onSuccess(data) {
@@ -90,7 +95,7 @@ export const useRemoveChild = () => {
 export const useLogin = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  const trpcContext = trpc.useContext();
+  const trpcContext = trpc.useUtils();
 
   return trpc.auth.login.useMutation({
     onSuccess() {
@@ -102,7 +107,7 @@ export const useLogin = () => {
 export const useRegister = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  const trpcContext = trpc.useContext();
+  const trpcContext = trpc.useUtils();
 
   return trpc.auth.register.useMutation({
     onSuccess() {
@@ -116,7 +121,7 @@ export const useLogout = () => {
 
   return trpc.auth.logout.useMutation({
     onSuccess() {
-      const userKey = trpc.user.getUser.getQueryKey(undefined, 'query');
+      const userKey = getQueryKey(trpc.user.getUser, undefined, 'query')
       queryClient.setQueryData(userKey, null);
       queryClient.clear();
     },
@@ -127,7 +132,7 @@ export const useLogout = () => {
 };
 
 export const useUpdateUser = () => {
-  const trpcContext = trpc.useContext();
+  const trpcContext = trpc.useUtils();
 
   return trpc.user.updateUser.useMutation({
     onSuccess(data) {

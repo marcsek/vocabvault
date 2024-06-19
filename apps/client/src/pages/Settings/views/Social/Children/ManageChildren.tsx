@@ -30,7 +30,7 @@ const ManageChildren = () => {
       <AddUserBySocialID />
       <ChildrenContainer selectedUsers={children ?? []} handleUserUnselect={(e) => handleChildUnselect(e.id)} flow="vertical" />
       <RemoveChildDialog
-        loading={removeChild.isLoading}
+        loading={removeChild.isPending}
         isOpen={dialogOpen.state}
         onButtonClick={handleSubmitClick}
         onClose={handleDialogClose}

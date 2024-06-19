@@ -41,7 +41,7 @@ const Role = () => {
         onButtonClick={handleButtonClick}
         onClose={() => setDialogOpen(false)}
         isOpen={dialogOpen}
-        loading={role.isLoading}
+        loading={role.isPending}
       />
     </div>
   );

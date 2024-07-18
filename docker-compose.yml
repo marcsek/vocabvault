@@ -1,5 +1,3 @@
-version: '3'
-
 services:
   server:
     container_name: server
@@ -8,4 +6,4 @@ services:
       dockerfile: ./apps/server/Dockerfile
     restart: always
     ports:
-      - 3001:3001
+      - 3002:3002

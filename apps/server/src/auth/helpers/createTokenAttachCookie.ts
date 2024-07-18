@@ -9,7 +9,7 @@ export const createTokenAttachCookie = ({ res, userId }: { res: e.Response; user
     httpOnly: true,
     secure: process.env.NODE_ENV !== 'development',
     sameSite: process.env.NODE_ENV === 'development' ? undefined : 'none',
-    domain: process.env.NODE_ENV === 'development' ? undefined : 'vocab-vault.com',
+    domain: process.env.NODE_ENV === 'development' ? undefined : process.env.DOMAIN_NAME,
   });
 
   res.cookie('is_loggedin', 'yes', {
@@ -17,7 +17,7 @@ export const createTokenAttachCookie = ({ res, userId }: { res: e.Response; user
     httpOnly: false,
     secure: process.env.NODE_ENV !== 'development',
     sameSite: process.env.NODE_ENV === 'development' ? undefined : 'none',
-    domain: process.env.NODE_ENV === 'development' ? undefined : 'vocab-vault.com',
+    domain: process.env.NODE_ENV === 'development' ? undefined : process.env.DOMAIN_NAME,
   });
 
   return accessToken;

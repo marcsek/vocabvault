@@ -7,3 +7,12 @@ services:
     restart: always
     ports:
       - 3002:3002
+
+  client:
+    container_name: client
+    build:
+      context: .
+      dockerfile: ./apps/client/Dockerfile
+    restart: always
+    ports:
+      - 3001:3000

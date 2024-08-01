@@ -2,7 +2,7 @@ import { TGetSessionByUserIdInput } from 'server/src/schemas/session.schema';
 import { trpc } from '../utils/trpc';
 
 export const useCreateSession = (onSuccess: () => void) => {
-  const trpcContext = trpc.useContext();
+  const trpcContext = trpc.useUtils();
 
   return trpc.session.createSession.useMutation({
     onSuccess() {

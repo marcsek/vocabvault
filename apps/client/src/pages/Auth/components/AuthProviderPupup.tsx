@@ -24,7 +24,7 @@ const AuthProviderWindow = ({ providerName }: Props) => {
   const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  const trpcContext = trpc.useContext();
+  const trpcContext = trpc.useUtils();
 
   const handleSubmit = () => {
     const popup = window.open(url + providerName.toLocaleLowerCase(), '_blank', `width=${width},height=${height},left=${left},top=${top}`);

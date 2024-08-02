@@ -2,6 +2,6 @@
   "parserOptions": {
     "project": ["server/tsconfig.json"]
   },
-  "ignorePatterns": ["**/*.js", "node_modules", "seed.ts"],
+  "ignorePatterns": ["**/*.js", "node_modules", "seed.mjs"],
   "extends": ["custom"]
 }

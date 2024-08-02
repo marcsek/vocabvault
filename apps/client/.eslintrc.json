@@ -3,6 +3,6 @@
     "project": ["client/tsconfig.json", "client/tsconfig.node.json"]
   },
   "rules": {},
-  "ignorePatterns": ["node_modules", "tailwind.config.cjs"],
+  "ignorePatterns": ["node_modules", "tailwind.config.cjs", "postcss.config.cjs"],
   "extends": ["custom"]
 }

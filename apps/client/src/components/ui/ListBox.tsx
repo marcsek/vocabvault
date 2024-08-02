@@ -64,7 +64,7 @@ const ListBox = <T extends TListBoxInput, TKey extends keyof T>({
                         {({ selected, focus, disabled }) => (
                           <p
                             className={`text-gray-200 ${selected ? '!font-bold !text-gray-50' : ''} ${
-                              focus? 'bg-gray-700 !text-gray-50' : ''
+                              focus ? 'bg-gray-700 !text-gray-50' : ''
                             } ${disabled ? '!text-gray-400' : ''} rounded-default box-border px-2 py-2 duration-100`}
                           >
                             {item[fieldValue]}

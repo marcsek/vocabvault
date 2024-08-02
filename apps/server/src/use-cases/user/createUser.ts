@@ -20,6 +20,5 @@ export const createUser = async ({ prisma, input }: { prisma: ExtendedPrismaClie
         throw new TRPCError({ message: 'User already exists.', code: 'FORBIDDEN' });
       }
     }
-    console.log(e);
   }
 };

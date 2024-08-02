@@ -140,7 +140,6 @@ export const useUpdateUser = () => {
       if (!data || !previousData) return;
 
       trpcContext.user.getUser.setData(undefined, { ...previousData, ...data });
-      console.log(data);
     },
     onError() {
       toast.error('Failed to update profile.');

@@ -29,7 +29,6 @@ export const getUserStats = async ({ prisma, userId }: { prisma: ExtendedPrismaC
       },
     });
   } catch (e) {
-    console.log(e);
     throw new TRPCError({ message: 'Failed to find record.', code: 'INTERNAL_SERVER_ERROR' });
   }
 };

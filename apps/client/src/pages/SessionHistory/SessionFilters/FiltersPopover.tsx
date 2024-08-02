@@ -1,5 +1,5 @@
 import React from 'react';
-import { Popover } from '@headlessui/react';
+import { Popover, PopoverButton, PopoverPanel } from '@headlessui/react';
 import ListBox from '@ui/ListBox';
 import { useGetAvailableWordSources } from '../../../queries/wordSource';
 import { THistoryFilters } from '../hooks/useHistoryFilters';
@@ -31,7 +31,7 @@ const FiltersPopover = ({ setFilters, filters }: Props) => {
     <Popover className="relative">
       {({ open }) => (
         <>
-          <Popover.Button className="rounded-default h-11 border border-gray-600 bg-gray-800 p-2.5 hover:bg-gray-700">
+          <PopoverButton className="rounded-default h-11 border border-gray-600 bg-gray-800 p-2.5 hover:bg-gray-700">
             <MixerHorizontalIcon className="h-full w-full text-gray-200" />
             <AnimatePresence>
               {(currentType.id !== 'All' || currentSource.id !== '0') && (
@@ -43,10 +43,10 @@ const FiltersPopover = ({ setFilters, filters }: Props) => {
                 />
               )}
             </AnimatePresence>
-          </Popover.Button>
+          </PopoverButton>
           <AnimatePresence>
             {open && (
-              <Popover.Panel
+              <PopoverPanel
                 as={motion.div}
                 static
                 style={{ translateX: '-50%', left: 0, top: '120%' }}
@@ -91,7 +91,7 @@ const FiltersPopover = ({ setFilters, filters }: Props) => {
                     }}
                   />
                 </div>
-              </Popover.Panel>
+              </PopoverPanel>
             )}
           </AnimatePresence>
         </>

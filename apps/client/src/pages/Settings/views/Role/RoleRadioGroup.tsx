@@ -1,5 +1,5 @@
 import React from 'react';
-import { RadioGroup } from '@headlessui/react';
+import { Label, Radio, RadioGroup } from '@headlessui/react';
 import { BsCheck } from 'react-icons/bs';
 import { useUser } from '../../../../providers/UserContext.provider';
 
@@ -14,14 +14,14 @@ const RoleRadioGroup = ({ activeRole, handleRoleChange, allRoles }: Props) => {
 
   return (
     <RadioGroup value={activeRole} onChange={(e) => handleRoleChange(e)}>
-      <RadioGroup.Label className="sr-only">Account Role</RadioGroup.Label>
+      <Label className="sr-only">Account Role</Label>
       <div className="flex flex-col gap-6">
         {allRoles.map((role) => (
-          <RadioGroup.Option key={role.name} value={role.name}>
-            {({ active, checked }) => (
+          <Radio key={role.name} value={role.name}>
+            {({ focus, checked }) => (
               <li
                 className={`rounded-default flex cursor-pointer list-none justify-between px-6 py-4 shadow-lg outline outline-1 outline-gray-500 duration-75 ${
-                  active ? 'ring-primary-300 ring' : ''
+                  focus ? 'ring-primary-300 ring' : ''
                 }`}
               >
                 <div className="flex flex-col gap-2 leading-none">
@@ -40,7 +40,7 @@ const RoleRadioGroup = ({ activeRole, handleRoleChange, allRoles }: Props) => {
                 </div>
               </li>
             )}
-          </RadioGroup.Option>
+          </Radio>
         ))}
       </div>
     </RadioGroup>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dialog } from '@headlessui/react';
+import { Dialog, DialogPanel, DialogTitle } from '@headlessui/react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface Props {
@@ -32,13 +32,13 @@ const DialogTemplate = ({ title, body, foot, onClose, isOpen }: Props) => {
                 transition={{ type: 'spring', duration: 0.5 }}
                 className="fixed inset-0 flex items-center justify-center p-4"
               >
-                <Dialog.Panel className="rounded-default mx-auto flex max-w-md flex-col gap-6 bg-gray-800 px-8 py-7 outline outline-1 outline-gray-600">
+                <DialogPanel className="rounded-default mx-auto flex max-w-md flex-col gap-6 bg-gray-800 px-8 py-7 outline outline-1 outline-gray-600">
                   <div className="flex flex-col gap-2">
-                    <Dialog.Title className="text-lg font-semibold leading-none text-gray-50">{title}</Dialog.Title>
+                    <DialogTitle className="text-lg font-semibold leading-none text-gray-50">{title}</DialogTitle>
                     <p className="text-sm text-gray-400">{body}</p>
                   </div>
                   {foot}
-                </Dialog.Panel>
+                </DialogPanel>
               </motion.div>
             </>
           )}

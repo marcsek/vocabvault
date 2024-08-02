@@ -1,4 +1,4 @@
-import { Dialog } from '@headlessui/react';
+import { Dialog, DialogPanel, DialogTitle } from '@headlessui/react';
 import { RxCross2 } from 'react-icons/rx';
 import Button from '@ui/Button';
 import Divider from '@ui/Divider';
@@ -37,13 +37,13 @@ const SidePanel = ({ isOpen, onClose }: Props) => {
                 transition={{ type: 'spring', bounce: 0, duration: 0.5 }}
                 className="rounded-l-default fixed bottom-0 right-0 top-0 flex w-full items-center justify-center bg-gray-800 shadow-[-1px_4px_32px_1px_#00000088] backdrop-blur-md sm:w-[320px] sm:bg-gray-800/50"
               >
-                <Dialog.Panel className="flex h-full flex-1 flex-col gap-6 p-9">
-                  <Dialog.Title className="flex justify-between">
+                <DialogPanel className="flex h-full flex-1 flex-col gap-6 p-9">
+                  <DialogTitle className="flex justify-between">
                     <Logo />
                     <Button intent="asWrapper" size="asWraper" onClick={onClose} className="!rounded-full p-3">
                       <RxCross2 size="24" />
                     </Button>
-                  </Dialog.Title>
+                  </DialogTitle>
                   {!!user && (
                     <>
                       <Divider className="h-[1px] w-full" />
@@ -56,7 +56,7 @@ const SidePanel = ({ isOpen, onClose }: Props) => {
 
                   <Divider className="h-[1px]" />
                   <MainButtons onClose={onClose} />
-                </Dialog.Panel>
+                </DialogPanel>
               </motion.div>
             </>
           )}

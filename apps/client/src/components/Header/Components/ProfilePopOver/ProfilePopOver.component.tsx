@@ -1,4 +1,4 @@
-import { Popover } from '@headlessui/react';
+import { Popover, PopoverButton, PopoverPanel } from '@headlessui/react';
 import { FiChevronDown } from 'react-icons/fi';
 import { RiHistoryFill } from 'react-icons/ri';
 import { TbSettings } from 'react-icons/tb';
@@ -17,7 +17,7 @@ const ProfilePopOver = () => {
     <Popover className="relative z-50 h-[32px]">
       {({ open }) => (
         <>
-          <Popover.Button aria-label="profile-view" className="z-30 outline-none">
+          <PopoverButton aria-label="profile-view" className="z-30 outline-none">
             <div className="flex items-center justify-center gap-2">
               <div className="overflow-hidden rounded-full bg-gray-700 outline outline-gray-600">
                 <img className="h-8 w-8" src={user?.profileImage ?? ''} alt="profile image"></img>
@@ -26,8 +26,8 @@ const ProfilePopOver = () => {
                 <FiChevronDown size="20" />
               </motion.div>
             </div>
-          </Popover.Button>
-          <Popover.Panel static>
+          </PopoverButton>
+          <PopoverPanel static>
             <AnimatePresence>
               {open && (
                 <motion.div
@@ -43,7 +43,7 @@ const ProfilePopOver = () => {
                   </div>
                   <Divider className="h-[1px] w-full bg-gray-700" />
                   <div className="flex flex-col gap-2">
-                    <Popover.Button
+                    <PopoverButton
                       as={Link}
                       hoverEffect
                       to="/session-history"
@@ -51,8 +51,8 @@ const ProfilePopOver = () => {
                       Icon={<RiHistoryFill size={16} />}
                     >
                       History
-                    </Popover.Button>
-                    <Popover.Button
+                    </PopoverButton>
+                    <PopoverButton
                       as={Link}
                       hoverEffect
                       to="/settings"
@@ -60,10 +60,10 @@ const ProfilePopOver = () => {
                       Icon={<TbSettings size={16} />}
                     >
                       Settings
-                    </Popover.Button>
+                    </PopoverButton>
                   </div>
                   <Divider className="h-[1px] w-full bg-gray-700" />
-                  <Popover.Button
+                  <PopoverButton
                     as={Link}
                     hoverEffect
                     onClick={() => logout.mutate()}
@@ -72,11 +72,11 @@ const ProfilePopOver = () => {
                     Icon={<VscSignOut size={16} />}
                   >
                     Sign Out
-                  </Popover.Button>
+                  </PopoverButton>
                 </motion.div>
               )}
             </AnimatePresence>
-          </Popover.Panel>
+          </PopoverPanel>
         </>
       )}
     </Popover>

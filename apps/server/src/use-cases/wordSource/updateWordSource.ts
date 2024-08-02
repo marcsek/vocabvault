@@ -1,13 +1,13 @@
-import { PrismaClient } from '@prisma/client';
 import { TRPCError } from '@trpc/server';
 import { TUpdateWordSourceInput } from '../../schemas/wordSource.schema.js';
+import { ExtendedPrismaClient } from '../../trpc/context.js';
 
 export const updateWordSource = async ({
   prisma,
   userId,
   input,
 }: {
-  prisma: PrismaClient;
+  prisma: ExtendedPrismaClient;
   input: TUpdateWordSourceInput;
   userId: string;
 }) => {

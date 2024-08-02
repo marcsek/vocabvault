@@ -1,7 +1,7 @@
-import { PrismaClient } from '@prisma/client';
 import { TRPCError } from '@trpc/server';
+import { ExtendedPrismaClient } from '../../trpc/context.js';
 
-export const getWordSourceById = async ({ prisma, wordSourceId }: { prisma: PrismaClient; wordSourceId: string }) => {
+export const getWordSourceById = async ({ prisma, wordSourceId }: { prisma: ExtendedPrismaClient; wordSourceId: string }) => {
   try {
     return await prisma.wordSource.findUnique({
       where: { id: wordSourceId },

@@ -1,7 +1,13 @@
-import { PrismaClient } from '@prisma/client';
 import { TRPCError } from '@trpc/server';
+import { ExtendedPrismaClient } from '../../trpc/context.js';
 
-export const deleteWordSource = async ({ prisma, input }: { prisma: PrismaClient; input: { userId: string; wordSourceId: string } }) => {
+export const deleteWordSource = async ({
+  prisma,
+  input,
+}: {
+  prisma: ExtendedPrismaClient;
+  input: { userId: string; wordSourceId: string };
+}) => {
   try {
     return await prisma.user.update({
       where: { id: input.userId },

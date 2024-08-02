@@ -1,7 +1,7 @@
-import { PrismaClient } from '@prisma/client';
 import { TRPCError } from '@trpc/server';
+import { ExtendedPrismaClient } from '../../trpc/context.js';
 
-export const addUsersChild = async ({ prisma, input }: { prisma: PrismaClient; input: { socialId: number; parentId: string } }) => {
+export const addUsersChild = async ({ prisma, input }: { prisma: ExtendedPrismaClient; input: { socialId: number; parentId: string } }) => {
   try {
     const childToAdd = await prisma.user.findUnique({
       where: { socialId: input.socialId },

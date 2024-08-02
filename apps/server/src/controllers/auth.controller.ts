@@ -23,6 +23,7 @@ export const registerUserController = async ({ ctx: { prisma, res }, registerInp
   const profileImage = await generateProfilePicture(registerInput.name);
 
   const createdUser = await createUser({ prisma, input: { ...registerInput, profileImage } });
+  console.log(createdUser);
 
   if (!createdUser) throw new TRPCError({ message: 'Failed to create user.', code: 'INTERNAL_SERVER_ERROR' });
 

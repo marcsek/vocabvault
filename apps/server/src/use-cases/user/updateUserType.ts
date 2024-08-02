@@ -1,9 +1,17 @@
-import { PrismaClient } from '@prisma/client';
 import { TRPCError } from '@trpc/server';
 import { removeAlikeWordSources } from './removeAlikeWordSources.js';
 import { TChangeUserType } from '../../schemas/user.schema.js';
+import { ExtendedPrismaClient } from '../../trpc/context.js';
 
-export const updateUserType = async ({ prisma, input, userId }: { prisma: PrismaClient; input: TChangeUserType; userId: string }) => {
+export const updateUserType = async ({
+  prisma,
+  input,
+  userId,
+}: {
+  prisma: ExtendedPrismaClient;
+  input: TChangeUserType;
+  userId: string;
+}) => {
   try {
     if (input.type === 'adult') {
       const child = await prisma.user.findUnique({

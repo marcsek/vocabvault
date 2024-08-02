@@ -1,11 +1,11 @@
-import { PrismaClient } from '@prisma/client';
 import { TRPCError } from '@trpc/server';
+import { ExtendedPrismaClient } from '../../trpc/context.js';
 
 export const removeAlikeWordSources = async ({
   prisma,
   input,
 }: {
-  prisma: PrismaClient;
+  prisma: ExtendedPrismaClient;
   input: { childId: string; wordSourcesWithChildIds: { id: string }[] };
 }) => {
   try {

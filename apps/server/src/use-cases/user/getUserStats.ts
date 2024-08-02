@@ -1,7 +1,7 @@
-import { PrismaClient } from '@prisma/client';
 import { TRPCError } from '@trpc/server';
+import { ExtendedPrismaClient } from '../../trpc/context.js';
 
-export const getUserStats = async ({ prisma, userId }: { prisma: PrismaClient; userId: string }) => {
+export const getUserStats = async ({ prisma, userId }: { prisma: ExtendedPrismaClient; userId: string }) => {
   const todayYearAgo = new Date().setFullYear(new Date().getFullYear() - 1);
 
   try {

@@ -1,8 +1,8 @@
-import { PrismaClient } from '@prisma/client';
 import { TRPCError } from '@trpc/server';
 import { TUpdateUserInput } from '../../schemas/user.schema.js';
+import { ExtendedPrismaClient } from '../../trpc/context.js';
 
-export const updateUser = async ({ prisma, input, userId }: { prisma: PrismaClient; input: TUpdateUserInput; userId: string }) => {
+export const updateUser = async ({ prisma, input, userId }: { prisma: ExtendedPrismaClient; input: TUpdateUserInput; userId: string }) => {
   try {
     return await prisma.user.update({
       where: { id: userId },

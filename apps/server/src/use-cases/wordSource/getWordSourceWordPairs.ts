@@ -1,11 +1,11 @@
-import { PrismaClient } from '@prisma/client';
 import { TRPCError } from '@trpc/server';
+import { ExtendedPrismaClient } from '../../trpc/context.js';
 
 export const getWordPairs = async ({
   prisma,
   input,
 }: {
-  prisma: PrismaClient;
+  prisma: ExtendedPrismaClient;
   input: { userId: string; wordSourceId: string; skip: number | undefined; take: number | undefined };
 }) => {
   try {

@@ -1,13 +1,14 @@
-import { Prisma, PrismaClient } from '@prisma/client';
+import { Prisma } from '@prisma/client';
 import { TRPCError } from '@trpc/server';
 import { CreateWordSourceInput } from '../../schemas/wordSource.schema.js';
+import { ExtendedPrismaClient } from '../../trpc/context.js';
 
 export const createWordSource = async ({
   prisma,
   input,
   userId,
 }: {
-  prisma: PrismaClient;
+  prisma: ExtendedPrismaClient;
   input: CreateWordSourceInput;
   userId: string;
 }) => {

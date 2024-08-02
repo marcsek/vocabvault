@@ -1,11 +1,9 @@
 import { PrismaClient } from '@prisma/client';
 import { verifyAccessToken } from '../auth/jwt.js';
 import type * as trpcExpress from '@trpc/server/adapters/express';
-import { inferAsyncReturnType } from '@trpc/server';
-import { prismaHashPassword } from '../middleware/prismaHashPassword.js';
+import { hashExtension } from '../extensions/prismaHashPassword.js';
 
-const prisma = new PrismaClient();
-prisma.$use(prismaHashPassword);
+const prisma = new PrismaClient().$extends(hashExtension);
 
 export const createContext = async ({ req, res }: trpcExpress.CreateExpressContextOptions) => {
   const token = req.cookies.jit;
@@ -25,4 +23,5 @@ export const createContext = async ({ req, res }: trpcExpress.CreateExpressConte
   return { req, res, prisma, userID };
 };
 
-export type Context = inferAsyncReturnType<typeof createContext>;
+export type Context = Awaited<ReturnType<typeof createContext>>;
+export type ExtendedPrismaClient = typeof prisma;

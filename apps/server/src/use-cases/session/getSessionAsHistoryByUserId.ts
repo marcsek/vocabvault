@@ -1,11 +1,11 @@
-import { PrismaClient } from '@prisma/client';
+import { ExtendedPrismaClient } from '../../trpc/context.js';
 
 export type TOrderByObject = { startedAt?: 'desc' | 'asc'; type?: 'desc' | 'asc'; accuracy?: 'desc' | 'asc' };
 export const getSessionAsHistoryByUserId = async ({
   prisma,
   input,
 }: {
-  prisma: PrismaClient;
+  prisma: ExtendedPrismaClient;
   input: {
     userID: string;
     skip: number | undefined;

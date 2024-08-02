@@ -36,14 +36,14 @@ export const logoutUserController = async ({ ctx: { req, res } }: { ctx: Context
   }
 
   res.clearCookie('jit', {
-    secure: process.env.NODE_ENV !== 'development',
-    sameSite: process.env.NODE_ENV === 'development' ? undefined : 'none',
-    domain: process.env.NODE_ENV === 'development' ? undefined : 'vocab-vault.com',
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: process.env.NODE_ENV === 'production' ? 'lax' : undefined,
+    domain: process.env.NODE_ENV === 'production' ? process.env.DOMAIN_NAME : undefined,
   });
   res.clearCookie('is_loggedin', {
-    secure: process.env.NODE_ENV !== 'development',
-    sameSite: process.env.NODE_ENV === 'development' ? undefined : 'none',
-    domain: process.env.NODE_ENV === 'development' ? undefined : 'vocab-vault.com',
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: process.env.NODE_ENV === 'production' ? 'none' : undefined,
+    domain: process.env.NODE_ENV === 'production' ? process.env.DOMAIN_NAME : undefined,
   });
 
   return 'sucess';

@@ -25,6 +25,8 @@ RUN npm i
 # Build the project and its dependencies
 COPY --from=builder /app/out/full/ .
 
+ARG VITE_BACKEND_URL
+
 # Have to generate db for typedefs to be present at build time (server doesn't get build)
 RUN npx turbo db:generate
 RUN npx turbo run build --filter=client
@@ -34,12 +36,10 @@ WORKDIR /app
 
 RUN npm install -g serve
 
-RUN npm install -g @dotenvx/dotenvx
-
 RUN addgroup --system --gid 1001 react
 RUN adduser --system --uid 1001 react
 USER react
 
 COPY --from=installer /app .
 
-CMD dotenvx run --env-file=/app/apps/client/.env -- serve -s apps/client/dist
+CMD serve -s apps/client/dist

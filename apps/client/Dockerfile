@@ -34,10 +34,12 @@ WORKDIR /app
 
 RUN npm install -g serve
 
+RUN npm install -g @dotenvx/dotenvx
+
 RUN addgroup --system --gid 1001 react
 RUN adduser --system --uid 1001 react
 USER react
 
 COPY --from=installer /app .
 
-CMD serve -s apps/client/dist
+CMD dotenvx run --env-file=/app/apps/client/.env -- serve -s apps/client/dist

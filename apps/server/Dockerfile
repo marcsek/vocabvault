@@ -1,9 +1,9 @@
-FROM node:18-alpine AS base
+FROM node:20-alpine3.17 AS base
 
 FROM base AS builder
 RUN apk update
 RUN apk add --no-cache libc6-compat
-
+RUN apk add --no-cache npm
 RUN apk add --no-cache openssl
 
 # Set working directory
@@ -27,7 +27,7 @@ RUN npm i
 
 # Build the project and its dependencies
 COPY --from=builder /app/out/full/ .
-#COPY /apps/server/.env .env
+COPY /apps/server/.env .env
 
 # Generate Prisma Schema
 RUN npx turbo db:generate

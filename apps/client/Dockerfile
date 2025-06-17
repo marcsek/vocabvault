@@ -1,8 +1,9 @@
-FROM node:18-alpine AS base
+FROM node:20-alpine3.17 AS base
 
 FROM base AS builder
 RUN apk update
 RUN apk add --no-cache libc6-compat
+RUN apk add --no-cache npm
 
 # Set working directory
 WORKDIR /app

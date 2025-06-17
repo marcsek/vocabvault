@@ -27,7 +27,7 @@ RUN npm i
 
 # Build the project and its dependencies
 COPY --from=builder /app/out/full/ .
-COPY /apps/server/.env .env
+#COPY /apps/server/.env .env
 
 # Generate Prisma Schema
 RUN npx turbo db:generate

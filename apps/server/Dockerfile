@@ -1,10 +1,10 @@
 FROM node:22-alpine AS base
+RUN apk add --no-cache openssl
 
 FROM base AS builder
 RUN apk update
 RUN apk add --no-cache libc6-compat
 RUN apk add --no-cache npm
-RUN apk add --no-cache openssl
 
 # Set working directory
 WORKDIR /app

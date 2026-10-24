@@ -32,15 +32,9 @@ ARG VITE_BACKEND_URL
 RUN npx turbo db:generate
 RUN npx turbo run build --filter=client
 
-FROM base AS runner
-WORKDIR /app
+FROM caddy:2-alpine AS runner
 
-RUN npm install -g serve
+COPY apps/client/Caddyfile /etc/caddy/Caddyfile
+COPY --from=installer /app/apps/client/dist /srv
 
-RUN addgroup --system --gid 1001 react
-RUN adduser --system --uid 1001 react
-USER react
-
-COPY --from=installer /app .
-
-CMD serve -s apps/client/dist
+CMD ["caddy", "run", "--config", "/etc/caddy/Caddyfile", "--adapter", "caddyfile"]
